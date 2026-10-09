@@ -16,7 +16,35 @@
 <helmet>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@100..1000&amp;family=Onest:wght@300..700&amp;family=Geist+Mono:wght@400..700&amp;display=swap">
 <style>
-.split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);min-height:1100px}
+.page{position:relative;isolation:isolate;display:flex;flex-direction:column;min-height:100vh}
+.split{flex:1;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.obf{display:none}
+.vg[data-ob=mark] .obm,.vg[data-ob=tick] .obt,.vg[data-ob=next] .obn{display:flex}
+.vg[data-ob=line] .obl{display:grid}
+.vg[data-ob=mini] .obs{display:block}
+.obs .ff-mini{margin-bottom:16px}
+.obl{position:relative;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:16px 48px;margin:0 32px;padding:20px 0 28px}
+.obl::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--line)}
+.obl ol{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.obl li{position:relative;display:flex;flex-direction:column;gap:4px;color:var(--quiet)}
+.obl li::before{content:"";position:absolute;left:0;right:0;top:-21px;height:3px;border-radius:2px}
+.obl li.on{color:var(--ink)}
+.obl li.on::before{background:var(--ink);transform-origin:left;animation:obl-fill 1s var(--ease) both .3s}
+@keyframes obl-fill{from{transform:scaleX(0)}}
+@media (prefers-reduced-motion:reduce){.obl li.on::before{animation:none}}
+.obl b{font-weight:500;font-size:15px}
+.obl-r{display:flex;flex-wrap:wrap;gap:8px 24px}
+.path{display:flex;gap:10px;align-items:center}
+.path li{display:flex;align-items:center;gap:10px;color:var(--quiet)}
+.path li+li::before{content:"→";color:var(--quiet)}
+.path li.on{color:var(--ink)}
+.path li.on::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 3px color-mix(in srgb,var(--mint) 35%,transparent);order:-1}
+.obm{position:absolute;left:41.667%;right:0;bottom:0;z-index:-1;justify-content:center;height:9vw;overflow:hidden;pointer-events:none}
+.obm span{font-family:var(--disp);font-weight:900;font-size:24vw;line-height:.74;letter-spacing:-.01em;color:color-mix(in srgb,var(--ink) 7%,transparent)}
+.obt{margin:0 16px 16px}
+.obn{flex-direction:column;gap:10px;padding:24px;border-radius:18px;box-shadow:inset 0 0 0 1px var(--line);opacity:.62;transition:opacity .3s}
+.obn:hover{opacity:1}
+.obn .prog{max-width:180px}
 .side{container-type:inline-size;margin:16px 0 16px 16px;padding:40px;display:flex;flex-direction:column;justify-content:space-between}
 .big{font-family:var(--disp);font-weight:900;font-size:38cqi;line-height:.74;white-space:nowrap;color:color-mix(in srgb,var(--ink) 88%,transparent)}
 .big span{font-weight:200;color:color-mix(in srgb,var(--ink) 30%,transparent)}
@@ -43,7 +71,8 @@
 .next{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:28px;box-shadow:inset 0 1px 0 var(--line)}
 </style>
 </helmet>
-<div class="vg fr calm">
+<div class="vg fr calm" data-ob="line">
+<div class="page">
 <div class="split">
 
 <aside class="side glow" data-rv>
@@ -56,7 +85,7 @@
 <span class="big" aria-hidden="true">01<span>/03</span></span>
 </aside>
 
-<main style="padding:120px 96px 64px;display:flex;flex-direction:column;gap:48px;max-width:860px;min-width:0">
+<main style="padding:clamp(64px,8vh,120px) 96px 56px;display:flex;flex-direction:column;gap:48px;max-width:860px;min-width:0">
 <div data-rv style="display:flex;flex-direction:column;gap:16px">
 <h1 class="d-1">Расскажите о себе</h1>
 <p class="deck" style="font-size:20px">По сфере и опыту выступлений подберём мероприятия, где ваш доклад будет к месту.</p>
@@ -93,18 +122,38 @@
 <a href="fr-selection.dc.html" class="b b-mint">Далее<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 </div>
 </form>
+
+<aside class="obf obn" aria-label="Следующий шаг">
+<span class="k muted">Дальше · шаг 2 из 3</span>
+<span class="h-20">Цель и формат выступлений</span>
+<span class="small muted">Выступать, преподавать или пока готовиться — подберём площадки под вашу цель.</span>
+<div class="prog" aria-hidden="true"><span class="on"></span><span class="on"></span><span></span></div>
+</aside>
 </main>
 
 </div>
+
+<footer class="obf obl">
+<ol aria-label="Шаги онбординга"><li class="on" aria-current="step"><span class="k">01</span><b>Сфера и опыт</b></li><li><span class="k">02</span><b>Цель</b></li><li><span class="k">03</span><b>Формат</b></li></ol>
+<div class="k muted obl-r"><span>© 2026 TRIX</span><a href="#help" class="ln">Помощь</a><a href="fr-selection.dc.html" class="ln">Пропустить, заполню позже</a></div>
+</footer>
+<div class="wrap obf obs"><footer class="ff ff-mini" data-ff>
+<a href="fr-home.dc.html" class="brand">TRIX<b></b></a>
+<ol class="path small" aria-label="Шаги онбординга"><li class="on" aria-current="step">Сфера и опыт</li><li>Цель</li><li>Формат</li></ol>
+<div class="k muted ff-legal"><span>© 2026 TRIX</span><a href="#help">Помощь</a><a href="fr-selection.dc.html">Пропустить, заполню позже</a></div>
+</footer></div>
+<div class="obf obm" aria-hidden="true"><span>TRIX</span></div>
+<div class="obf obt ticker mint" aria-hidden="true"><div class="tk"><span>Backend</span><i></i><span>Frontend</span><i></i><span>Data и ML</span><i></i><span>DevOps</span><i></i><span>120+ мероприятий в сезоне</span><i></i></div></div>
+</div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100},"cursor":{"editor":"enum","options":["Слова и буквы","Только буквы","Волна","Выкл"],"default":"Слова и буквы","section":"След курсора"},"zone":{"editor":"enum","options":["Вся страница","Цветные блоки","Белый фон"],"default":"Вся страница","section":"След курсора"},"text":{"editor":"enum","options":["Блоками","По буквам","Не обходить"],"default":"По буквам","section":"След курсора"},"fade":{"editor":"enum","options":["Выкл","Мягкое","Сильное"],"default":"Мягкое","section":"След курсора"},"letters":{"editor":"enum","options":["Мелкие","Средние","Крупные","Огромные"],"default":"Мелкие","section":"След курсора"},"spread":{"editor":"enum","options":["Узкий","Обычный","Широкий"],"default":"Узкий","section":"След курсора"},"freq":{"editor":"enum","options":["Часто","Обычно","Редко"],"default":"Редко","section":"След курсора"},"tone":{"editor":"enum","options":["Яркий","Приглушённый"],"default":"Яркий","section":"След курсора"},"reveal":{"editor":"enum","options":["Шторка","Расшифровка","Подъём","Выкл"],"default":"Подъём","section":"Появление"},"display":{"editor":"enum","options":["Шёпот","Резина","Обычный"],"default":"Обычный","section":"Заголовки"},"glowSideEdge":{"editor":"enum","options":["Блик и тень","Блик, контур и тень"],"default":"Блик и тень","section":"Verge Glow — панель шага"}}'>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1100},&quot;cursor&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Слова и буквы&quot;,&quot;Только буквы&quot;,&quot;Волна&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Слова и буквы&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;zone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Вся страница&quot;,&quot;Цветные блоки&quot;,&quot;Белый фон&quot;],&quot;default&quot;:&quot;Вся страница&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;text&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Блоками&quot;,&quot;По буквам&quot;,&quot;Не обходить&quot;],&quot;default&quot;:&quot;По буквам&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;fade&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Выкл&quot;,&quot;Мягкое&quot;,&quot;Сильное&quot;],&quot;default&quot;:&quot;Мягкое&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;letters&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Мелкие&quot;,&quot;Средние&quot;,&quot;Крупные&quot;,&quot;Огромные&quot;],&quot;default&quot;:&quot;Мелкие&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;spread&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Узкий&quot;,&quot;Обычный&quot;,&quot;Широкий&quot;],&quot;default&quot;:&quot;Узкий&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;freq&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Часто&quot;,&quot;Обычно&quot;,&quot;Редко&quot;],&quot;default&quot;:&quot;Редко&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Яркий&quot;,&quot;Приглушённый&quot;],&quot;default&quot;:&quot;Яркий&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;reveal&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Шторка&quot;,&quot;Расшифровка&quot;,&quot;Подъём&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Подъём&quot;,&quot;section&quot;:&quot;Появление&quot;},&quot;display&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Шёпот&quot;,&quot;Резина&quot;,&quot;Обычный&quot;],&quot;default&quot;:&quot;Обычный&quot;,&quot;section&quot;:&quot;Заголовки&quot;},&quot;glowSideEdge&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Блик и тень&quot;,&quot;Блик, контур и тень&quot;],&quot;default&quot;:&quot;Блик и тень&quot;,&quot;section&quot;:&quot;Verge Glow — панель шага&quot;},&quot;bottom&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Линия-прогресс&quot;,&quot;Шаги в футере&quot;,&quot;Без футера&quot;,&quot;Вордмарк&quot;,&quot;Бегущая строка&quot;,&quot;Следующий шаг&quot;],&quot;default&quot;:&quot;Линия-прогресс&quot;,&quot;section&quot;:&quot;Низ онбординга&quot;}}">
 class Component extends DCLogic {
   componentDidMount() {
     this.start()
   }
   componentDidUpdate(prev) {
-    if (window.FrankFX?.keys.some(k => prev[k] !== this.props[k])) {
+    if (prev.bottom !== this.props.bottom || window.FrankFX?.keys.some(k => prev[k] !== this.props[k])) {
       this.stop()
       this.start()
     }
@@ -113,6 +162,10 @@ class Component extends DCLogic {
     this.stop()
   }
   start() {
+    // В props только изменённые Tweaks: без значения берём default из data-props
+    const def = JSON.parse(document.querySelector('script[data-dc-script]').getAttribute('data-props')).bottom.default
+    const ob = { 'Шаги в футере': 'mini', 'Без футера': 'none', 'Вордмарк': 'mark', 'Бегущая строка': 'tick', 'Следующий шаг': 'next' }
+    document.querySelector('.vg').dataset.ob = ob[this.props.bottom ?? def] ?? 'line'
     this.stopFx = window.FrankFX?.run(this.props, { words: 'onboarding' })
   }
   stop() {
