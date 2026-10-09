@@ -1,29 +1,25 @@
 // Мини-рантайм макетов с холста: шаблон из <template id="dc-tpl">, класс Component из data-dc-script,
-// {{дырки}}, x-import компонентов дизайн-систем через React и Tweaks из data-props.
-// Наружу: window.DCLite = { schema, values(), set(key, value), reset() } и событие 'dc:change' на window.
+// {{дырки}} и Tweaks из data-props. Общие Tweaks (shared) живут в localStorage по ключу prefix + имя:
+// оттуда их читают доски, поэтому они одинаковы на всех страницах.
+// Наружу: window.DCLite = { schema, values(), defaults(), set(key, value), reset(keys?) } и событие 'dc:change' на window.
 ;(() => {
   const tpl = document.getElementById('dc-tpl')
   const host = document.getElementById('dc')
   const tag = document.querySelector('script[data-dc-script]')
-  const { $preview, ...schema } = JSON.parse(tag.getAttribute('data-props') || '{}')
+  const { shared } = JSON.parse(document.getElementById('demo-meta').textContent)
+  const { $preview, ...own } = JSON.parse(tag.getAttribute('data-props') || '{}')
+  const schema = Object.fromEntries(Object.entries(shared.schema).map(([k, d]) => [k, { ...d, shared: true }]))
+  for (const [k, d] of Object.entries(own)) schema[k] ??= d
   const store = `dc:${location.pathname}`
   const HOLE = /\{\{\s*([\w$.]+)\s*\}\}/g
-  const WHOLE = /^\{\{\s*([\w$.]+)\s*\}\}$/
-  const BOOL = new Set(['checked', 'disabled', 'selected', 'required', 'readonly', 'multiple', 'hidden', 'open'])
-  const NAMES = { class: 'className', for: 'htmlFor', tabindex: 'tabIndex', readonly: 'readOnly', maxlength: 'maxLength', autocomplete: 'autoComplete', value: 'defaultValue', checked: 'defaultChecked' }
-  const VOID = /^(area|br|col|hr|img|input|source|track|wbr)$/
 
   const get = (o, path) => path.split('.').reduce((v, k) => v?.[k], o)
   const lit = (vals, p) => (p === 'true' ? true : p === 'false' ? false : /^-?\d/.test(p) ? Number(p) : get(vals, p))
-  const camel = s => s.replace(/-([a-z])/g, (_, c) => c.toUpperCase())
-  const css = s =>
-    Object.fromEntries(
-      s.split(';').flatMap(d => {
-        const i = d.indexOf(':')
-        const k = d.slice(0, i).trim()
-        return i > 0 && k ? [[k.startsWith('--') ? k : camel(k), d.slice(i + 1).trim()]] : []
-      }),
-    )
+  const ls = (k, v) => {
+    try {
+      return v === undefined ? localStorage.getItem(k) : localStorage.setItem(k, v)
+    } catch {}
+  }
 
   class DCLogic {
     constructor(props) {
@@ -42,28 +38,32 @@
   const Component = new Function('DCLogic', `${tag.textContent}\nreturn Component`)(DCLogic)
 
   // Как на холсте: в props попадают только изменённые Tweaks, default лишь подсказка панели.
-  // Значения Tweaks: ссылка важнее сохранённых в браузере, неизвестные опции отбрасываем
+  // Значения: ссылка важнее сохранённых в браузере, неизвестные опции отбрасываем
   const ok = (k, v) => k in schema && (!schema[k].options || schema[k].editor === 'color' || schema[k].options.includes(v))
-  const load = () => {
-    let saved = {}
-    try {
-      saved = JSON.parse(localStorage.getItem(store)) ?? {}
-    } catch {}
-    for (const [k, v] of new URLSearchParams(location.search)) saved[k] = v
-    return Object.fromEntries(Object.entries(saved).filter(([k, v]) => ok(k, v)))
+  const defaults = () => Object.fromEntries(Object.entries(schema).filter(([, d]) => 'default' in d).map(([k, d]) => [k, d.default]))
+  const common = () => Object.fromEntries(Object.keys(shared.schema).map(k => [k, ls(shared.prefix + k)]).filter(([k, v]) => ok(k, v)))
+  let tweaks = {}
+  try {
+    tweaks = JSON.parse(localStorage.getItem(store)) ?? {}
+  } catch {}
+  for (const [k, v] of new URLSearchParams(location.search)) tweaks[k] = v
+  tweaks = Object.fromEntries(Object.entries(tweaks).filter(([k, v]) => ok(k, v)))
+  // Общие храним только у досок: без записи доска взяла бы свой встроенный default, а не значение главной
+  for (const [k, d] of Object.entries(shared.schema)) {
+    if (k in tweaks) ls(shared.prefix + k, tweaks[k])
+    else if (!ok(k, ls(shared.prefix + k))) ls(shared.prefix + k, d.default)
+    delete tweaks[k]
   }
+  const values = () => ({ ...defaults(), ...common(), ...tweaks })
+  const props = () => ({ ...common(), ...tweaks })
   const save = () => {
     try {
       localStorage.setItem(store, JSON.stringify(tweaks))
     } catch {}
-    const q = new URLSearchParams(tweaks).toString()
+    const d = defaults()
+    const q = new URLSearchParams(Object.entries(values()).filter(([k, v]) => v !== d[k])).toString()
     history.replaceState(history.state, '', location.pathname + (q ? `?${q}` : '') + location.hash)
   }
-  let tweaks = load()
-  const values = () => ({
-    ...Object.fromEntries(Object.entries(schema).filter(([, d]) => 'default' in d).map(([k, d]) => [k, d.default])),
-    ...tweaks,
-  })
 
   function fill(root, vals) {
     const walk = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT)
@@ -72,69 +72,20 @@
         if (n.data.includes('{{')) n.data = n.data.replace(HOLE, (_, p) => lit(vals, p) ?? '')
         continue
       }
-      for (const a of [...n.attributes]) {
-        if (!a.value.includes('{{')) continue
-        const whole = a.value.match(WHOLE)
-        if (whole && n.localName === 'x-import') {
-          n.raw ??= {}
-          n.raw[a.name] = lit(vals, whole[1])
-        } else a.value = a.value.replace(HOLE, (_, p) => lit(vals, p) ?? '')
-      }
+      for (const a of n.attributes) if (a.value.includes('{{')) a.value = a.value.replace(HOLE, (_, p) => lit(vals, p) ?? '')
     }
-  }
-
-  function attrs(el) {
-    const imp = el.localName === 'x-import'
-    const p = {}
-    for (const a of el.attributes) {
-      if (a.name === 'component-from-global-scope') continue
-      if (el.raw && a.name in el.raw) p[camel(a.name)] = el.raw[a.name]
-      else if (a.name === 'style') p.style = css(a.value)
-      else p[NAMES[a.name] ?? (imp ? camel(a.name) : a.name)] = BOOL.has(a.name) || a.value
-    }
-    return p
-  }
-
-  // Узел шаблона → React-элемент; поддеревья без x-import вставляем как есть через innerHTML
-  function react(n) {
-    if (n.nodeType === 3) return n.data
-    if (n.nodeType !== 1) return null
-    const h = React.createElement
-    const kids = () => [...n.childNodes].map(react)
-    if (n.localName === 'x-import') {
-      const name = n.getAttribute('component-from-global-scope')
-      const C = get(window, name)
-      if (!C) console.warn(`x-import: нет компонента ${name}`)
-      return C ? h(C, attrs(n), ...kids()) : null
-    }
-    if (n.querySelector('x-import')) return h(n.localName, attrs(n), ...kids())
-    return h(n.localName, VOID.test(n.localName) ? attrs(n) : { ...attrs(n), dangerouslySetInnerHTML: { __html: n.innerHTML } })
   }
 
   let inst
-  let roots = []
-  function render() {
+  function mount() {
+    inst = new Component(props())
     const frag = tpl.content.cloneNode(true)
     fill(frag, inst.renderVals?.() ?? {})
     host.replaceChildren(frag)
-    for (const el of host.querySelectorAll('x-import')) {
-      if (!el.isConnected || el.parentElement.closest('x-import')) continue
-      const vnode = react(el)
-      el.replaceChildren()
-      const r = ReactDOM.createRoot(el)
-      ReactDOM.flushSync(() => r.render(vnode))
-      roots.push(r)
-    }
-  }
-  function mount() {
-    inst = new Component({ ...tweaks })
-    render()
     inst.componentDidMount?.()
   }
   function remount() {
     inst.componentWillUnmount?.()
-    for (const r of roots) r.unmount()
-    roots = []
     mount()
   }
 
@@ -145,27 +96,27 @@
     const prev = inst.props
     if (holes) remount()
     else {
-      inst.props = { ...tweaks }
+      inst.props = props()
       inst.componentDidUpdate?.(prev, inst.state)
     }
     dispatchEvent(new Event('dc:change'))
   }
+  const put = (k, v) => (schema[k].shared ? ls(shared.prefix + k, v) : v === schema[k].default ? delete tweaks[k] : (tweaks[k] = v))
 
-  const style = document.createElement('style')
-  style.textContent = 'x-import{display:contents!important}'
-  document.head.append(style)
   mount()
+  save()
 
   window.DCLite = {
     schema,
     values,
+    defaults,
     set(k, v) {
       if (!ok(k, v)) return
-      tweaks[k] = v
+      put(k, v)
       change()
     },
-    reset() {
-      tweaks = {}
+    reset(keys = Object.keys(schema)) {
+      for (const k of keys) if ('default' in schema[k]) put(k, schema[k].default)
       change()
     },
   }

@@ -6,12 +6,15 @@
 <script src="./support.js"></script>
 <script src="./trail.js"></script>
 <script src="./cursor-fx.js"></script>
-<link rel="stylesheet" href="bp.css">
+<script src="./verge-fx.js"></script>
+<script src="./fr-fx.js"></script>
+<link rel="stylesheet" href="verge.css">
+<link rel="stylesheet" href="fr.css">
 </head>
 <body>
 <x-dc>
 <helmet>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@100..1000&amp;family=Onest:wght@300..700&amp;family=Geist+Mono:wght@400..700&amp;display=swap">
 <style>
 body{margin:0}
 .ev{--ev:#4f46e5;--ev-on:#fff;--ev-soft:color-mix(in srgb,var(--ev) 12%,var(--bg));--ev-ink:color-mix(in srgb,var(--ev) 62%,#000);min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5}
@@ -73,23 +76,26 @@ body{margin:0}
 .ev-micro{font-size:12px;line-height:1.45;color:var(--muted)}
 .ev-more{font-size:14px;font-weight:500;color:var(--ev-ink)!important;text-decoration:none}
 .ev-more:hover{text-decoration:underline}
-.ev-foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:24px 0 32px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
-.ev-foot a{text-decoration:none}.ev-foot a:hover{color:var(--ink)}
 
-.ev.bp{--bg:var(--canvas);--line:var(--hair);--surface:var(--stone-2);--r:16px;--r-cover:24px;--font:var(--sans);--font-h:var(--sans);--h-w:400;--h1:60px;--h2:30px;--h-ls:-.035em;--h-tt:none;--label-font:var(--mono)}
-.ev.bp .ev-h3{font-weight:400;font-size:19px}
-.ev.bp .ev-logo{font-weight:500}
+.ev.vg{--muted:var(--ink-2);--surface:var(--bg-2);--r:20px;--r-cover:20px;--font:var(--sans);--font-h:var(--disp);--h-w:900;--h1:96px;--h1-lh:.88;--h2:44px;--h-ls:.01em;--h-tt:uppercase;--when:72px;--label-font:var(--mono);--label-fs:11px;--label-w:600;--label-ls:1.6px}
+.ev.vg[data-theme=dark]{--line:var(--line-2)}
+.ev.vg .ev-h3{font-weight:700;font-size:20px}
+.ev.vg .ev-n{font-family:var(--mono);font-size:12px;border-radius:50%}
+.ev.vg .ev-chip{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
+.ev.vg .ev-tabs a{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.ev.vg .ev-tabs a[aria-current]{box-shadow:inset 0 -3px 0 var(--ev)}
+.ev.vg .ev-logo{font-weight:900;font-size:48px}
 </style>
 </helmet>
-<div class="ev bp" data-ev data-fx data-accent="emerald" data-cover="pattern" data-visitor="guest">
-<header class="hdr"><div class="wrap">
-<div style="display:flex;align-items:center;gap:48px"><a href="bp-home.dc.html" class="logo"><i></i>TRIX</a>
-<nav class="nav" aria-label="Разделы"><a href="bp-selection.dc.html" aria-current="page">Мероприятия</a><a href="#" class="ev-me">Мои доклады</a><a href="bp-growth.dc.html" class="ev-me">Развитие</a></nav></div>
-<div class="ev-guest" style="display:flex;align-items:center;gap:24px"><a href="#" class="ln small">Войти</a><a href="bp-onboarding.dc.html" class="btn" style="height:40px;padding:0 20px">Начать</a></div>
-<a href="#" aria-label="Профиль" class="ava ava-g mesh ev-me" style="border-radius:9999px">СП</a>
+<div class="ev vg fr calm" data-ev data-fx data-accent="coral" data-cover="pattern" data-visitor="guest">
+<header class="nav"><div class="wrap">
+<div style="display:flex;align-items:center;gap:56px"><a href="fr-home.dc.html" class="brand">TRIX<b></b></a>
+<nav class="links" aria-label="Разделы"><a href="fr-selection.dc.html" aria-current="page">Мероприятия</a><a href="#" class="ev-me">Мои доклады</a><a href="fr-growth.dc.html" class="ev-me">Развитие</a></nav></div>
+<div class="ev-guest" style="display:flex;align-items:center;gap:28px"><a href="#" class="k">Войти</a><a href="fr-onboarding.dc.html" class="b b-mint b-sm">Начать</a></div>
+<a href="#" aria-label="Профиль" class="ava mint ev-me">СП</a>
 </div></header>
 <div class="ev-wrap">
-<nav class="ev-crumbs" aria-label="Навигация"><a href="bp-selection.dc.html">Мероприятия</a><span>/</span><a href="bp-selection.dc.html">Конференции</a><span>/</span><span aria-current="page">Конференция по надёжности сервисов</span></nav>
+<nav class="ev-crumbs" aria-label="Навигация"><a href="fr-selection.dc.html">Мероприятия</a><span>/</span><a href="fr-selection.dc.html">Конференции</a><span>/</span><span aria-current="page">Конференция по надёжности сервисов</span></nav>
 
 <div class="ev-cover" role="img" aria-label="Обложка мероприятия">
 <div class="org"><span>Организатор</span><b>Сообщество инженеров надёжности</b></div>
@@ -98,7 +104,7 @@ body{margin:0}
 
 <section class="ev-title" data-rv>
 <div class="ev-chips"><span class="ev-chip acc">Конференция</span><span class="ev-chip">Заявка через TRIX</span></div>
-<h1 class="ev-h1">Конференция по надёжности сервисов</h1>
+<h1 class="ev-h1 d-1">Конференция по надёжности сервисов</h1>
 <div class="ev-meta"><span><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>[Даты проведения]</span><span><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Санкт-Петербург, гибрид</span><span>Организатор: Сообщество инженеров надёжности</span></div>
 <nav class="ev-tabs" aria-label="Разделы мероприятия"><a href="#about" aria-current="true">О мероприятии</a><a href="#aud">Аудитория</a><a href="#tracks">Треки</a><a href="#terms">Условия</a><a href="#apply">Заявка</a></nav>
 </section>
@@ -143,22 +149,26 @@ body{margin:0}
 <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span class="ev-label">Заявки до</span><span class="ev-chip ok">Приём открыт</span></div>
 <h2 id="deadline-title" class="ev-when">[Дата]</h2>
 <dl class="ev-kv"><dt>Даты</dt><dd>[Даты проведения]</dd><dt>Место</dt><dd>Санкт-Петербург, гибрид</dd><dt>Организатор</dt><dd>Сообщество инженеров надёжности</dd></dl>
-<div class="ev-cta"><a href="bp-onboarding.dc.html" class="btn">Подать заявку<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+<div class="ev-cta"><a href="fr-onboarding.dc.html" class="b b-ink">Подать заявку<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
 <p class="ev-micro ev-guest">Заявку подают после регистрации — данные профиля подставятся в неё сами.</p>
 <p class="ev-micro ev-me">Данные профиля подставятся в заявку сами.</p>
 </section>
 <section class="ev-card soft ev-guest" data-rv>
 <h3 class="ev-h3">Впервые в TRIX?</h3>
 <p class="ev-muted" style="font-size:15px">TRIX подбирает мероприятия под ваши темы и помогает подготовить доклад до подачи.</p>
-<a href="bp-home.dc.html" class="ev-more">Как работает TRIX →</a>
+<a href="fr-home.dc.html" class="ev-more">Как работает TRIX →</a>
 </section>
 </aside>
 </div>
 </div>
-<div class="ev-wrap"><footer class="ev-foot"><span>Страница мероприятия на TRIX</span><a href="bp-selection.dc.html">Все мероприятия</a></footer></div>
+<div class="wrap"><footer class="ff ff-mini" data-ff>
+<a href="fr-home.dc.html" class="brand">TRIX<b></b></a>
+<nav class="ff-links small" aria-label="Подвал"><a href="fr-selection.dc.html">Мероприятия</a><a href="fr-review.dc.html">Разбор доклада</a><a href="fr-growth.dc.html">Развитие</a><a href="fr-event-edit.dc.html">Организаторам</a></nav>
+<div class="k muted ff-legal"><span>© 2026 TRIX</span><a href="#privacy">Конфиденциальность</a></div>
+</footer></div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 2440}, "accent": {"editor": "enum", "options": ["Индиго", "Коралл", "Изумруд", "Графит", "Солнце"], "section": "Оформление организатора", "default": "Изумруд"}, "cover": {"editor": "enum", "options": ["Узор", "Фото", "Только цвет"], "default": "Узор", "section": "Оформление организатора"}, "visitor": {"editor": "enum", "options": ["Гость", "Спикер"], "default": "Гость", "section": "Посетитель"}, "cursor": {"editor": "enum", "options": ["Слова", "Линза-негатив", "Перекрестие", "Выкл"], "default": "Слова", "section": "Эффект курсора"}, "letters": {"editor": "enum", "options": ["Мелкие", "Средние", "Крупные"], "default": "Мелкие", "section": "Эффект курсора"}, "zone": {"editor": "enum", "options": ["Как было", "Весь белый фон", "Фон и карточки", "Только карточки"], "default": "Весь белый фон", "section": "Эффект курсора"}, "reveal": {"editor": "enum", "options": ["Подъём", "Выкл"], "default": "Подъём", "section": "Появление"}}'>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:2580},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Индиго&quot;,&quot;Коралл&quot;,&quot;Изумруд&quot;,&quot;Графит&quot;,&quot;Солнце&quot;],&quot;section&quot;:&quot;Оформление организатора&quot;,&quot;default&quot;:&quot;Индиго&quot;},&quot;cover&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Узор&quot;,&quot;Фото&quot;,&quot;Только цвет&quot;],&quot;default&quot;:&quot;Фото&quot;,&quot;section&quot;:&quot;Оформление организатора&quot;},&quot;visitor&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Гость&quot;,&quot;Спикер&quot;],&quot;default&quot;:&quot;Гость&quot;,&quot;section&quot;:&quot;Посетитель&quot;},&quot;cursor&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Слова и буквы&quot;,&quot;Только буквы&quot;,&quot;Волна&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Слова и буквы&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;zone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Вся страница&quot;,&quot;Цветные блоки&quot;,&quot;Белый фон&quot;],&quot;default&quot;:&quot;Белый фон&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;text&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Блоками&quot;,&quot;По буквам&quot;,&quot;Не обходить&quot;],&quot;default&quot;:&quot;По буквам&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;fade&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Выкл&quot;,&quot;Мягкое&quot;,&quot;Сильное&quot;],&quot;default&quot;:&quot;Мягкое&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;letters&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Мелкие&quot;,&quot;Средние&quot;,&quot;Крупные&quot;,&quot;Огромные&quot;],&quot;default&quot;:&quot;Мелкие&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;spread&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Узкий&quot;,&quot;Обычный&quot;,&quot;Широкий&quot;],&quot;default&quot;:&quot;Узкий&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;freq&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Часто&quot;,&quot;Обычно&quot;,&quot;Редко&quot;],&quot;default&quot;:&quot;Редко&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Яркий&quot;,&quot;Приглушённый&quot;],&quot;default&quot;:&quot;Яркий&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;reveal&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Шторка&quot;,&quot;Расшифровка&quot;,&quot;Подъём&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Подъём&quot;,&quot;section&quot;:&quot;Появление&quot;},&quot;display&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Шёпот&quot;,&quot;Резина&quot;,&quot;Обычный&quot;],&quot;default&quot;:&quot;Обычный&quot;,&quot;section&quot;:&quot;Заголовки&quot;}}">
 class Component extends DCLogic {
   componentDidMount() {
     this.apply()
@@ -166,7 +176,7 @@ class Component extends DCLogic {
   }
   componentDidUpdate(prev) {
     this.apply()
-    if (window.TrixFX?.keys.some(k => prev[k] !== this.props[k])) {
+    if (window.FrankFX?.keys.some(k => prev[k] !== this.props[k])) {
       this.stop()
       this.start()
     }
@@ -178,19 +188,13 @@ class Component extends DCLogic {
     const el = document.querySelector('[data-ev]')
     if (!el) return
     const p = this.props
-    el.dataset.accent = { Индиго: 'indigo', Коралл: 'coral', Изумруд: 'emerald', Графит: 'graphite', Солнце: 'sun' }[p.accent ?? 'Изумруд']
+    el.dataset.accent = { Индиго: 'indigo', Коралл: 'coral', Изумруд: 'emerald', Графит: 'graphite', Солнце: 'sun' }[p.accent ?? 'Коралл']
     el.dataset.cover = { Узор: 'pattern', Фото: 'photo', 'Только цвет': 'flat' }[p.cover ?? 'Узор']
     el.dataset.visitor = p.visitor === 'Спикер' ? 'me' : 'guest'
   }
   start() {
     const T = window.TrixTrail
-    this.stopFx = window.TrixFX?.run(this.props, {
-      words: 'landing',
-      accent: '#17171c',
-      light: '#fff',
-      spot: () => T.spot('.ev-card, .ev-facts div, .ev-steps li', '255,119,89'),
-      defaults: {'zone': 'Весь белый фон', 'reveal': 'Подъём'},
-    })
+    this.stopFx = window.FrankFX?.run(this.props, { words: 'landing' })
   }
   stop() {
     this.stopFx?.()

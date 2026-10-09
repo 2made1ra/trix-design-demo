@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — лендинг</title>
+<script src="./support.js"></script>
+<script src="./trail.js"></script>
+<script src="./cursor-fx.js"></script>
+<script src="./verge-fx.js"></script>
+<script src="./fr-fx.js"></script>
+<link rel="stylesheet" href="verge.css">
+<link rel="stylesheet" href="fr.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@100..1000&amp;family=Onest:wght@300..700&amp;family=Geist+Mono:wght@400..700&amp;family=Literata:ital,opsz,wght@0,7..72,400..500;1,7..72,400&amp;display=swap">
+<style>
+.beta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 16px;min-height:40px;padding:8px 20px;background:var(--inv);color:var(--mint)}
+.beta a{color:var(--inv-ink)}
+.hero{padding:40px 0 72px}
+.hero h1 em{display:block;font-style:normal;color:var(--uv)}
+.vg[data-theme=dark] .hero h1 em{color:var(--mint)}
+.hero-foot{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:32px 48px;margin-top:48px}
+.mock{display:flex;flex-direction:column;gap:12px;min-height:236px;justify-content:center}
+.mock .sk{display:block;height:8px;border-radius:4px;background:var(--line)}
+.mrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;background:var(--bg);box-shadow:inset 0 0 0 1px var(--line-2)}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.how .tile{display:flex;flex-direction:column;gap:28px}
+.feat{display:flex;flex-wrap:wrap;gap:32px 48px;align-items:center}
+.feat>.txt{flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.feat>figure{flex:999 1 560px;min-width:0}
+.vg:not([data-side=left]) .feat.flip{flex-direction:row-reverse}
+.ticks li{display:flex;gap:12px;align-items:baseline;padding:12px 0;box-shadow:inset 0 1px 0 var(--line-2)}
+.ticks li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 1px var(--mint-line);transform:translateY(-1px)}
+.win{display:flex;flex-direction:column;gap:14px;padding:28px}
+.win-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.win .mrow{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.grid4{display:grid;grid-template-columns:minmax(110px,1.2fr) repeat(3,minmax(0,1fr));gap:8px;align-items:center}
+.vg-in{animation:vg-in 7s var(--ease) infinite both}
+@keyframes vg-in{0%,24%{opacity:0;transform:translateY(10px)}34%,88%{opacity:1;transform:none}96%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.vg-in{animation:none}}
+.faq details{box-shadow:inset 0 1px 0 var(--line-2)}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;list-style:none;cursor:pointer}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{flex:none;position:relative;width:32px;height:32px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--ink);transition:transform .3s var(--ease),background .2s}
+.faq summary i::before,.faq summary i::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:2px;margin:-1px 0 0 -6px;background:currentColor}
+.faq summary i::after{transform:rotate(90deg)}
+.faq details[open] summary i{transform:rotate(45deg);background:var(--mint);color:#000;box-shadow:none}
+.faq details p{padding:0 64px 24px 0;max-width:820px}
+</style>
+</helmet>
+<div class="vg fr">
+
+<div class="beta k"><span>TRIX в закрытой бете: подборки мероприятий и разбор доклада</span><a href="#footer" class="ln">Получить доступ</a></div>
+
+<section class="hero fx-field" data-trail-host>
+<header class="nav" style="position:relative;background:transparent;border:0"><div class="wrap">
+<a href="fr-home.dc.html" class="brand">TRIX<b></b></a>
+<nav aria-label="Основное меню" class="links"><a href="fr-selection.dc.html">Мероприятия</a><a href="fr-review.dc.html">Разбор доклада</a><a href="#growth">Развитие</a><a href="#organizers">Организаторам</a></nav>
+<div style="display:flex;align-items:center;gap:28px"><a href="#" class="k">Войти</a><a href="fr-onboarding.dc.html" class="b b-mint b-sm">Начать<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</div></header>
+
+<div class="wrap" style="padding-top:64px">
+<div data-rv style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:28px"><span class="tag mint">Для спикеров</span><span class="tag">Для организаторов</span><span class="whisper" style="margin-left:14px">Мероприятия, разбор доклада, развитие</span></div>
+<h1 class="d-hero shout" data-rv style="font-size:clamp(76px,8.9vw,128px)">Найдите, где <span class="h-w1">выступить.</span> <em data-t="Выступайте лучше." data-type="Выступайте лучше.|Начните с митапа.|Готовьтесь под зал.|Получайте гонорары.|Звучите увереннее."><span class="h-w2">Выступайте</span> <span class="h-key">лучше.</span></em></h1>
+<div class="hero-foot">
+<p class="serif" data-rv style="flex:1 1 480px;max-width:720px;font-size:32px;line-height:1.2">TRIX подбирает мероприятия под вашу сферу и уровень и честно разбирает доклад: <span class="muted">до выступления и после.</span></p>
+<div data-rv style="display:flex;flex-wrap:wrap;gap:12px"><a href="fr-onboarding.dc.html" class="b b-ink">Подобрать мероприятия<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#how" class="b b-line">Как это работает</a></div>
+</div>
+</div>
+</section>
+
+<div class="wrap" data-rv><div class="ticker" aria-hidden="true"><div class="tk"><span>Подборка мероприятий</span><i></i><span>Разбор доклада</span><i></i><span>Развитие</span><i></i></div></div></div>
+
+<main class="wrap" style="padding-top:96px;padding-bottom:120px">
+<div class="stream">
+
+<section class="st" id="how" aria-labelledby="how-title">
+<div class="st-time k">Как это работает<b>01</b></div>
+<div style="display:flex;flex-direction:column;gap:32px;padding-bottom:48px">
+<h2 id="how-title" class="d-2" data-rv>Как работает TRIX</h2>
+<ol class="how" data-scene="900,600,900,500,500,900,700,500,500,3600">
+<li class="tile slate" data-card="how" data-rv>
+<div class="mock" aria-hidden="true"><span class="sk" style="width:72px"></span><div class="picks"><span class="pick" aria-pressed="true" data-press="1">Backend</span><span class="pick">Frontend</span><span class="pick">Data</span></div><span class="sk" style="width:56px"></span><div class="picks"><span class="pick">Начинающий</span><span class="pick" aria-pressed="true" data-press="2">Опытный</span></div></div>
+<div style="display:flex;flex-direction:column;gap:10px"><span class="k muted">Шаг 1</span><h3 class="h-24">Заполните профиль</h3><p class="muted">Сфера, уровень и цель: выступать или прокачаться. Город, формат и оплата — по желанию.</p></div>
+</li>
+<li class="tile slate" data-card="how" data-rv>
+<div class="mock" aria-hidden="true"><div class="mrow" data-s="3"><span class="sk" style="width:120px"></span><span class="tag mint">Оплачивается</span></div><div class="mrow" data-s="4"><span class="sk" style="width:104px"></span><span class="tag">до [дата]</span></div><div class="mrow" data-s="5"><span class="sk" style="width:132px"></span><span class="tag">до [дата]</span></div></div>
+<div style="display:flex;flex-direction:column;gap:10px"><span class="k muted">Шаг 2</span><h3 class="h-24">Получите подборку</h3><p class="muted">Мероприятия с объяснением, почему подходят, дедлайном заявки и меткой оплаты.</p></div>
+</li>
+<li class="tile slate" data-card="how" data-rv>
+<div class="mock" aria-hidden="true"><span class="tag dash" style="align-self:flex-start" data-s="6">slides.pdf</span><div class="mrow"><span class="small">Аудитория</span><span class="tag uv" data-s="7">Доработать</span></div><div class="mrow"><span class="small">Структура</span><span class="tag mint" data-s="8">В порядке</span></div><div class="mrow"><span class="small">Тайминг</span><span class="tag pink" data-s="9">Слабо</span></div></div>
+<div style="display:flex;flex-direction:column;gap:10px"><span class="k muted">Шаг 3</span><h3 class="h-24">Подготовьте доклад</h3><p class="muted">Загрузите план или слайды — получите разбор под аудиторию выбранного мероприятия.</p></div>
+</li>
+</ol>
+</div>
+</section>
+
+<section class="st" aria-labelledby="sel-title">
+<div class="st-time k">Подборка<b>02</b></div>
+<div class="feat" style="padding-bottom:48px">
+<div class="txt" data-rv>
+<span class="tag mint" style="align-self:flex-start">Подборка мероприятий</span>
+<h2 id="sel-title" class="d-3">Мероприятия под ваш профиль</h2>
+<p class="deck">Мероприятия публикуют организаторы в TRIX, остальные агент собирает из открытых источников. Из них подбираем те, что подходят под вашу сферу, уровень и цель.</p>
+<ul class="ticks small"><li>Объяснение, почему мероприятие подходит</li><li>Дедлайн заявки и напоминание о нём</li><li>Метка оплаты, если организатор её указал</li></ul>
+<a href="fr-selection.dc.html" class="b b-ink" style="align-self:flex-start">Подобрать мероприятия<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<figure class="tile ink win fx-field" data-card="sel" data-rv data-scene="700,1500,1800,1800,4200">
+<figcaption class="sr">Демо: подборка мероприятий под профиль спикера</figcaption>
+<div class="win-top"><span class="h-24">Мероприятия для вас</span><span class="k muted">Подборка · Сохранённые</span></div>
+<div class="picks"><span class="tag mint">Backend</span><span class="tag">Опытный</span><span class="tag">Цель: выступать</span></div>
+<div class="bar" data-s="1"><i></i><span class="k muted"><span data-s="1-1">Агент ищет мероприятия под профиль</span><span data-s="2">Нашли 3 подходящих</span></span></div>
+<div class="mrow vg-in" data-s="2"><div style="display:flex;flex-direction:column;gap:4px"><b>Конференция о высоконагруженных системах</b><span class="small muted" data-typed="2">Ваша тема совпадает с треком «Архитектура». Заявки до [дата]</span></div><span class="tag">Не оплачивается</span></div>
+<div class="mrow vg-in" data-s="3" style="animation-delay:.25s"><div style="display:flex;flex-direction:column;gap:4px"><b>Онлайн-школа ищет автора курса</b><span class="small muted" data-typed="3">Нужен практик с опытом выступлений. Отклик до [дата]</span></div><span class="tag mint">Оплачивается</span></div>
+<div class="mrow vg-in" data-s="4" style="animation-delay:.5s"><div style="display:flex;flex-direction:column;gap:4px"><b>Митап Go-разработчиков, Казань</b><span class="small muted" data-typed="4">Ищут доклады на 20 минут. Заявки до [дата]</span></div><span class="tag dash">Оплата не указана</span></div>
+</figure>
+</div>
+</section>
+
+<section class="st" aria-labelledby="rev-title">
+<div class="st-time k">Разбор<b>03</b></div>
+<div class="feat flip" style="padding-bottom:48px">
+<div class="txt" data-rv>
+<span class="tag uv" style="align-self:flex-start">Разбор доклада</span>
+<h2 id="rev-title" class="d-3">Разбор доклада под аудиторию</h2>
+<p class="deck">Загрузите план или слайды и выберите мероприятие. TRIX оценит доклад по понятным критериям и расставит правки по приоритету.</p>
+<ul class="ticks small"><li>Оценка по критериям: аудитория, структура, тайминг</li><li>Правки по приоритету со ссылками на слайды</li><li>Вопросы, которые вероятно зададут из зала</li></ul>
+<a href="fr-review.dc.html" class="b b-line" style="align-self:flex-start">Посмотреть пример разбора<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<figure class="tile yellow win fx-field" data-card="rev" data-rv data-scene="800,900,1900,500,500,500,700,4500">
+<figcaption class="sr">Демо: разбор доклада по критериям и первая правка</figcaption>
+<div class="win-top"><span class="h-24">Миграция монолита без остановки сервиса</span></div>
+<div class="picks"><span class="tag" data-s="1">slides.pdf</span><span class="tag">Конференция о высоконагруженных системах</span><span class="tag">30 мин</span></div>
+<div class="bar" data-s="2"><i></i><span class="k muted"><span data-s="2-2">Разбираем доклад под аудиторию</span><span data-s="3">Готово: 4 критерия, 1 правка</span></span></div>
+<div class="k muted" style="display:flex;gap:24px"><span style="color:var(--ink)">Оценка</span><span>Правки</span><span>Вопросы из зала</span></div>
+<div class="mrow"><span>Соответствие аудитории</span><span class="tag uv vg-in" data-s="3">Доработать</span></div>
+<div class="mrow"><span>Структура</span><span class="tag ink vg-in" data-s="4" style="animation-delay:.2s">В порядке</span></div>
+<div class="mrow"><span>Главная мысль</span><span class="tag uv vg-in" data-s="5" style="animation-delay:.4s">Доработать</span></div>
+<div class="mrow"><span>Укладывается во время</span><span class="tag pink vg-in" data-s="6" style="animation-delay:.6s">Слабо</span></div>
+<div class="tile ink vg-in" style="padding:18px 20px;border-radius:16px;animation-delay:.9s" data-s="7"><span class="k" style="color:var(--mint)">Правка 01</span><p class="h-20" style="margin-top:8px" data-typed="7">Вынести главную мысль на второй слайд</p></div>
+</figure>
+</div>
+</section>
+
+<section class="st" aria-labelledby="gr-title">
+<div class="st-time k">Развитие<b>04</b></div>
+<div class="feat" style="padding-bottom:48px">
+<div class="txt" data-rv>
+<span class="tag pink" style="align-self:flex-start">Развитие</span>
+<h2 id="gr-title" class="d-3">Прогресс от доклада к докладу</h2>
+<p class="deck">После выступления загрузите запись и отзывы слушателей. Вы увидите, что стало лучше, и получите материалы под то, что пока проседает.</p>
+<ul class="ticks small"><li>Разбор после выступления по записи и отзывам</li><li>История оценок по каждому критерию</li><li>Материалы под слабые места</li></ul>
+<a href="fr-growth.dc.html" class="b b-line" style="align-self:flex-start">Как устроено развитие<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<figure class="tile uv win fx-field" data-card="gr" data-rv data-scene="700,1200,1200,1300,4200">
+<figcaption class="sr">Демо: оценки по критериям улучшаются от первого доклада к третьему</figcaption>
+<div class="win-top"><span class="h-24">Ваш прогресс</span><span class="k muted">3 доклада · Backend</span></div>
+<div class="grid4">
+<span aria-hidden="true"></span><span class="k muted">Доклад 1</span><span class="k muted">Доклад 2</span><span class="k muted">Доклад 3</span>
+<span>Структура</span><span data-s="1" class="tag pink vg-in" style="justify-self:start">Доработать</span><span data-s="2" class="tag mint vg-in" style="justify-self:start;animation-delay:.3s">В порядке</span><span data-s="3" class="tag mint vg-in" style="justify-self:start;animation-delay:.6s">В порядке</span>
+<span>Главная мысль</span><span data-s="1" class="tag yellow vg-in" style="justify-self:start">Слабо</span><span data-s="2" class="tag pink vg-in" style="justify-self:start;animation-delay:.3s">Доработать</span><span data-s="3" class="tag mint vg-in" style="justify-self:start;animation-delay:.6s">В порядке</span>
+<span>Тайминг</span><span data-s="1" class="tag yellow vg-in" style="justify-self:start">Слабо</span><span data-s="2" class="tag yellow vg-in" style="justify-self:start;animation-delay:.3s">Слабо</span><span data-s="3" class="tag pink vg-in" style="justify-self:start;animation-delay:.6s">Доработать</span>
+</div>
+<div class="mrow vg-in" style="animation-delay:.9s" data-s="4"><span><span class="k muted">Материал для прокачки:</span> <span data-typed="4">репетиция с таймером</span></span></div>
+</figure>
+</div>
+</section>
+
+<section class="st" id="growth" aria-labelledby="new-title">
+<div class="st-time k">Начинающим<b>05</b></div>
+<div class="feat flip" style="padding-bottom:48px">
+<div class="txt" data-rv>
+<span class="tag mint" style="align-self:flex-start">Для начинающих</span>
+<h2 id="new-title" class="d-3">Если выступать пока рано</h2>
+<p class="deck">TRIX подберёт площадки для старта и поможет подготовиться к первому докладу.</p>
+<ul class="ticks small"><li>Митапы и студенческие события, где можно обкатать первый доклад</li><li>Репетиция и разбор, пока есть время поправить</li><li>Мастер-классы и техники под слабые места</li></ul>
+<a href="fr-onboarding.dc.html" class="b b-ink" style="align-self:flex-start">Заполнить профиль<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<figure class="tile mint win fx-field" data-card="new" data-rv data-scene="900,1100,1300,2000,4200">
+<figcaption class="sr">Демо: подборка площадок для первого доклада и репетиция с таймером</figcaption>
+<div class="win-top"><span class="h-24">Площадки для старта</span><span class="k muted">Backend · Казань</span></div>
+<div class="picks"><span class="pick">Все</span><span class="pick" aria-pressed="true" data-press="1">Первый доклад</span><span class="pick">Онлайн</span></div>
+<div class="mrow"><div style="display:flex;flex-direction:column;gap:4px"><b>Студенческий IT-клуб, Казань</b><span class="small muted">Доклады на 10 минут, опыт не нужен</span></div><span class="tag ink">Для старта</span></div>
+<div class="mrow" data-x="2"><div style="display:flex;flex-direction:column;gap:4px"><b>Конференция о высоконагруженных системах</b><span class="small muted">Отбор по заявкам, нужен опыт выступлений</span></div><span class="tag">Опытным</span></div>
+<div class="mrow"><div style="display:flex;flex-direction:column;gap:4px"><b>Онлайн-митап начинающих спикеров</b><span class="small muted">Слот 15 минут и разбор после выступления</span></div><span class="tag ink">Для старта</span></div>
+<div class="mrow" data-x="2"><div style="display:flex;flex-direction:column;gap:4px"><b>Форум архитекторов</b><span class="small muted">Только приглашённые спикеры</span></div><span class="tag">Опытным</span></div>
+<div class="tile ink" style="padding:18px 20px;border-radius:16px;display:flex;align-items:center;justify-content:space-between;gap:16px" data-s="3"><div><span class="k" style="color:var(--mint)">Репетиция 1</span><p class="h-20" style="margin-top:8px">Таймер: <span data-count="3">09:48</span> из 10:00</p></div><span class="tag mint" data-s="4">Укладываетесь</span></div>
+</figure>
+</div>
+</section>
+
+<section class="st" id="organizers" aria-labelledby="org-title">
+<div class="st-time k">Организаторам<b>06</b></div>
+<div class="feat" style="padding-bottom:48px">
+<div class="txt" data-rv>
+<span class="tag yellow" style="align-self:flex-start">Организаторам</span>
+<h2 id="org-title" class="d-3">Для организаторов</h2>
+<p class="deck">Опубликуйте мероприятие в TRIX: из одной формы соберём лендинг со ссылкой, а заявки спикеров придут к вам с аннотацией, ответами на ваши вопросы и профилем спикера.</p>
+<ul class="ticks small"><li>Лендинг мероприятия из одной формы — со ссылкой, которой можно поделиться</li><li>Заявки с аннотацией, треком и ответами на ваши вопросы</li><li>Профиль и доклады спикера прямо в заявке</li></ul>
+<a href="fr-event-edit.dc.html" class="b b-line" style="align-self:flex-start">Опубликовать мероприятие<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<figure class="tile ink win fx-field" data-card="org" data-rv data-scene="700,1600,1300,800,900,1200,4500">
+<figcaption class="sr">Демо: форма мероприятия, готовый лендинг и первая заявка спикера</figcaption>
+<div class="win-top"><span class="h-24">Новое мероприятие</span><span class="k muted">Форма · Лендинг · Заявки</span></div>
+<div class="mrow"><span class="k muted">Название</span><b data-typed="1">Митап Go-разработчиков</b></div>
+<div class="mrow"><span class="k muted">Дата и город</span><b data-typed="2">[дата] · Казань</b></div>
+<div class="mrow"><span class="k muted">Формат</span><span class="tag" data-s="3">Доклады по 20 минут</span></div>
+<span class="b b-mint b-sm" style="align-self:flex-start" aria-hidden="true" data-press="4">Опубликовать</span>
+<div class="mrow" data-s="5"><span><b>Лендинг готов</b> <span class="small muted">· ссылка скопирована</span></span><span class="tag mint">Открыть</span></div>
+<div class="mrow note" data-s="6"><div style="display:flex;flex-direction:column;gap:4px"><b>Новая заявка</b><span class="small">«Профилирование Go в проде» · аннотация и ответы на вопросы</span></div><span class="tag">Спикер</span></div>
+</figure>
+</div>
+</section>
+
+<section class="st" id="faq" aria-labelledby="faq-title">
+<div class="st-time k">Вопросы<b>07</b></div>
+<div class="row2" data-rv>
+<div class="faq">
+<details open><summary><span class="h-24">Откуда берутся мероприятия?</span><i aria-hidden="true"></i></summary><p class="muted">Из двух источников. Организаторы публикуют мероприятия в TRIX — на них заявку подаёте прямо здесь. Остальные агент собирает из открытых источников: сайтов конференций, агрегаторов и Telegram-каналов — на них заявку подаёте на сайте организатора. Оплату отмечаем, только если организатор её указал.</p></details>
+<details><summary><span class="h-24">Кто видит разбор моего доклада?</span><i aria-hidden="true"></i></summary><p class="muted">Содержание разбора видите только вы. В рейтинг идут только факт разбора и рост оценок.</p></details>
+<details><summary><span class="h-24">Какие материалы можно загрузить?</span><i aria-hidden="true"></i></summary><p class="muted">До выступления — план, текст или слайды. После — запись выступления и отзывы слушателей.</p></details>
+<details><summary><span class="h-24">Подойдёт ли TRIX, если я ещё не выступал?</span><i aria-hidden="true"></i></summary><p class="muted">Да. Укажите уровень «Начинающий» — подберём площадки для старта и материалы для подготовки.</p></details>
+<details><summary><span class="h-24">Сколько стоит TRIX?</span><i aria-hidden="true"></i></summary><p class="muted">[Цена и условия бесплатного тарифа]</p></details>
+<details><summary><span class="h-24">Как опубликовать мероприятие?</span><i aria-hidden="true"></i></summary><p class="muted">Зарегистрируйтесь как организатор и заполните одну форму: даты, место, аудитория, треки и условия для спикеров. Из неё соберётся лендинг мероприятия — опубликуйте его и поделитесь ссылкой.</p></details>
+<details><summary><span class="h-24">Как устроена работа с заявками?</span><i aria-hidden="true"></i></summary><p class="muted">Заявки приходят в кабинет организатора: аннотация, трек, ответы на ваши вопросы и профиль спикера. Вы принимаете или отклоняете заявку, спикер получает письмо со статусом, а дальше вы договариваетесь напрямую.</p></details>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<h2 id="faq-title" class="d-3">Остались вопросы?</h2>
+<p class="deck">Не нашли ответ — напишите нам: <a href="#contacts" class="ln" style="color:var(--ink)">[почта]</a></p>
+</div>
+</div>
+</section>
+
+</div>
+</main>
+
+<footer id="footer" class="wrap" style="padding-bottom:48px">
+<div class="ff" data-ff data-rv>
+<div class="ff-main">
+<div class="ff-sub" data-ffs>
+<div class="ff-head"><span class="k">Подборка на почту</span><h2 class="d-2">Новые мероприятия под вашу сферу</h2></div>
+<div class="ff-field"><label for="footer-email" class="k muted">Электронная почта</label><div class="ff-form"><input id="footer-email" class="inp" type="email" placeholder="you@example.com"><button type="button" class="icon-btn" aria-label="Подписаться"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></div>
+</div>
+<div class="ff-cols small">
+<div><span class="k muted">Продукт</span><a href="fr-selection.dc.html">Мероприятия</a><a href="fr-review.dc.html">Разбор доклада</a><a href="fr-growth.dc.html">Развитие</a></div>
+<div><span class="k muted">Организаторам</span><a href="fr-event-edit.dc.html">Опубликовать мероприятие</a><a href="fr-apps.dc.html">Заявки спикеров</a></div>
+<div><span class="k muted">Проект</span><a href="#team">Команда</a><a href="#contacts">Контакты</a></div>
+</div>
+</div>
+<div class="ff-base"><span class="brand" aria-label="TRIX">TRIX<b></b></span><div class="k muted ff-legal"><span>© 2026 TRIX</span><a href="#privacy">Политика конфиденциальности</a></div></div>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:6300},&quot;palette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Тёплая&quot;,&quot;Строгая&quot;,&quot;Verge&quot;,&quot;Verge Glow&quot;],&quot;default&quot;:&quot;Verge Glow&quot;,&quot;section&quot;:&quot;Палитра — для всех страниц&quot;},&quot;footer&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Тёмный финал&quot;,&quot;Подписка + вордмарк&quot;,&quot;Светлый&quot;,&quot;Glow&quot;],&quot;default&quot;:&quot;Светлый&quot;,&quot;section&quot;:&quot;Футер — для всех страниц&quot;},&quot;heroMotion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Выкл&quot;,&quot;Волна&quot;,&quot;Перелив&quot;,&quot;Маркер&quot;,&quot;Ротатор&quot;,&quot;Печать&quot;],&quot;default&quot;:&quot;Печать&quot;,&quot;section&quot;:&quot;Заголовок главной&quot;},&quot;heroColor&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Авто по палитре&quot;,&quot;Акцент слова&quot;,&quot;Плашка&quot;,&quot;Монохром&quot;,&quot;Слова цветами&quot;],&quot;default&quot;:&quot;Авто по палитре&quot;,&quot;section&quot;:&quot;Заголовок главной&quot;},&quot;heroGlow&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Выкл&quot;,&quot;Заливка&quot;,&quot;Ореол&quot;,&quot;Плашка&quot;,&quot;У курсора&quot;],&quot;default&quot;:&quot;Выкл&quot;,&quot;section&quot;:&quot;Заголовок главной&quot;},&quot;glowAccent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Мятный glow&quot;,&quot;Изумруд&quot;,&quot;Синий&quot;],&quot;default&quot;:&quot;Мятный glow&quot;,&quot;section&quot;:&quot;Заголовок главной&quot;},&quot;glowTiles&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Вкл&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Вкл&quot;,&quot;section&quot;:&quot;Verge Glow — для всех страниц&quot;},&quot;glowButtons&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Вкл&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Вкл&quot;,&quot;section&quot;:&quot;Verge Glow — для всех страниц&quot;},&quot;glowTicker&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Вкл&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Выкл&quot;,&quot;section&quot;:&quot;Verge Glow — для всех страниц&quot;},&quot;glowPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Вкл&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Вкл&quot;,&quot;section&quot;:&quot;Verge Glow — для всех страниц&quot;},&quot;glowMotion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Выкл&quot;,&quot;Дрейф&quot;,&quot;Курсор&quot;],&quot;default&quot;:&quot;Курсор&quot;,&quot;section&quot;:&quot;Verge Glow — для всех страниц&quot;},&quot;glowFooterEdge&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Блик и тень&quot;,&quot;Блик, контур и тень&quot;],&quot;default&quot;:&quot;Блик и тень&quot;,&quot;section&quot;:&quot;Verge Glow — для всех страниц&quot;},&quot;cursor&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Слова и буквы&quot;,&quot;Только буквы&quot;,&quot;Волна&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Слова и буквы&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;zone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Вся страница&quot;,&quot;Цветные блоки&quot;,&quot;Белый фон&quot;],&quot;default&quot;:&quot;Белый фон&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;text&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Блоками&quot;,&quot;По буквам&quot;,&quot;Не обходить&quot;],&quot;default&quot;:&quot;По буквам&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;fade&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Выкл&quot;,&quot;Мягкое&quot;,&quot;Сильное&quot;],&quot;default&quot;:&quot;Выкл&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;letters&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Мелкие&quot;,&quot;Средние&quot;,&quot;Крупные&quot;,&quot;Огромные&quot;],&quot;default&quot;:&quot;Мелкие&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;spread&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Узкий&quot;,&quot;Обычный&quot;,&quot;Широкий&quot;],&quot;default&quot;:&quot;Узкий&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;freq&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Часто&quot;,&quot;Обычно&quot;,&quot;Редко&quot;],&quot;default&quot;:&quot;Обычно&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Яркий&quot;,&quot;Приглушённый&quot;],&quot;default&quot;:&quot;Яркий&quot;,&quot;section&quot;:&quot;След курсора&quot;},&quot;reveal&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Шторка&quot;,&quot;Расшифровка&quot;,&quot;Подъём&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Подъём&quot;,&quot;section&quot;:&quot;Появление&quot;},&quot;display&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Шёпот&quot;,&quot;Резина&quot;,&quot;Обычный&quot;],&quot;default&quot;:&quot;Обычный&quot;,&quot;section&quot;:&quot;Заголовки&quot;},&quot;ticker&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;По скроллу&quot;,&quot;Постоянная&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Постоянная&quot;,&quot;section&quot;:&quot;Бегущая строка&quot;},&quot;rail&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Рисуется&quot;,&quot;Статичная&quot;],&quot;default&quot;:&quot;Статичная&quot;,&quot;section&quot;:&quot;Лента&quot;},&quot;cards&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Чередование&quot;,&quot;Стекло&quot;,&quot;Мята и дымка&quot;,&quot;Как было&quot;],&quot;default&quot;:&quot;Мята и дымка&quot;,&quot;section&quot;:&quot;Карточки главной&quot;},&quot;card04&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Лайм&quot;,&quot;Мятная дымка&quot;],&quot;default&quot;:&quot;Лайм&quot;,&quot;section&quot;:&quot;Карточки главной&quot;},&quot;cardMotion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Сценарий&quot;,&quot;Появление&quot;,&quot;Выкл&quot;],&quot;default&quot;:&quot;Сценарий&quot;,&quot;section&quot;:&quot;Карточки главной&quot;},&quot;cardSide&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Чередование&quot;,&quot;Текст слева&quot;],&quot;default&quot;:&quot;Чередование&quot;,&quot;section&quot;:&quot;Карточки главной&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    if (window.FrankFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  start() {
+    this.stopFx = window.FrankFX?.run(this.props, { words: 'home', master: true })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>

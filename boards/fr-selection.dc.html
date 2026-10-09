@@ -7,12 +7,14 @@
 <script src="./trail.js"></script>
 <script src="./cursor-fx.js"></script>
 <script src="./verge-fx.js"></script>
+<script src="./fr-fx.js"></script>
 <link rel="stylesheet" href="verge.css">
+<link rel="stylesheet" href="fr.css">
 </head>
 <body>
 <x-dc>
 <helmet>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@100..1000&amp;family=Onest:wght@300..700&amp;family=Martian+Mono:wdth,wght@75..112.5,400..700&amp;family=Literata:ital,opsz,wght@0,7..72,400..500;1,7..72,400&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@100..1000&amp;family=Onest:wght@300..700&amp;family=Geist+Mono:wght@400..700&amp;family=Literata:ital,opsz,wght@0,7..72,400..500;1,7..72,400&amp;display=swap">
 <style>
 .search{display:flex;align-items:center;gap:12px;width:400px;height:50px;padding:0 16px;border:1px solid var(--field);border-radius:2px;background:var(--bg-2)}
 .search:focus-within{border-color:var(--mint);box-shadow:inset 0 0 0 1px var(--uv)}
@@ -25,10 +27,10 @@
 .vg .ev .b svg,.vg .tile .b svg{width:14px;height:14px}
 </style>
 </helmet>
-<div class="vg">
+<div class="vg fr calm">
 <header class="nav"><div class="wrap">
 <div style="display:flex;align-items:center;gap:56px"><a href="#" class="brand">TRIX<b></b></a>
-<nav class="links" aria-label="Разделы"><a href="vg-selection.dc.html" aria-current="page">Мероприятия</a><a href="#">Мои доклады</a><a href="vg-growth.dc.html">Развитие</a></nav></div>
+<nav class="links" aria-label="Разделы"><a href="fr-selection.dc.html" aria-current="page">Мероприятия</a><a href="#">Мои доклады</a><a href="fr-growth.dc.html">Развитие</a></nav></div>
 <a href="#" aria-label="Профиль" class="ava mint">СП</a>
 </div></header>
 
@@ -37,9 +39,9 @@
 <div style="display:flex;flex-direction:column;gap:20px">
 <span class="ribbon" style="align-self:flex-start">Подборка агента</span>
 <h1 class="d-1">Мероприятия для вас</h1>
-<p class="deck">Подобрано по сфере Backend и уровню «Опытный». <a href="vg-onboarding.dc.html" class="ln" style="color:var(--ink)">Изменить</a></p>
+<p class="deck">Подобрано по сфере Backend и уровню «Опытный». <a href="fr-onboarding.dc.html" class="ln" style="color:var(--ink)">Изменить</a></p>
 </div>
-<label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="sr">Поиск по мероприятиям</span><input type="search" placeholder="Поиск по названию или теме"><span class="num" style="font-size:11px;color:var(--quiet);padding:2px 7px;border-radius:2px;box-shadow:inset 0 0 0 1px var(--field)">/</span></label>
+<label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="sr">Поиск по мероприятиям</span><input type="search" placeholder="Поиск по названию или теме"><span class="num" style="font-size:11px;color:var(--ink-2);padding:2px 7px;border-radius:2px;box-shadow:inset 0 0 0 1px var(--field)">/</span></label>
 </div>
 
 <div data-rv style="margin-top:40px;display:flex;flex-wrap:wrap;gap:8px">
@@ -73,10 +75,10 @@
 <div class="st-time k">Заявки до<b>[дата]</b></div>
 <div class="tile mint ev feature fx-field" data-rv style="padding:40px">
 <div style="display:flex;align-items:center;gap:12px"><span class="k">Конференция · Санкт-Петербург · гибрид</span><span class="tag ink">Заявка через TRIX</span></div>
-<h2 class="d-3"><a href="vg-landing.dc.html">Конференция по надёжности сервисов</a></h2>
+<h2 class="d-3"><a href="fr-landing.dc.html">Конференция по надёжности сервисов</a></h2>
 <div style="display:flex;flex-wrap:wrap;gap:8px"><span class="tag">Архитектура</span><span class="tag">Надёжность</span></div>
 <p class="why"><b>Почему подходит</b>трек «Архитектура и миграции» — под вашу тему «Миграция монолита».</p>
-<div class="ev-foot"><span style="margin-right:auto"><span class="tag">Не оплачивается</span></span><a href="vg-landing.dc.html" class="b b-ink b-sm">Подать заявку<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#" class="k ln">Подготовить доклад</a></div>
+<div class="ev-foot"><span style="margin-right:auto"><span class="tag">Не оплачивается</span></span><a href="fr-landing.dc.html" class="b b-ink b-sm">Подать заявку<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#" class="k ln">Подготовить доклад</a></div>
 </div>
 </article>
 
@@ -114,20 +116,25 @@
 <span class="k">Развитие</span>
 <h2 class="h-24">Пока не готовы выступать?</h2>
 <p class="small muted">Подберём площадки для старта и материалы для прокачки.</p>
-<a href="vg-growth.dc.html" class="b b-mint b-sm" style="align-self:flex-start;margin-top:6px">Перейти в «Развитие»<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<a href="fr-growth.dc.html" class="b b-mint b-sm" style="align-self:flex-start;margin-top:6px">Перейти в «Развитие»<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 </div>
 <p class="small muted" style="padding:0 8px">Мероприятия публикуют организаторы в TRIX или находит агент в открытых источниках. Оплату отмечаем, только если организатор её указал.</p>
 </aside>
 </div>
+<div class="wrap"><footer class="ff ff-mini" data-ff>
+<a href="fr-home.dc.html" class="brand">TRIX<b></b></a>
+<nav class="ff-links small" aria-label="Подвал"><a href="fr-selection.dc.html">Мероприятия</a><a href="fr-review.dc.html">Разбор доклада</a><a href="fr-growth.dc.html">Развитие</a><a href="fr-event-edit.dc.html">Организаторам</a></nav>
+<div class="k muted ff-legal"><span>© 2026 TRIX</span><a href="#privacy">Конфиденциальность</a></div>
+</footer></div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2440},"theme":{"editor":"enum","options":["Светлая","Тёмная"],"default":"Светлая","section":"Тема"},"cursor":{"editor":"enum","options":["Слова","Линза-негатив","Перекрестие","Выкл"],"default":"Слова","section":"Эффект курсора"},"letters":{"editor":"enum","options":["Мелкие","Средние","Крупные"],"default":"Мелкие","section":"Эффект курсора"},"zone":{"editor":"enum","options":["Как было","Весь белый фон","Фон и карточки","Только карточки"],"default":"Как было","section":"Эффект курсора"},"reveal":{"editor":"enum","options":["Шторка","Расшифровка","Подъём","Выкл"],"default":"Подъём","section":"Появление"},"display":{"editor":"enum","options":["Шёпот","Резина","Обычный"],"default":"Обычный","section":"Заголовки"},"ticker":{"editor":"enum","options":["По скроллу","Постоянная","Выкл"],"default":"Постоянная","section":"Бегущая строка"},"rail":{"editor":"enum","options":["Рисуется","Статичная"],"default":"Рисуется","section":"Лента"}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2440},"cursor":{"editor":"enum","options":["Слова и буквы","Только буквы","Волна","Выкл"],"default":"Слова и буквы","section":"След курсора"},"zone":{"editor":"enum","options":["Вся страница","Цветные блоки","Белый фон"],"default":"Белый фон","section":"След курсора"},"text":{"editor":"enum","options":["Блоками","По буквам","Не обходить"],"default":"Блоками","section":"След курсора"},"fade":{"editor":"enum","options":["Выкл","Мягкое","Сильное"],"default":"Мягкое","section":"След курсора"},"letters":{"editor":"enum","options":["Мелкие","Средние","Крупные","Огромные"],"default":"Мелкие","section":"След курсора"},"spread":{"editor":"enum","options":["Узкий","Обычный","Широкий"],"default":"Узкий","section":"След курсора"},"freq":{"editor":"enum","options":["Часто","Обычно","Редко"],"default":"Редко","section":"След курсора"},"tone":{"editor":"enum","options":["Яркий","Приглушённый"],"default":"Яркий","section":"След курсора"},"reveal":{"editor":"enum","options":["Шторка","Расшифровка","Подъём","Выкл"],"default":"Подъём","section":"Появление"},"display":{"editor":"enum","options":["Шёпот","Резина","Обычный"],"default":"Обычный","section":"Заголовки"},"ticker":{"editor":"enum","options":["По скроллу","Постоянная","Выкл"],"default":"Постоянная","section":"Бегущая строка"},"rail":{"editor":"enum","options":["Рисуется","Статичная"],"default":"Рисуется","section":"Лента"}}'>
 class Component extends DCLogic {
   componentDidMount() {
     this.start()
   }
   componentDidUpdate(prev) {
-    if (window.VergeFX?.keys.some(k => prev[k] !== this.props[k])) {
+    if (window.FrankFX?.keys.some(k => prev[k] !== this.props[k])) {
       this.stop()
       this.start()
     }
@@ -136,7 +143,7 @@ class Component extends DCLogic {
     this.stop()
   }
   start() {
-    this.stopFx = window.VergeFX?.run(this.props, { words: 'selection' })
+    this.stopFx = window.FrankFX?.run(this.props, { words: 'selection' })
   }
   stop() {
     this.stopFx?.()

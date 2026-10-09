@@ -7,12 +7,14 @@
 <script src="./trail.js"></script>
 <script src="./cursor-fx.js"></script>
 <script src="./verge-fx.js"></script>
+<script src="./fr-fx.js"></script>
 <link rel="stylesheet" href="verge.css">
+<link rel="stylesheet" href="fr.css">
 </head>
 <body>
 <x-dc>
 <helmet>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@100..1000&amp;family=Onest:wght@300..700&amp;family=Martian+Mono:wdth,wght@75..112.5,400..700&amp;family=Literata:ital,opsz,wght@0,7..72,400..500;1,7..72,400&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@100..1000&amp;family=Onest:wght@300..700&amp;family=Geist+Mono:wght@400..700&amp;family=Literata:ital,opsz,wght@0,7..72,400..500;1,7..72,400&amp;display=swap">
 <style>
 .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .trk{display:grid;grid-template-columns:32px minmax(0,.8fr) minmax(0,1.4fr) 44px;gap:8px;align-items:center}
@@ -27,10 +29,10 @@
 .poster{display:flex;flex-direction:column;justify-content:space-between;gap:24px;min-height:300px}
 </style>
 </helmet>
-<div class="vg">
+<div class="vg fr calm">
 <header class="nav"><div class="wrap">
 <div style="display:flex;align-items:center;gap:56px"><a href="#" class="brand">TRIX<b></b></a>
-<nav class="links" aria-label="Разделы"><a href="vg-event-edit.dc.html" aria-current="page">Мероприятия</a><a href="vg-apps.dc.html">Заявки</a></nav></div>
+<nav class="links" aria-label="Разделы"><a href="fr-event-edit.dc.html" aria-current="page">Мероприятия</a><a href="fr-apps.dc.html">Заявки</a></nav></div>
 <a href="#" aria-haspopup="menu" aria-expanded="false" class="k" style="display:inline-flex;align-items:center;gap:12px"><span aria-hidden="true" class="ava uv">СИ</span>Сообщество инженеров надёжности<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2"><path d="m6 9 6 6 6-6"/></svg></a>
 </div></header>
 
@@ -115,7 +117,7 @@
 
 <aside style="flex-basis:400px;position:sticky;top:96px;display:flex;flex-direction:column;gap:16px">
 <section aria-labelledby="lp-title" style="display:flex;flex-direction:column;gap:16px">
-<a href="vg-landing.dc.html" class="tile uv poster fx-field" data-rv aria-label="Открыть лендинг">
+<a href="fr-landing.dc.html" class="tile uv poster fx-field" data-rv aria-label="Открыть лендинг">
 <span class="tag mint" style="align-self:flex-start">Конференция</span>
 <span class="d-3" style="font-size:60px">Конференция по надёжности сервисов</span>
 </a>
@@ -129,21 +131,26 @@
 <li><a href="#ev-intake"><span class="k muted">04</span>Приём заявок<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
 </ul>
 <p class="small muted">Лендинг соберём из этих разделов — так его увидят спикеры.</p>
-<a href="vg-landing.dc.html" class="b b-ink b-sm" style="align-self:flex-start">Предпросмотр лендинга<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></a>
+<a href="fr-landing.dc.html" class="b b-ink b-sm" style="align-self:flex-start">Предпросмотр лендинга<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></a>
 </div>
 </section>
 </aside>
 </div>
 </main>
+<div class="wrap"><footer class="ff ff-mini" data-ff>
+<a href="fr-home.dc.html" class="brand">TRIX<b></b></a>
+<nav class="ff-links small" aria-label="Подвал"><a href="fr-selection.dc.html">Мероприятия</a><a href="fr-review.dc.html">Разбор доклада</a><a href="fr-growth.dc.html">Развитие</a><a href="fr-event-edit.dc.html">Организаторам</a></nav>
+<div class="k muted ff-legal"><span>© 2026 TRIX</span><a href="#privacy">Конфиденциальность</a></div>
+</footer></div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3680},"theme":{"editor":"enum","options":["Светлая","Тёмная"],"default":"Светлая","section":"Тема"},"cursor":{"editor":"enum","options":["Слова","Линза-негатив","Перекрестие","Выкл"],"default":"Слова","section":"Эффект курсора"},"letters":{"editor":"enum","options":["Мелкие","Средние","Крупные"],"default":"Мелкие","section":"Эффект курсора"},"zone":{"editor":"enum","options":["Как было","Весь белый фон","Фон и карточки","Только карточки"],"default":"Как было","section":"Эффект курсора"},"reveal":{"editor":"enum","options":["Шторка","Расшифровка","Подъём","Выкл"],"default":"Подъём","section":"Появление"},"display":{"editor":"enum","options":["Шёпот","Резина","Обычный"],"default":"Обычный","section":"Заголовки"},"rail":{"editor":"enum","options":["Рисуется","Статичная"],"default":"Рисуется","section":"Лента"}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3680},"cursor":{"editor":"enum","options":["Слова и буквы","Только буквы","Волна","Выкл"],"default":"Слова и буквы","section":"След курсора"},"zone":{"editor":"enum","options":["Вся страница","Цветные блоки","Белый фон"],"default":"Белый фон","section":"След курсора"},"text":{"editor":"enum","options":["Блоками","По буквам","Не обходить"],"default":"Блоками","section":"След курсора"},"fade":{"editor":"enum","options":["Выкл","Мягкое","Сильное"],"default":"Мягкое","section":"След курсора"},"letters":{"editor":"enum","options":["Мелкие","Средние","Крупные","Огромные"],"default":"Мелкие","section":"След курсора"},"spread":{"editor":"enum","options":["Узкий","Обычный","Широкий"],"default":"Узкий","section":"След курсора"},"freq":{"editor":"enum","options":["Часто","Обычно","Редко"],"default":"Редко","section":"След курсора"},"tone":{"editor":"enum","options":["Яркий","Приглушённый"],"default":"Яркий","section":"След курсора"},"reveal":{"editor":"enum","options":["Шторка","Расшифровка","Подъём","Выкл"],"default":"Подъём","section":"Появление"},"display":{"editor":"enum","options":["Шёпот","Резина","Обычный"],"default":"Обычный","section":"Заголовки"},"rail":{"editor":"enum","options":["Рисуется","Статичная"],"default":"Рисуется","section":"Лента"}}'>
 class Component extends DCLogic {
   componentDidMount() {
     this.start()
   }
   componentDidUpdate(prev) {
-    if (window.VergeFX?.keys.some(k => prev[k] !== this.props[k])) {
+    if (window.FrankFX?.keys.some(k => prev[k] !== this.props[k])) {
       this.stop()
       this.start()
     }
@@ -152,7 +159,7 @@ class Component extends DCLogic {
     this.stop()
   }
   start() {
-    this.stopFx = window.VergeFX?.run(this.props, { words: 'event-edit' })
+    this.stopFx = window.FrankFX?.run(this.props, { words: 'event-edit' })
   }
   stop() {
     this.stopFx?.()

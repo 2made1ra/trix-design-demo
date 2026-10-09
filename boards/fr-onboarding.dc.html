@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — онбординг, сфера и уровень</title>
+<script src="./support.js"></script>
+<script src="./trail.js"></script>
+<script src="./cursor-fx.js"></script>
+<script src="./verge-fx.js"></script>
+<script src="./fr-fx.js"></script>
+<link rel="stylesheet" href="verge.css">
+<link rel="stylesheet" href="fr.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@100..1000&amp;family=Onest:wght@300..700&amp;family=Geist+Mono:wght@400..700&amp;display=swap">
+<style>
+.split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);min-height:1100px}
+.side{container-type:inline-size;margin:16px 0 16px 16px;padding:40px;display:flex;flex-direction:column;justify-content:space-between}
+.big{font-family:var(--disp);font-weight:900;font-size:38cqi;line-height:.74;white-space:nowrap;color:color-mix(in srgb,var(--ink) 88%,transparent)}
+.big span{font-weight:200;color:color-mix(in srgb,var(--ink) 30%,transparent)}
+.bob{animation:fr-bob 7s ease-in-out infinite}
+@keyframes fr-bob{50%{transform:translateY(-8px)}}
+.prog{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.prog span{height:4px;border-radius:2px;background:var(--line)}
+.prog span.on{background:var(--ink)}
+.idx{display:flex;align-items:center;gap:12px;width:100%;margin-bottom:20px;padding:0}
+.idx::after{content:"";flex:1;height:1px;background:var(--line)}
+.lvls{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.lvl{position:relative;display:flex;flex-direction:column;gap:14px;padding:22px;border-radius:18px;box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;transition:box-shadow .2s,background .2s,transform .3s var(--ease)}
+.lvl:hover{box-shadow:inset 0 0 0 1px var(--ink);transform:translateY(-2px)}
+.lvl input{position:absolute;opacity:0;width:1px;height:1px}
+.lvl:has(input:checked){background:var(--bg-2);box-shadow:inset 0 0 0 2px var(--ink)}
+.lvl:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:2px}
+.tick{position:absolute;top:18px;right:18px;display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--field)}
+.tick svg{width:12px;height:12px;fill:none;stroke:var(--inv-ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.lvl:has(input:checked) .tick{background:var(--ink);box-shadow:none}
+.lvl:has(input:checked) .tick svg{opacity:1}
+.bars{display:flex;align-items:flex-end;gap:4px;height:22px}
+.bars i{width:6px;border-radius:2px;background:var(--bg-3)}
+.bars i.on{background:var(--ink)}
+.next{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:28px;box-shadow:inset 0 1px 0 var(--line)}
+</style>
+</helmet>
+<div class="vg fr calm">
+<div class="split">
+
+<aside class="side glow" data-rv>
+<a href="fr-home.dc.html" class="brand">TRIX<b></b></a>
+<div class="float bob" style="padding:28px;display:flex;flex-direction:column;gap:16px;max-width:380px">
+<span class="k muted">Шаг 1 из 3</span>
+<div role="progressbar" aria-label="Заполнение профиля" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1" class="prog"><span class="on"></span><span></span><span></span></div>
+<p class="small muted">По сфере и опыту выступлений подберём мероприятия, где ваш доклад будет к месту.</p>
+</div>
+<span class="big" aria-hidden="true">01<span>/03</span></span>
+</aside>
+
+<main style="padding:120px 96px 64px;display:flex;flex-direction:column;gap:48px;max-width:860px;min-width:0">
+<div data-rv style="display:flex;flex-direction:column;gap:16px">
+<h1 class="d-1">Расскажите о себе</h1>
+<p class="deck" style="font-size:20px">По сфере и опыту выступлений подберём мероприятия, где ваш доклад будет к месту.</p>
+</div>
+
+<form style="display:flex;flex-direction:column;gap:48px">
+<fieldset data-rv style="margin:0;padding:0;border:0;min-width:0">
+<legend class="idx k muted">01 / Сфера</legend>
+<div class="picks">
+<label class="pick"><input type="radio" name="sphere" checked>Backend</label>
+<label class="pick"><input type="radio" name="sphere">Frontend</label>
+<label class="pick"><input type="radio" name="sphere">Mobile</label>
+<label class="pick"><input type="radio" name="sphere">Data и ML</label>
+<label class="pick"><input type="radio" name="sphere">DevOps</label>
+<label class="pick"><input type="radio" name="sphere">QA</label>
+<label class="pick"><input type="radio" name="sphere">Продукт</label>
+<label class="pick"><input type="radio" name="sphere">Дизайн</label>
+<label class="pick"><input type="radio" name="sphere">Аналитика</label>
+<label class="pick"><input type="radio" name="sphere">Другое</label>
+</div>
+</fieldset>
+
+<fieldset data-rv style="margin:0;padding:0;border:0;min-width:0">
+<legend class="idx k muted">02 / Опыт выступлений</legend>
+<div class="lvls">
+<label class="lvl"><input type="radio" name="level"><span class="tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bars" aria-hidden="true"><i class="on" style="height:8px"></i><i style="height:14px"></i><i style="height:22px"></i></span><span class="h-20">Начинающий</span><span class="small muted">Ещё не выступал или выступал пару раз</span></label>
+<label class="lvl"><input type="radio" name="level"><span class="tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bars" aria-hidden="true"><i class="on" style="height:8px"></i><i class="on" style="height:14px"></i><i style="height:22px"></i></span><span class="h-20">Есть опыт</span><span class="small muted">Выступал на митапах или внутри компании</span></label>
+<label class="lvl"><input type="radio" name="level" checked><span class="tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bars" aria-hidden="true"><i class="on" style="height:8px"></i><i class="on" style="height:14px"></i><i class="on" style="height:22px"></i></span><span class="h-20">Опытный</span><span class="small muted">Регулярно выступаю на конференциях</span></label>
+</div>
+</fieldset>
+
+<div class="next" data-rv>
+<span class="small muted">Всё можно поменять позже в профиле</span>
+<a href="fr-selection.dc.html" class="b b-mint">Далее<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+</form>
+</main>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100},"cursor":{"editor":"enum","options":["Слова и буквы","Только буквы","Волна","Выкл"],"default":"Слова и буквы","section":"След курсора"},"zone":{"editor":"enum","options":["Вся страница","Цветные блоки","Белый фон"],"default":"Вся страница","section":"След курсора"},"text":{"editor":"enum","options":["Блоками","По буквам","Не обходить"],"default":"По буквам","section":"След курсора"},"fade":{"editor":"enum","options":["Выкл","Мягкое","Сильное"],"default":"Мягкое","section":"След курсора"},"letters":{"editor":"enum","options":["Мелкие","Средние","Крупные","Огромные"],"default":"Мелкие","section":"След курсора"},"spread":{"editor":"enum","options":["Узкий","Обычный","Широкий"],"default":"Узкий","section":"След курсора"},"freq":{"editor":"enum","options":["Часто","Обычно","Редко"],"default":"Редко","section":"След курсора"},"tone":{"editor":"enum","options":["Яркий","Приглушённый"],"default":"Яркий","section":"След курсора"},"reveal":{"editor":"enum","options":["Шторка","Расшифровка","Подъём","Выкл"],"default":"Подъём","section":"Появление"},"display":{"editor":"enum","options":["Шёпот","Резина","Обычный"],"default":"Обычный","section":"Заголовки"},"glowSideEdge":{"editor":"enum","options":["Блик и тень","Блик, контур и тень"],"default":"Блик и тень","section":"Verge Glow — панель шага"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    if (window.FrankFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  start() {
+    this.stopFx = window.FrankFX?.run(this.props, { words: 'onboarding' })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>

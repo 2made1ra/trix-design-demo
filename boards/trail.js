@@ -6,6 +6,9 @@
 //   ink: true — текст обходится по контуру каждого глифа, след просачивается между буквами и строками
 //   self: true — курсор слушается только на самом элементе, а не на ближайшем [data-trail-host]
 //   font, cell: [w, h] — размер букв следа и шаг их сетки (по умолчанию 12px и 10×18, при ink — 9px и 7×12)
+//   dense: true — абзацы и списки с длинным текстом обходятся целиком, с запасом
+//   fade: px — след гаснет, приближаясь к тексту и блокам ближе этого расстояния
+//   rate: px пути курсора между словами (260), spread — ширина пятна следа (1), alpha — множитель яркости (1)
 // TrixTrail.attach(el, opts) — то же для одного элемента
 // TrixTrail.magnet(selector, colors) — пятна градиента тянутся за курсором
 // TrixTrail.spot(selector, rgb) — подсветка карточки в точке курсора, rgb — цвет акцента системы ('83,58,253')
@@ -68,7 +71,7 @@
     return () => { for (const k in handlers) host.removeEventListener(k, handlers[k]) }
   }
 
-  function attach(el, { color = '#fff', height, glyphs = 'wave', words, avoid = false, solid, follow, ink = false, font, cell, self = false }) {
+  function attach(el, { color = '#fff', height, glyphs = 'wave', words, avoid = false, solid, follow, ink = false, font, cell, self = false, dense = false, fade = 0, rate = 260, spread = 1, alpha = 1 }) {
     const list = SCREENS[words] ?? ALL
     // В режиме ink сетка и буквы мельче, чтобы след пролезал в узкие просветы между плитками и строками
     const [gw, gh] = cell ?? (ink ? [7, 12] : [CW, CH]), pad = ink ? 2 : 7
@@ -79,7 +82,7 @@
 
     // Прямоугольники статичного содержимого в координатах элемента (с отступом); при follow — только рядом с холстом
     const measure = () => {
-      if (!avoid) return
+      if (!avoid && !fade) return
       measured = performance.now()
       const { r, s } = scale()
       const top = Math.max(r.top, r.top + (oy - 200) * s), bottom = Math.min(r.bottom, r.top + (oy + c.clientHeight + 200) * s)
@@ -120,9 +123,15 @@
         }
       }
       host.querySelectorAll('input, svg, .ava, .logo i, .search' + (solid ? ', ' + solid : '')).forEach(e => add(e.getBoundingClientRect()))
+      if (dense) host.querySelectorAll('p, li, dd, blockquote, .deck, .small').forEach(e => {
+        if (e.textContent.trim().length < 60) return
+        const b = e.getBoundingClientRect()
+        if (near(b)) push(b.left, b.top, b.right, b.bottom, 16)
+      })
     }
     const hw = ink ? gw * .43 : gw / 2, hh = ink ? gh * .375 : gh / 2
     const free = (cx, cy) => {
+      if (!avoid) return true
       const x = cx * gw, y = cy * gh
       return !blocks.some(b => x + hw > b.l && x - hw < b.r && y + hh > b.t && y - hh < b.b)
     }
@@ -138,26 +147,36 @@
       ctx.textBaseline = 'middle'
       measure()
     }
+    // Затухание у текста: 0 у самого блока, 1 дальше fade px; плавная ступенька без резкой границы
+    const soft = (x, y) => {
+      if (!fade) return 1
+      let d = fade
+      for (const b of blocks) d = Math.min(d, Math.hypot(Math.max(b.l - x, 0, x - b.r), Math.max(b.t - y, 0, y - b.b)))
+      const k = d / fade
+      return k * k * (3 - 2 * k)
+    }
     const stamp = (x, y, now) => {
       const cx = Math.round(x / gw), cy = Math.round(y / gh)
-      const rx = ink ? 4 : 3, ry = ink ? 3 : 2
+      const f = soft(x, y)
+      if (f < .03) return
+      const rx = Math.round((ink ? 4 : 3) * spread), ry = Math.max(1, Math.round((ink ? 3 : 2) * spread))
       for (let i = -rx; i <= rx; i++) for (let j = -ry; j <= ry; j++) {
         const dist = Math.hypot(i / (rx + .5), j / (ry + .5))
         if (dist > 1) continue
         if (!free(cx + i, cy + j)) continue
-        const k = (cx + i) + ':' + (cy + j)
+        const key = (cx + i) + ':' + (cy + j)
         const amp = (1 - dist * .8) * (.5 + Math.random() * .5)
-        const o = cells.get(k)
+        const o = cells.get(key)
         if (o?.word) continue
-        if (!o || o.amp * (1 - (now - o.t) / o.life) < amp) cells.set(k, { x: cx + i, y: cy + j, t: now, life: LIFE, amp, ch: o?.ch ?? letter() })
+        if (!o || o.amp * o.k * (1 - (now - o.t) / o.life) < amp * f) cells.set(key, { x: cx + i, y: cy + j, t: now, life: LIFE, amp, k: f, ch: o?.ch ?? letter() })
       }
     }
     // Слово сначала перебирается случайными буквами, потом «расшифровывается» слева направо
     const word = (x, y, now) => {
       const w = list[Math.random() * list.length | 0]
       const cx = Math.round(x / gw) - (w.length >> 1), cy = Math.round(y / gh) - 2
-      if (![...w].every((_, i) => free(cx + i, cy))) return
-      ;[...w].forEach((ch, i) => cells.set((cx + i) + ':' + cy, { x: cx + i, y: cy, t: now, life: 1700, amp: 1, ch: letter(), word: ch, at: now + 140 + i * 45 }))
+      if (soft(x, y) < .5 || ![...w].every((_, i) => free(cx + i, cy))) return
+      ;[...w].forEach((ch, i) => cells.set((cx + i) + ':' + cy, { x: cx + i, y: cy, t: now, life: 1700, amp: 1, k: 1, ch: letter(), word: ch, at: now + 140 + i * 45 }))
     }
     const draw = now => {
       ctx.clearRect(ox, oy, c.clientWidth, c.clientHeight)
@@ -167,13 +186,13 @@
         if (glyphs === 'wave') {
           const lvl = o.amp * (1 - age) ** 1.4 * (.65 + .35 * Math.sin(now / 90 + o.x * .9))
           const h = Math.max(2, lvl * (gh - 4))
-          ctx.globalAlpha = .2 + .7 * lvl
+          ctx.globalAlpha = (.2 + .7 * lvl) * o.k * alpha
           ctx.fillRect(o.x * gw - 1.5, o.y * gh - h / 2, 3, h)
           continue
         }
         if (o.word && now >= o.at) o.ch = o.word
         else if (Math.random() < (o.word ? .5 : .12 * (1 - age))) o.ch = letter()
-        ctx.globalAlpha = o.word ? (1 - age ** 3) : .15 + .8 * o.amp * (1 - age) ** 1.2
+        ctx.globalAlpha = (o.word ? (1 - age ** 3) : .15 + .8 * o.amp * (1 - age) ** 1.2) * o.k * alpha
         ctx.fillText(o.ch, o.x * gw, o.y * gh)
       }
       raf = cells.size ? requestAnimationFrame(draw) : 0
@@ -195,14 +214,14 @@
       if (y < oy || y > oy + c.clientHeight) { last = null; return }
       const now = performance.now()
       // Шапка липкая и сдвигается при прокрутке — пересчитываем раскладку не чаще раза в 400 мс
-      if (avoid && now - measured > 400) measure()
+      if ((avoid || fade) && now - measured > 400) measure()
       const d = last ? Math.hypot(x - last.x, y - last.y) : 0
       travel += d
       if (last) {
         const n = Math.min(60, Math.ceil(d / (gw * .8)))
         for (let i = 1; i <= n; i++) stamp(last.x + (x - last.x) * i / n, last.y + (y - last.y) * i / n, now)
       } else stamp(x, y, now)
-      if (glyphs === 'words' && travel > 260) { travel = 0; word(x, y, now) }
+      if (glyphs === 'words' && travel > rate) { travel = 0; word(x, y, now) }
       last = { x, y }
       if (!raf) raf = requestAnimationFrame(draw)
     }
