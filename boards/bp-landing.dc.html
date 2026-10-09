@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — конференция по надёжности сервисов</title>
+<script src="./support.js"></script>
+<script src="./trail.js"></script>
+<script src="./cursor-fx.js"></script>
+<link rel="stylesheet" href="bp.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0}
+.ev{--ev:#4f46e5;--ev-on:#fff;--ev-soft:color-mix(in srgb,var(--ev) 12%,var(--bg));--ev-ink:color-mix(in srgb,var(--ev) 62%,#000);min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5}
+.ev[data-accent=coral]{--ev:#e8553d}.ev[data-accent=emerald]{--ev:#0f8a6a}.ev[data-accent=graphite]{--ev:#2b2f36}.ev[data-accent=sun]{--ev:#f2b705;--ev-on:#1a1400}
+.ev *{box-sizing:border-box}
+.ev :where(h1,h2,h3,p,dl,dd,ul,ol){margin:0;padding:0}.ev :where(ul,ol){list-style:none}
+.ev a{color:inherit}
+.ev svg{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ev[data-visitor=guest] .ev-me,.ev[data-visitor=me] .ev-guest{display:none!important}
+.ev-wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+.ev-crumbs{display:flex;flex-wrap:wrap;gap:8px;padding:20px 0;font-size:13px;color:var(--muted)}
+.ev-crumbs a{text-decoration:none}.ev-crumbs a:hover{color:var(--ink)}.ev-crumbs [aria-current]{color:var(--ink)}
+.ev-cover{position:relative;height:280px;border-radius:var(--r-cover);color:var(--ev-on);background:var(--ev);transition:background .3s}
+.ev[data-cover=pattern] .ev-cover{background:repeating-radial-gradient(circle at 86% 140%,transparent 0 30px,color-mix(in srgb,var(--ev-on) 16%,transparent) 30px 32px),linear-gradient(120deg,var(--ev),color-mix(in srgb,var(--ev) 72%,#000))}
+.ev[data-cover=photo] .ev-cover{background:linear-gradient(90deg,color-mix(in srgb,var(--ev) 92%,transparent) 0 30%,color-mix(in srgb,var(--ev) 20%,transparent)),url(/_blob/eec782983c737e4b5624c8460fcaa2d5) center 30%/cover}
+.ev-cover .org{position:absolute;left:36px;top:32px;display:flex;flex-direction:column;gap:4px;font-size:14px;opacity:.92}
+.ev-cover .org b{font-size:20px;font-weight:500}
+.ev-logo{position:absolute;left:36px;bottom:-44px;width:104px;height:104px;border-radius:calc(var(--r) + 6px);background:var(--bg);box-shadow:0 0 0 5px var(--bg),0 0 0 6px var(--line);display:grid;place-items:center;font:600 34px/1 var(--font-h);letter-spacing:-.02em;color:var(--ev-ink)}
+.ev-title{padding-top:72px}
+.ev-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ev-chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 11px;border-radius:9999px;font-size:13px;line-height:1;white-space:nowrap;border:1px solid var(--line);color:var(--muted)}
+.ev-chip.acc{background:var(--ev-soft);border-color:transparent;color:var(--ev-ink)}
+.ev-chip.ok::before{content:"";width:6px;height:6px;border-radius:50%;background:#1f9d6a}
+.ev-h1{margin-top:16px!important;max-width:960px;font-family:var(--font-h);font-weight:var(--h-w);font-size:var(--h1);line-height:var(--h1-lh,1.04);letter-spacing:var(--h-ls);text-transform:var(--h-tt);color:var(--ink)}
+.ev-meta{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:16px;color:var(--muted)}
+.ev-meta span{display:inline-flex;align-items:center;gap:8px}
+.ev-tabs{display:flex;gap:28px;margin-top:40px;border-bottom:1px solid var(--line);font-size:14px}
+.ev-tabs a{padding:14px 0;text-decoration:none;color:var(--muted)}
+.ev-tabs a:hover{color:var(--ink)}.ev-tabs a[aria-current]{color:var(--ink);box-shadow:inset 0 -2px 0 var(--ev)}
+.ev-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:64px;align-items:start;padding:40px 0 96px}
+@media (max-width:1100px){.ev-grid{grid-template-columns:1fr}}
+.ev-sec{padding:36px 0;border-top:1px solid var(--line);scroll-margin-top:96px}
+.ev-sec:first-child{padding-top:0;border-top:0}
+.ev-h2{margin-bottom:20px!important;font-family:var(--font-h);font-weight:var(--h2-w,var(--h-w));font-size:var(--h2);line-height:1.12;letter-spacing:var(--h-ls);text-transform:var(--h-tt);color:var(--ink)}
+.ev-h3{font-size:18px;font-weight:var(--h3-w,500);line-height:1.3;color:var(--ink)}
+.ev-lead{max-width:760px;font-size:18px;line-height:1.55}
+.ev-muted{color:var(--muted)}
+.ev-label{font-family:var(--label-font);font-size:var(--label-fs,12px);font-weight:var(--label-w,400);letter-spacing:var(--label-ls,.06em);text-transform:var(--label-tt,uppercase);color:var(--muted)}
+.ev-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ev-facts div{display:flex;flex-direction:column;gap:6px;padding:18px 20px;border-radius:var(--r);background:var(--surface)}
+.ev-tracks li{display:grid;grid-template-columns:44px 1fr;gap:18px;padding:18px 0;border-top:1px solid var(--line)}
+.ev-tracks li:first-child{border-top:0;padding-top:0}
+.ev-tracks p{margin-top:4px!important;font-size:15px;color:var(--muted)}
+.ev-n{width:44px;height:44px;border-radius:var(--r);display:grid;place-items:center;background:var(--ev-soft);color:var(--ev-ink);font-size:14px;font-weight:600}
+.ev-dl div{display:grid;grid-template-columns:220px 1fr;gap:24px;padding:14px 0;border-top:1px solid var(--line)}
+.ev-dl div:first-child{border-top:0;padding-top:0}
+.ev-dl dt{color:var(--muted)}
+.ev-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ev-steps li{display:flex;flex-direction:column;gap:6px;padding:20px;border:1px solid var(--line);border-radius:var(--r)}
+.ev-steps p{font-size:15px;color:var(--muted)}
+.ev-side{position:sticky;top:96px;display:flex;flex-direction:column;gap:16px}
+.ev-card{display:flex;flex-direction:column;gap:20px;padding:28px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg);box-shadow:var(--card-sh,none)}
+.ev-card.deadline{border-top:4px solid var(--ev)}
+.ev-card.soft{gap:12px;border:0;background:var(--surface);box-shadow:none}
+.ev-when{font-family:var(--font-h);font-weight:var(--h-w);font-size:var(--when,40px);line-height:1;letter-spacing:var(--h-ls);text-transform:var(--h-tt);color:var(--ink)}
+.ev-kv{display:grid;grid-template-columns:auto 1fr;gap:10px 20px;font-size:14px}
+.ev-kv dt{color:var(--muted)}
+.ev-cta{display:flex}.ev-cta>*{flex:1;justify-content:center}
+.ev-micro{font-size:12px;line-height:1.45;color:var(--muted)}
+.ev-more{font-size:14px;font-weight:500;color:var(--ev-ink)!important;text-decoration:none}
+.ev-more:hover{text-decoration:underline}
+.ev-foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:24px 0 32px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.ev-foot a{text-decoration:none}.ev-foot a:hover{color:var(--ink)}
+
+.ev.bp{--bg:var(--canvas);--line:var(--hair);--surface:var(--stone-2);--r:16px;--r-cover:24px;--font:var(--sans);--font-h:var(--sans);--h-w:400;--h1:60px;--h2:30px;--h-ls:-.035em;--h-tt:none;--label-font:var(--mono)}
+.ev.bp .ev-h3{font-weight:400;font-size:19px}
+.ev.bp .ev-logo{font-weight:500}
+</style>
+</helmet>
+<div class="ev bp" data-ev data-fx data-accent="emerald" data-cover="pattern" data-visitor="guest">
+<header class="hdr"><div class="wrap">
+<div style="display:flex;align-items:center;gap:48px"><a href="bp-home.dc.html" class="logo"><i></i>TRIX</a>
+<nav class="nav" aria-label="Разделы"><a href="bp-selection.dc.html" aria-current="page">Мероприятия</a><a href="#" class="ev-me">Мои доклады</a><a href="bp-growth.dc.html" class="ev-me">Развитие</a></nav></div>
+<div class="ev-guest" style="display:flex;align-items:center;gap:24px"><a href="#" class="ln small">Войти</a><a href="bp-onboarding.dc.html" class="btn" style="height:40px;padding:0 20px">Начать</a></div>
+<a href="#" aria-label="Профиль" class="ava ava-g mesh ev-me" style="border-radius:9999px">СП</a>
+</div></header>
+<div class="ev-wrap">
+<nav class="ev-crumbs" aria-label="Навигация"><a href="bp-selection.dc.html">Мероприятия</a><span>/</span><a href="bp-selection.dc.html">Конференции</a><span>/</span><span aria-current="page">Конференция по надёжности сервисов</span></nav>
+
+<div class="ev-cover" role="img" aria-label="Обложка мероприятия">
+<div class="org"><span>Организатор</span><b>Сообщество инженеров надёжности</b></div>
+<div class="ev-logo" aria-hidden="true">НС</div>
+</div>
+
+<section class="ev-title" data-rv>
+<div class="ev-chips"><span class="ev-chip acc">Конференция</span><span class="ev-chip">Заявка через TRIX</span></div>
+<h1 class="ev-h1">Конференция по надёжности сервисов</h1>
+<div class="ev-meta"><span><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>[Даты проведения]</span><span><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Санкт-Петербург, гибрид</span><span>Организатор: Сообщество инженеров надёжности</span></div>
+<nav class="ev-tabs" aria-label="Разделы мероприятия"><a href="#about" aria-current="true">О мероприятии</a><a href="#aud">Аудитория</a><a href="#tracks">Треки</a><a href="#terms">Условия</a><a href="#apply">Заявка</a></nav>
+</section>
+
+<div class="ev-grid">
+<main>
+<section class="ev-sec" data-rv id="about"><h2 class="ev-h2">О мероприятии</h2>
+<p class="ev-lead">Конференция для инженеров, которые отвечают за сервисы в продакшене: как строить системы, переживающие сбои, и как спокойно переносить нагрузку со старого на новое. <span class="ev-muted">Без маркетинга — только опыт команд.</span></p></section>
+
+<section class="ev-sec" data-rv id="aud"><h2 class="ev-h2">Аудитория</h2>
+<dl class="ev-facts">
+<div><dt class="ev-label">Уровень</dt><dd>Middle и выше</dd></div>
+<div><dt class="ev-label">Кто приходит</dt><dd>Backend- и SRE-инженеры, тимлиды</dd></div>
+<div><dt class="ev-label">Формат</dt><dd>Офлайн в Санкт-Петербурге и онлайн-трансляция</dd></div>
+</dl></section>
+
+<section class="ev-sec" data-rv id="tracks"><h2 class="ev-h2">Треки</h2>
+<ul class="ev-tracks">
+<li><span class="ev-n">01</span><div><h3 class="ev-h3">Архитектура и миграции</h3><p>Как переносить нагрузку со старых систем на новые и не ронять продакшен.</p></div></li>
+<li><span class="ev-n">02</span><div><h3 class="ev-h3">Наблюдаемость</h3><p>Метрики, логи и трейсы, которые помогают найти причину сбоя, а не только симптом.</p></div></li>
+<li><span class="ev-n">03</span><div><h3 class="ev-h3">Инциденты и постмортемы</h3><p>Разборы реальных сбоев: что случилось, как чинили и что поменяли после.</p></div></li>
+</ul></section>
+
+<section class="ev-sec" data-rv id="terms"><h2 class="ev-h2">Условия для спикеров</h2>
+<dl class="ev-dl">
+<div><dt>Длительность слота</dt><dd>Доклад [длительность] и вопросы [длительность]</dd></div>
+<div><dt>Оплата</dt><dd><span class="ev-chip">Не оплачивается</span></dd></div>
+<div><dt>Дорога и проживание</dt><dd>[Условия организатора]</dd></div>
+<div><dt>Подготовка</dt><dd>Прогон доклада с программным комитетом</dd></div>
+</dl></section>
+
+<section class="ev-sec" data-rv id="apply"><h2 class="ev-h2">Как подать заявку</h2>
+<ol class="ev-steps">
+<li><span class="ev-label">Шаг 1</span><h3 class="ev-h3">Выберите доклад</h3><p>Из «Моих докладов» или опишите новый.</p></li>
+<li><span class="ev-label">Шаг 2</span><h3 class="ev-h3">Ответьте на вопросы</h3><p>Укажите трек, длительность и ответьте на вопросы организатора.</p></li>
+<li><span class="ev-label">Шаг 3</span><h3 class="ev-h3">Дождитесь решения</h3><p>Ответ придёт письмом до [дата] и появится на странице доклада.</p></li>
+</ol></section>
+</main>
+
+<aside class="ev-side">
+<section class="ev-card deadline" data-rv aria-labelledby="deadline-title">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span class="ev-label">Заявки до</span><span class="ev-chip ok">Приём открыт</span></div>
+<h2 id="deadline-title" class="ev-when">[Дата]</h2>
+<dl class="ev-kv"><dt>Даты</dt><dd>[Даты проведения]</dd><dt>Место</dt><dd>Санкт-Петербург, гибрид</dd><dt>Организатор</dt><dd>Сообщество инженеров надёжности</dd></dl>
+<div class="ev-cta"><a href="bp-onboarding.dc.html" class="btn">Подать заявку<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+<p class="ev-micro ev-guest">Заявку подают после регистрации — данные профиля подставятся в неё сами.</p>
+<p class="ev-micro ev-me">Данные профиля подставятся в заявку сами.</p>
+</section>
+<section class="ev-card soft ev-guest" data-rv>
+<h3 class="ev-h3">Впервые в TRIX?</h3>
+<p class="ev-muted" style="font-size:15px">TRIX подбирает мероприятия под ваши темы и помогает подготовить доклад до подачи.</p>
+<a href="bp-home.dc.html" class="ev-more">Как работает TRIX →</a>
+</section>
+</aside>
+</div>
+</div>
+<div class="ev-wrap"><footer class="ev-foot"><span>Страница мероприятия на TRIX</span><a href="bp-selection.dc.html">Все мероприятия</a></footer></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 2440}, "accent": {"editor": "enum", "options": ["Индиго", "Коралл", "Изумруд", "Графит", "Солнце"], "section": "Оформление организатора", "default": "Изумруд"}, "cover": {"editor": "enum", "options": ["Узор", "Фото", "Только цвет"], "default": "Узор", "section": "Оформление организатора"}, "visitor": {"editor": "enum", "options": ["Гость", "Спикер"], "default": "Гость", "section": "Посетитель"}, "cursor": {"editor": "enum", "options": ["Слова", "Линза-негатив", "Перекрестие", "Выкл"], "default": "Слова", "section": "Эффект курсора"}, "letters": {"editor": "enum", "options": ["Мелкие", "Средние", "Крупные"], "default": "Мелкие", "section": "Эффект курсора"}, "zone": {"editor": "enum", "options": ["Как было", "Весь белый фон", "Фон и карточки", "Только карточки"], "default": "Весь белый фон", "section": "Эффект курсора"}, "reveal": {"editor": "enum", "options": ["Подъём", "Выкл"], "default": "Подъём", "section": "Появление"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.apply()
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    this.apply()
+    if (window.TrixFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  apply() {
+    const el = document.querySelector('[data-ev]')
+    if (!el) return
+    const p = this.props
+    el.dataset.accent = { Индиго: 'indigo', Коралл: 'coral', Изумруд: 'emerald', Графит: 'graphite', Солнце: 'sun' }[p.accent ?? 'Изумруд']
+    el.dataset.cover = { Узор: 'pattern', Фото: 'photo', 'Только цвет': 'flat' }[p.cover ?? 'Узор']
+    el.dataset.visitor = p.visitor === 'Спикер' ? 'me' : 'guest'
+  }
+  start() {
+    const T = window.TrixTrail
+    this.stopFx = window.TrixFX?.run(this.props, {
+      words: 'landing',
+      accent: '#17171c',
+      light: '#fff',
+      spot: () => T.spot('.ev-card, .ev-facts div, .ev-steps li', '255,119,89'),
+      defaults: {'zone': 'Весь белый фон', 'reveal': 'Подъём'},
+    })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>

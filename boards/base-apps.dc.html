@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — заявки</title>
+<script src="./support.js"></script>
+<script src="./trail.js"></script>
+<script src="./cursor-fx.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@400;500&amp;family=Space+Mono&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#212121}a:hover{color:#1863dc}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #4c6ee6;outline-offset:2px}
+input:focus,textarea:focus{border-color:#9b60aa}
+</style>
+</helmet>
+<div data-fx style="min-height: 100vh; background: #ffffff; color: #212121; font-family: Inter, Arial, ui-sans-serif, system-ui, sans-serif; font-size: 16px; line-height: 1.5">
+
+<header style="border-bottom: 1px solid #e5e7eb">
+<div style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 0 clamp(20px, 4vw, 40px); min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 40px">
+<a href="#" style="font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-size: 24px; letter-spacing: -0.5px; color: #000000; text-decoration: none">TRIX</a>
+<nav aria-label="Разделы" style="display: flex; flex-wrap: wrap; gap: 24px; font-size: 14px">
+<a href="#" style="padding: 24px 0 22px; border-bottom: 2px solid transparent; color: #616161; text-decoration: none">Мероприятия</a>
+<a href="base-apps.dc.html" aria-current="page" style="padding: 24px 0 22px; border-bottom: 2px solid #17171c; color: #000000; text-decoration: none">Заявки</a>
+</nav>
+</div>
+<div style="position: relative">
+<a href="#" aria-haspopup="menu" aria-expanded="false" style="display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: #212121; text-decoration: none"><span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 9999px; background: #eeece7; display: inline-flex; align-items: center; justify-content: center">СИ</span>Сообщество инженеров надёжности<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="flex: none; fill: none; stroke: #616161; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="m6 9 6 6 6-6"></path></svg></a>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 40px clamp(20px, 4vw, 40px) 96px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h1 style="margin: 0; font-weight: 400; font-size: clamp(36px, 4vw, 48px); line-height: 1.2; letter-spacing: -0.01em; color: #000000">Заявки</h1>
+<p style="margin: 0; color: #616161">Принимайте и отклоняйте заявки спикеров — каждый получит письмо со статусом.</p>
+</div>
+<div style="margin-top: 40px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 20px 16px">
+<div style="flex: 1 1 360px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ap-event" style="font-size: 14px">Мероприятие</label>
+<div style="position: relative; display: flex">
+<input id="ap-event" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" value="Конференция по надёжности сервисов" style="flex: 1 1 auto; min-width: 0; height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 52px 0 14px; background: #ffffff; font: inherit; color: #212121">
+<button type="button" aria-label="Открыть список" style="position: absolute; top: 2px; right: 2px; width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #616161; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="m6 9 6 6 6-6"></path></svg></button>
+</div>
+</div></div>
+<div style="flex: 0 1 280px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ap-track" style="font-size: 14px">Трек</label>
+<div style="position: relative; display: flex">
+<input id="ap-track" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" value="Все треки" style="flex: 1 1 auto; min-width: 0; height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 52px 0 14px; background: #ffffff; font: inherit; color: #212121">
+<button type="button" aria-label="Открыть список" style="position: absolute; top: 2px; right: 2px; width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #616161; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="m6 9 6 6 6-6"></path></svg></button>
+</div>
+</div></div>
+<div style="flex: 1 1 auto"><fieldset style="margin: 0; padding: 0; border: 0; min-width: 0">
+<legend style="padding: 0; margin-bottom: 12px; font-size: 14px">Статус</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #17171c; color: #ffffff; font-size: 14px; cursor: pointer"><input type="radio" name="app-status" checked style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Все</label>
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #ffffff; color: #17171c; font-size: 14px; cursor: pointer"><input type="radio" name="app-status" style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Новые</label>
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #ffffff; color: #17171c; font-size: 14px; cursor: pointer"><input type="radio" name="app-status" style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Принятые</label>
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #ffffff; color: #17171c; font-size: 14px; cursor: pointer"><input type="radio" name="app-status" style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Отклонённые</label>
+</div>
+</fieldset></div>
+</div>
+
+<div style="margin-top: 32px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 48px">
+<section aria-label="Список заявок" style="flex: 1 1 380px; min-width: 0">
+<ul style="margin: 0; padding: 0; list-style: none; border-top: 1px solid #d9d9dd">
+<li style="border-bottom: 1px solid #d9d9dd"><a href="base-apps.dc.html" aria-current="true" style="display: flex; gap: 14px; padding: 20px 16px 20px 14px; border-left: 2px solid #17171c; background: #fafaf9; color: #212121; text-decoration: none">
+<span aria-hidden="true" style="flex: none; width: 44px; height: 44px; border-radius: 9999px; background: #eeece7; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; color: #212121">СП</span>
+<span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px"><span style="font-size: 15px; color: #000000">Сергей Петров</span><span style="display: inline-block; border: 1px solid #17171c; color: #17171c; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap">Новая</span></span>
+<span style="font-size: 15px">Миграция монолита без остановки сервиса</span>
+<span style="font-size: 13px; color: #616161">Золотая лига · «Архитектура и миграции» · подана [дата]</span>
+</span></a></li>
+<li style="border-bottom: 1px solid #d9d9dd"><a href="#application" style="display: flex; gap: 14px; padding: 20px 16px 20px 14px; border-left: 2px solid transparent; color: #212121; text-decoration: none">
+<span aria-hidden="true" style="flex: none; width: 44px; height: 44px; border-radius: 9999px; background: #eeece7; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; color: #212121">АК</span>
+<span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px"><span style="font-size: 15px; color: #000000">Анна Ковалёва</span><span style="display: inline-block; border: 1px solid #17171c; color: #17171c; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap">Новая</span></span>
+<span style="font-size: 15px">Релизы без страха: канареечные выкладки на практике</span>
+<span style="font-size: 13px; color: #616161">Рубиновая лига · «Наблюдаемость» · подана [дата]</span>
+</span></a></li>
+<li style="border-bottom: 1px solid #d9d9dd"><a href="#application" style="display: flex; gap: 14px; padding: 20px 16px 20px 14px; border-left: 2px solid transparent; color: #212121; text-decoration: none">
+<span aria-hidden="true" style="flex: none; width: 44px; height: 44px; border-radius: 9999px; background: #eeece7; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; color: #212121">ДО</span>
+<span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px"><span style="font-size: 15px; color: #000000">Дмитрий Орлов</span><span style="display: inline-flex; align-items: center; gap: 6px; background: #17171c; color: #ffffff; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round"><path d="M20 6 9 17l-5-5"></path></svg>Принята</span></span>
+<span style="font-size: 15px">Постмортем без поиска виноватых</span>
+<span style="font-size: 13px; color: #616161">Бронзовая лига · «Инциденты и постмортемы» · подана [дата]</span>
+</span></a></li>
+<li style="border-bottom: 1px solid #d9d9dd"><a href="#application" style="display: flex; gap: 14px; padding: 20px 16px 20px 14px; border-left: 2px solid transparent; color: #212121; text-decoration: none">
+<span aria-hidden="true" style="flex: none; width: 44px; height: 44px; border-radius: 9999px; background: #eeece7; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; color: #212121">МБ</span>
+<span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px"><span style="font-size: 15px; color: #000000">Мария Белова</span><span style="display: inline-block; border: 1px solid #d9d9dd; color: #616161; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap">Отклонена</span></span>
+<span style="font-size: 15px">Трейсинг в очередях: где теряется время</span>
+<span style="font-size: 13px; color: #616161">Серебряная лига · «Наблюдаемость» · подана [дата]</span>
+</span></a></li>
+</ul>
+</section>
+
+<article aria-labelledby="app-title" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px"><span style="font-family: 'Space Mono', ui-monospace, monospace; font-size: 14px; letter-spacing: 0.28px; text-transform: uppercase; color: #616161">Заявка</span><span style="display: inline-block; border: 1px solid #17171c; color: #17171c; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap">Новая</span></div>
+<h2 id="app-title" style="margin: 0; font-weight: 400; font-size: 32px; line-height: 1.2; letter-spacing: -0.01em; color: #000000">Миграция монолита без остановки сервиса</h2>
+<p style="margin: 0; color: #616161">Трек «Архитектура и миграции» · 30 минут · подана [дата]</p>
+</div>
+
+<section aria-labelledby="sp-title" style="background: #eeece7; border-radius: 8px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px">
+<div style="display: flex; align-items: center; gap: 14px">
+<span aria-hidden="true" style="flex: none; width: 44px; height: 44px; border-radius: 9999px; background: #eeece7; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; color: #212121">СП</span>
+<div style="display: flex; flex-direction: column"><h3 id="sp-title" style="margin: 0; font-weight: 400; font-size: 20px; line-height: 1.3; color: #000000">Сергей Петров</h3><span style="font-size: 14px; color: #616161">Backend · Опытный · Москва</span></div>
+</div>
+<a href="#" style="display: inline-block; border: 1px solid #17171c; background: #ffffff; color: #17171c; border-radius: 30px; padding: 9px 18px; font-size: 14px; font-weight: 500; line-height: 1.71; text-decoration: none">Открыть профиль</a>
+</div>
+<p style="margin: 0; font-size: 15px">Бэкенд-разработчик в финтехе. Переношу монолиты на сервисы без остановки и рассказываю, как сделать это спокойно.</p>
+<dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 20px; font-size: 14px">
+<dt style="color: #616161">Лига</dt><dd style="margin: 0"><span style="display: inline-block; border: 1px solid #17171c; color: #17171c; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap">Золотая</span></dd>
+<dt style="color: #616161">Выступления</dt><dd style="margin: 0">[N] подтверждённых</dd>
+<dt style="color: #616161">Выступал</dt><dd style="margin: 0">Митап Go-разработчиков, Студенческий фестиваль IT-проектов, внутренний митап компании</dd>
+<dt style="color: #616161">Ссылки</dt><dd style="margin: 0"><a href="#link" style="text-decoration: underline; text-underline-offset: 3px">Telegram</a>, <a href="#link" style="text-decoration: underline; text-underline-offset: 3px">GitHub</a></dd>
+</dl>
+</section>
+
+<section>
+<h3 style="margin: 0 0 12px; font-weight: 400; font-size: 20px; line-height: 1.3; color: #000000">Аннотация</h3>
+<p style="margin: 0; max-width: 720px; font-size: 18px; line-height: 1.5">Как мы перевели платёжный монолит на сервисы, не останавливая приём платежей: переключение трафика по частям, откаты без простоя и что пришлось договорить с бизнесом.</p>
+</section>
+
+<section>
+<h3 style="margin: 0 0 12px; font-weight: 400; font-size: 20px; line-height: 1.3; color: #000000">Ответы на вопросы</h3>
+<ul style="margin: 0; padding: 0; list-style: none; border-top: 1px solid #d9d9dd">
+<li style="display: flex; flex-direction: column; gap: 6px; padding: 18px 0; border-bottom: 1px solid #d9d9dd"><span style="font-size: 14px; color: #616161">Выступали ли вы с этим докладом раньше? Если да — где</span><span>Нет, это первая версия доклада.</span></li>
+<li style="display: flex; flex-direction: column; gap: 6px; padding: 18px 0; border-bottom: 1px solid #d9d9dd"><span style="font-size: 14px; color: #616161">Что слушатели смогут применить после доклада?</span><span>Схему переключения трафика со старого сервиса на новый и чек-лист отката.</span></li>
+</ul>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; padding-top: 24px; border-top: 1px solid #e5e7eb">
+<span style="flex: 1 1 280px; font-size: 14px; color: #616161">Спикер получит письмо со статусом. Дальше договариваетесь напрямую.</span>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+<a href="#" style="display: inline-block; border: 1px solid #17171c; color: #17171c; border-radius: 30px; padding: 11px 20px; font-size: 14px; font-weight: 500; line-height: 1.71; text-decoration: none">Отклонить</a>
+<a href="#" style="display: inline-block; background: #17171c; color: #ffffff; border-radius: 32px; padding: 12px 24px; font-size: 14px; font-weight: 500; line-height: 1.71; text-decoration: none">Принять</a>
+</div>
+</div>
+</article>
+</div>
+</main>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 1460}, "cursor": {"editor": "enum", "options": ["Слова", "Линза-негатив", "Перекрестие", "Выкл"], "default": "Слова", "section": "Эффект курсора"}, "letters": {"editor": "enum", "options": ["Мелкие", "Средние", "Крупные"], "default": "Мелкие", "section": "Эффект курсора"}, "zone": {"editor": "enum", "options": ["Как было", "Весь белый фон", "Фон и карточки", "Только карточки"], "default": "Как было", "section": "Эффект курсора"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    if (window.TrixFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  start() {
+    const T = window.TrixTrail
+    this.stopFx = window.TrixFX?.run(this.props, {
+      words: 'apps',
+      accent: '#1863dc',
+      light: '#fff',
+    })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>

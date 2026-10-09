@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — разбор после выступления</title>
+<script src="./support.js"></script>
+<script src="./trail.js"></script>
+<script src="./cursor-fx.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@400;500&amp;family=Space+Mono&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#212121}a:hover{color:#1863dc}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #4c6ee6;outline-offset:2px}
+</style>
+</helmet>
+<div data-fx style="min-height: 100vh; background: #ffffff; color: #212121; font-family: Inter, Arial, ui-sans-serif, system-ui, sans-serif; font-size: 16px; line-height: 1.5">
+
+<header style="border-bottom: 1px solid #e5e7eb">
+<div style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 0 clamp(20px, 4vw, 40px); min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 40px">
+<a href="#" style="font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-size: 24px; letter-spacing: -0.5px; color: #000000; text-decoration: none">TRIX</a>
+<nav aria-label="Разделы" style="display: flex; flex-wrap: wrap; gap: 24px; font-size: 14px">
+<a href="base-selection.dc.html" style="padding: 24px 0 22px; border-bottom: 2px solid transparent; color: #616161; text-decoration: none">Мероприятия</a>
+<a href="#" aria-current="page" style="padding: 24px 0 22px; border-bottom: 2px solid #17171c; color: #000000; text-decoration: none">Мои доклады</a>
+<a href="base-growth.dc.html" style="padding: 24px 0 22px; border-bottom: 2px solid transparent; color: #616161; text-decoration: none">Развитие</a>
+</nav>
+</div>
+<a href="#" aria-label="Профиль" style="width: 44px; height: 44px; border-radius: 9999px; background: #eeece7; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; color: #212121; text-decoration: none">СП</a>
+</div>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 40px clamp(20px, 4vw, 40px) 96px">
+<nav aria-label="Путь по разделу" style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px; color: #616161">
+<a href="#" style="color: #616161">Мои доклады</a>
+<span aria-hidden="true">/</span>
+<a href="#" style="color: #616161">Миграция монолита без остановки сервиса</a>
+<span aria-hidden="true">/</span>
+<span>Разбор после выступления</span>
+</nav>
+
+<div style="margin-top: 32px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 48px">
+<div style="flex: 1 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<span style="font-family: 'Space Mono', ui-monospace, monospace; font-size: 14px; letter-spacing: 0.28px; text-transform: uppercase; color: #616161">Разбор после выступления</span>
+<h1 style="margin: 0; max-width: 900px; font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-weight: 400; font-size: clamp(36px, 4.4vw, 60px); line-height: 1.02; letter-spacing: -0.02em; color: #000000">Миграция монолита без остановки сервиса</h1>
+<p style="margin: 0; color: #616161">Для мероприятия: <a href="#" style="color: #1863dc">Конференция о высоконагруженных системах</a>. Материалы: запись talk-recording.m4a, отзывы слушателей и организатора</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+<a href="base-growth.dc.html" style="display: inline-block; background: #17171c; color: #ffffff; border-radius: 32px; padding: 12px 24px; font-size: 14px; font-weight: 500; line-height: 1.71; text-decoration: none">Перейти в «Развитие»</a>
+<a href="#" style="display: inline-flex; align-items: center; gap: 8px; border: 1px solid #17171c; color: #17171c; border-radius: 30px; padding: 11px 20px; font-size: 14px; font-weight: 500; line-height: 1.71; text-decoration: none"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #17171c; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"></path></svg>Спросить AI о разборе</a>
+</div>
+</div>
+
+<div style="margin-top: 56px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 48px">
+<div style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; gap: 56px">
+
+<section>
+<h2 style="margin: 0 0 16px; font-weight: 400; font-size: 32px; line-height: 1.2; letter-spacing: -0.01em; color: #000000">Главное</h2>
+<p style="margin: 0; max-width: 720px; font-size: 18px; line-height: 1.5">Главная мысль теперь звучит в начале — правка из разбора до выступления сработала. Демо снова затянулось, и на вопросы из зала почти не осталось времени.</p>
+</section>
+
+<section>
+<h2 style="margin: 0 0 16px; font-weight: 400; font-size: 32px; line-height: 1.2; letter-spacing: -0.01em; color: #000000">Выводы</h2>
+<ol style="margin: 0; padding: 0; list-style: none; border-top: 1px solid #d9d9dd">
+<li style="display: flex; gap: 24px; padding: 24px 0; border-bottom: 1px solid #d9d9dd">
+<span style="flex: none; min-width: 28px; padding-top: 3px; font-family: 'Space Mono', ui-monospace, monospace; font-size: 14px; color: #616161">01</span>
+<div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<h3 style="margin: 0; font-weight: 400; font-size: 20px; line-height: 1.3; color: #000000">Сохранить: главная мысль в начале</h3>
+<p style="margin: 0; color: #616161">Слушатели в отзывах пересказывают её своими словами — значит, она запомнилась.</p>
+<span style="font-family: 'Space Mono', ui-monospace, monospace; font-size: 13px; color: #616161">Запись, [таймкод]</span>
+</div>
+</li>
+<li style="display: flex; gap: 24px; padding: 24px 0; border-bottom: 1px solid #d9d9dd">
+<span style="flex: none; min-width: 28px; padding-top: 3px; font-family: 'Space Mono', ui-monospace, monospace; font-size: 14px; color: #616161">02</span>
+<div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<h3 style="margin: 0; font-weight: 400; font-size: 20px; line-height: 1.3; color: #000000">Сократить демо до одного сценария</h3>
+<p style="margin: 0; color: #616161">Демо заняло больше времени, чем было в плане, и съело время на вопросы из зала.</p>
+<span style="font-family: 'Space Mono', ui-monospace, monospace; font-size: 13px; color: #616161">Запись, [таймкод]</span>
+</div>
+</li>
+<li style="display: flex; gap: 24px; padding: 24px 0; border-bottom: 1px solid #d9d9dd">
+<span style="flex: none; min-width: 28px; padding-top: 3px; font-family: 'Space Mono', ui-monospace, monospace; font-size: 14px; color: #616161">03</span>
+<div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<h3 style="margin: 0; font-weight: 400; font-size: 20px; line-height: 1.3; color: #000000">Держать темп во второй половине</h3>
+<p style="margin: 0; color: #616161">К концу вы говорите заметно быстрее: часть слайдов зал не успел прочитать.</p>
+<span style="font-family: 'Space Mono', ui-monospace, monospace; font-size: 13px; color: #616161">Запись, [таймкод]</span>
+</div>
+</li>
+</ol>
+</section>
+
+<section>
+<h2 style="margin: 0 0 8px; font-weight: 400; font-size: 32px; line-height: 1.2; letter-spacing: -0.01em; color: #000000">Реакция зала</h2>
+<p style="margin: 0; color: #616161">По отзывам слушателей и организатора, которые вы добавили.</p>
+<div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h3 style="margin: 0; font-weight: 400; font-size: 20px; line-height: 1.3; color: #000000">Что понравилось</h3>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px">
+<li style="background: #f1f5ff; border-radius: 8px; padding: 18px 20px">Честный рассказ про откаты, а не только про успех</li>
+<li style="background: #f1f5ff; border-radius: 8px; padding: 18px 20px">Понятная схема переключения трафика</li>
+</ul>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h3 style="margin: 0; font-weight: 400; font-size: 20px; line-height: 1.3; color: #000000">Чего не хватило</h3>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px">
+<li style="background: #f1f5ff; border-radius: 8px; padding: 18px 20px">Больше о том, как договаривались с бизнесом</li>
+<li style="background: #f1f5ff; border-radius: 8px; padding: 18px 20px">Времени на вопросы: организатор отметил, что доклад вышел за слот</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section>
+<h2 style="margin: 0 0 8px; font-weight: 400; font-size: 32px; line-height: 1.2; letter-spacing: -0.01em; color: #000000">Навыки для «Развития»</h2>
+<p style="margin: 0; color: #616161">Добавили в «Развитие» — там материалы под каждый навык.</p>
+<ul style="margin: 20px 0 0; padding: 0; list-style: none; border-top: 1px solid #d9d9dd">
+<li style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding: 18px 0; border-bottom: 1px solid #d9d9dd"><span style="font-size: 18px; line-height: 1.4; color: #000000">Укладываться в слот</span><span style="display: inline-block; border: 1px solid #17171c; color: #17171c; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap">В работе</span></li>
+<li style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding: 18px 0; border-bottom: 1px solid #d9d9dd"><span style="font-size: 18px; line-height: 1.4; color: #000000">Сокращать демо</span><span style="display: inline-block; border: 1px solid #17171c; color: #17171c; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap">В работе</span></li>
+<li style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding: 18px 0; border-bottom: 1px solid #d9d9dd"><span style="font-size: 18px; line-height: 1.4; color: #000000">Выносить главную мысль в начало</span><span style="display: inline-flex; align-items: center; gap: 6px; background: #17171c; color: #ffffff; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round"><path d="M20 6 9 17l-5-5"></path></svg>Получается</span></li>
+</ul>
+</section>
+
+</div>
+
+<aside style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<section aria-labelledby="criteria-title" style="background: #17171c; color: #ffffff; border-radius: 8px; padding: 24px; display: flex; flex-direction: column">
+<h2 id="criteria-title" style="margin: 0 0 8px; font-weight: 400; font-size: 20px; line-height: 1.3">Оценка по критериям</h2>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.12)">
+<span style="font-size: 15px">Соответствие аудитории</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; background: #ffffff; color: #17171c; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round"><path d="M20 6 9 17l-5-5"></path></svg>В порядке</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.12)">
+<span style="font-size: 15px">Структура</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; background: #ffffff; color: #17171c; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round"><path d="M20 6 9 17l-5-5"></path></svg>В порядке</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.12)">
+<span style="font-size: 15px">Главная мысль</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; background: #ffffff; color: #17171c; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round"><path d="M20 6 9 17l-5-5"></path></svg>В порядке</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0">
+<span style="font-size: 15px">Укладывается во время</span>
+<span style="border: 1px solid #ffad9b; color: #ffad9b; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap">Доработать</span>
+</div>
+<p style="margin: 8px 0 0; font-size: 12px; line-height: 1.4; color: rgba(255,255,255,0.72)">Оценка по записи и отзывам с учётом аудитории мероприятия.</p>
+</section>
+<section aria-labelledby="materials-title" style="background: #eeece7; border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<h2 id="materials-title" style="margin: 0; font-weight: 400; font-size: 20px; line-height: 1.3; color: #000000">Материалы под слабые места</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px">
+<li style="display: flex; flex-direction: column; gap: 2px"><a href="base-growth.dc.html" style="text-decoration: underline; text-underline-offset: 3px">Репетиция с таймером: как уложиться в слот</a><span style="font-size: 13px; color: #616161">Тайминг</span></li>
+</ul>
+</section>
+</aside>
+</div>
+</main>
+
+<a href="#" style="position: fixed; right: 32px; bottom: 32px; z-index: 10; display: inline-flex; align-items: center; gap: 8px; background: #17171c; color: #ffffff; border-radius: 32px; padding: 12px 24px; font-size: 14px; font-weight: 500; line-height: 1.71; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #ffffff; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"></path></svg>AI-помощник</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 1900}, "cursor": {"editor": "enum", "options": ["Слова", "Линза-негатив", "Перекрестие", "Выкл"], "default": "Слова", "section": "Эффект курсора"}, "letters": {"editor": "enum", "options": ["Мелкие", "Средние", "Крупные"], "default": "Мелкие", "section": "Эффект курсора"}, "zone": {"editor": "enum", "options": ["Как было", "Весь белый фон", "Фон и карточки", "Только карточки"], "default": "Как было", "section": "Эффект курсора"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    if (window.TrixFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  start() {
+    const T = window.TrixTrail
+    this.stopFx = window.TrixFX?.run(this.props, {
+      words: 'review',
+      accent: '#1863dc',
+      light: '#fff',
+    })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>

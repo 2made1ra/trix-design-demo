@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — мероприятия для вас</title>
+<script src="./support.js"></script>
+<script src="./cursor-fx.js"></script>
+<script src="./trail.js"></script>
+<link rel="stylesheet" href="st.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;display=swap">
+<style>
+.ev{display:grid;grid-template-columns:132px minmax(0,1fr) 220px;gap:28px;padding:28px 16px;margin:0 -16px;border-radius:16px}
+.ev .thumb{width:132px;height:132px;transition:transform .5s var(--ease)}
+.ev .side{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.why{display:flex;gap:8px;font-size:14px;padding:10px 12px;border-radius:8px;background:var(--pale-blue);color:var(--ink)}
+.why .spark{flex:none;margin-top:3px;color:var(--blue)}
+.search{display:flex;align-items:center;gap:10px;width:360px;height:40px;border:1px solid var(--hair);border-radius:6px;padding:0 12px;box-shadow:var(--sh1);transition:border-color .2s,box-shadow .2s}
+.search:focus-within{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(83,58,253,.16)}
+.search input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:14px;color:var(--ink);outline:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+</style>
+</helmet>
+<div data-fx class="bp work">
+
+<header class="hdr"><div class="wrap">
+<div style="display:flex;align-items:center;gap:48px"><a href="#" class="logo"><i></i>TRIX</a>
+<nav class="nav" aria-label="Разделы"><a href="st-selection.dc.html" aria-current="page">Мероприятия</a><a href="#">Мои доклады</a><a href="st-growth.dc.html">Развитие</a></nav></div>
+<a href="#" aria-label="Профиль" class="ava ava-g mesh" style="border-radius:9999px">СП</a>
+</div></header>
+
+<main class="wrap" style="padding-top:72px;padding-bottom:120px">
+<div class="rv" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<span class="mono">Подборка агента</span>
+<h1 class="d-xl">Мероприятия для вас</h1>
+<p class="muted">Подобрано по сфере Backend и уровню «Опытный». <a href="st-onboarding.dc.html" class="ln" style="color:var(--ink)">Изменить</a></p>
+</div>
+<label class="search">
+<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="flex:none;fill:none;stroke:var(--muted);stroke-width:1.5;stroke-linecap:round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+<span class="sr">Поиск по мероприятиям</span>
+<input type="search" placeholder="Поиск по названию или теме">
+<span class="num" style="font-size:12px;color:var(--quiet);border:1px solid var(--border);border-radius:4px;padding:2px 6px">/</span>
+</label>
+</div>
+
+<div class="rv" style="--d:1;margin-top:40px;display:flex;flex-wrap:wrap;gap:10px">
+<button type="button" class="filter" aria-pressed="true">Все</button>
+<button type="button" class="filter" aria-pressed="false">Оплачиваются</button>
+<button type="button" class="filter" aria-pressed="false">Конференции</button>
+<button type="button" class="filter" aria-pressed="false">Митапы</button>
+<button type="button" class="filter" aria-pressed="false">Онлайн</button>
+<button type="button" class="filter" aria-pressed="false">В моём городе</button>
+<button type="button" class="filter" aria-pressed="false">Дедлайн в этом месяце</button>
+</div>
+
+<div style="margin-top:56px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:56px;align-items:start">
+<section aria-label="Список мероприятий" class="rows">
+
+<article class="ev row-h zoom rv" style="--d:2">
+<div class="thumb mesh mesh-sm mesh-blue" aria-hidden="true"></div>
+<div style="min-width:0;display:flex;flex-direction:column;gap:12px">
+<span class="mono">Конференция · Москва · офлайн</span>
+<h2 class="h-card"><a href="#" style="text-decoration:none">Конференция о высоконагруженных системах</a></h2>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><span class="tag">Архитектура</span><span class="tag">Backend</span></div>
+<p class="why"><svg class="spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span><span class="muted">Почему подходит:</span> ваша тема «Миграция монолита» совпадает с треком «Архитектура».</span></p>
+</div>
+<div class="side">
+<span class="mono" style="color:var(--ink)">Заявки до [дата]</span>
+<span class="chip">Не оплачивается</span>
+<a href="#source" class="btn-o">Подать на сайте<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+<a href="#" class="ln small">Подготовить доклад</a>
+</div>
+</article>
+
+<article class="ev row-h zoom rv" style="--d:3">
+<div class="thumb mesh mesh-sm" aria-hidden="true"></div>
+<div style="min-width:0;display:flex;flex-direction:column;gap:12px">
+<span style="display:flex;align-items:center;gap:12px"><span class="mono">Конференция · Санкт-Петербург · гибрид</span><span class="chip chip-line">Заявка через TRIX</span></span>
+<h2 class="h-card"><a href="st-landing.dc.html" style="text-decoration:none">Конференция по надёжности сервисов</a></h2>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><span class="tag">Архитектура</span><span class="tag">Надёжность</span></div>
+<p class="why"><svg class="spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span><span class="muted">Почему подходит:</span> трек «Архитектура и миграции» — под вашу тему «Миграция монолита».</span></p>
+</div>
+<div class="side">
+<span class="mono" style="color:var(--ink)">Заявки до [дата]</span>
+<span class="chip">Не оплачивается</span>
+<a href="st-landing.dc.html" class="btn" style="height:44px;padding:0 20px">Подать заявку<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<a href="#" class="ln small">Подготовить доклад</a>
+</div>
+</article>
+
+<article class="ev row-h zoom rv" style="--d:4">
+<div class="thumb mesh mesh-sm mesh-mint" aria-hidden="true"></div>
+<div style="min-width:0;display:flex;flex-direction:column;gap:12px">
+<span class="mono">Митап · Казань · офлайн</span>
+<h2 class="h-card">Митап Go-разработчиков</h2>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><span class="tag">Go</span><span class="tag">Backend</span></div>
+<p class="why"><svg class="spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span><span class="muted">Почему подходит:</span> ищут доклады на 20 минут, уровень middle и выше.</span></p>
+</div>
+<div class="side">
+<span class="mono" style="color:var(--ink)">Заявки до [дата]</span>
+<span class="chip chip-dash">Оплата не указана</span>
+<a href="#source" class="btn-o">Подать на сайте<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+<a href="#" class="ln small">Подготовить доклад</a>
+</div>
+</article>
+
+<article class="ev row-h zoom rv" style="--d:5">
+<div class="thumb mesh mesh-sm mesh-dawn" aria-hidden="true"></div>
+<div style="min-width:0;display:flex;flex-direction:column;gap:12px">
+<span class="mono">Фестиваль · Новосибирск · гибрид</span>
+<h2 class="h-card">Студенческий фестиваль IT-проектов</h2>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><span class="tag">Backend</span><span class="tag">Карьера</span></div>
+<p class="why"><svg class="spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span><span class="muted">Почему подходит:</span> можно обкатать доклад перед большой конференцией.</span></p>
+</div>
+<div class="side">
+<span class="mono" style="color:var(--ink)">Заявки до [дата]</span>
+<span class="chip">Не оплачивается</span>
+<a href="#source" class="btn-o">Подать на сайте<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+<a href="#" class="ln small">Подготовить доклад</a>
+</div>
+</article>
+
+</section>
+
+<aside style="display:flex;flex-direction:column;gap:20px;position:sticky;top:96px">
+<div class="card-stone" style="padding:28px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;align-items:center;gap:14px"><span class="ava ava-g mesh">СП</span><h2 class="h-card">Ваш профиль</h2></div>
+<dl class="kv"><dt>Сфера</dt><dd>Backend</dd><dt>Уровень</dt><dd>Опытный</dd><dt>Цель</dt><dd>Выступать</dd><dt>Формат</dt><dd>Офлайн и онлайн</dd><dt>Оплата</dt><dd>Не обязательна</dd></dl>
+<a href="#" class="ln small" style="align-self:flex-start">Изменить профиль</a>
+</div>
+<div class="mesh mesh-green on-dark lift" style="padding:28px;display:flex;flex-direction:column;gap:14px">
+<span class="mono">Развитие</span>
+<h2 class="h-card">Пока не готовы выступать?</h2>
+<p class="small muted">Подберём площадки для старта и материалы для прокачки.</p>
+<a href="st-growth.dc.html" class="btn btn-w" style="align-self:flex-start;height:40px;padding:0 18px;margin-top:6px">Перейти в «Развитие»<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<p class="micro">Мероприятия публикуют организаторы в TRIX или находит агент в открытых источниках. Оплату отмечаем, только если организатор её указал.</p>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 1500}, "cursor": {"editor": "enum", "options": ["Слова", "Линза-негатив", "Перекрестие", "Выкл"], "default": "Слова", "section": "Эффект курсора"}, "letters": {"editor": "enum", "options": ["Мелкие", "Средние", "Крупные"], "default": "Мелкие", "section": "Эффект курсора"}, "zone": {"editor": "enum", "options": ["Как было", "Весь белый фон", "Фон и карточки", "Только карточки"], "default": "Как было", "section": "Эффект курсора"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    if (window.TrixFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  start() {
+    const T = window.TrixTrail
+    this.stopFx = window.TrixFX?.run(this.props, {
+      words: 'selection',
+      accent: '#533afd',
+      light: '#fff',
+      spot: () => T.spot('.ev, .card-stone'),
+      legacy: () => T.mount('.mesh:not(.ava):not(.mesh-sm), .work', el => el.matches('.work') ? { color: '#533afd', height: 200, glyphs: 'words', words: 'selection', avoid: true } : { color: el.matches('.mesh-mint, .mesh-dawn') ? '#533afd' : '#fff', glyphs: 'words', words: 'selection', avoid: true }),
+    })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>

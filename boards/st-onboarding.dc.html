@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — онбординг, сфера и уровень</title>
+<script src="./support.js"></script>
+<script src="./cursor-fx.js"></script>
+<script src="./trail.js"></script>
+<link rel="stylesheet" href="st.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;display=swap">
+<style>
+.split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);min-height:1080px}
+.side{margin:16px 0 16px 16px;display:flex;flex-direction:column;justify-content:space-between;padding:40px}
+.lvl{position:relative;display:flex;flex-direction:column;gap:14px;padding:22px;border:1px solid var(--hair);border-radius:16px;cursor:pointer;transition:border-color .2s,background .2s,transform .3s var(--ease)}
+.lvl:hover{border-color:var(--indigo-sub);transform:translateY(-2px)}
+.lvl input{position:absolute;opacity:0;width:1px;height:1px}
+.lvl:has(input:checked){border-color:var(--indigo);box-shadow:inset 0 0 0 1px var(--indigo),var(--sh2);background:#fff}
+.lvl:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:2px}
+.lvl .tick{position:absolute;top:18px;right:18px;width:22px;height:22px;border-radius:9999px;border:1px solid var(--hair);display:flex;align-items:center;justify-content:center}
+.lvl:has(input:checked) .tick{background:var(--indigo);border-color:var(--indigo)}
+.lvl .tick svg{width:12px;height:12px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.lvl:has(input:checked) .tick svg{opacity:1}
+.bars{display:flex;align-items:flex-end;gap:4px;height:22px}
+.bars i{width:6px;border-radius:2px;background:var(--hair)}
+.bars i.on{background:var(--indigo)}
+.prog{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.prog span{height:4px;border-radius:2px;background:rgba(23,23,28,.12);overflow:hidden}
+.prog span.on::after{content:"";display:block;height:100%;background:var(--indigo);transform-origin:left;animation:fill 1s var(--ease) .3s both}
+</style>
+</helmet>
+<div data-fx class="bp">
+<div class="split">
+
+<aside class="side mesh rv">
+<a href="#" class="logo"><i></i>TRIX</a>
+<div class="float bob" style="padding:28px;display:flex;flex-direction:column;gap:16px;max-width:380px">
+<span class="mono">Шаг 1 из 3</span>
+<div role="progressbar" aria-label="Заполнение профиля" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1" class="prog"><span class="on"></span><span></span><span></span></div>
+<p class="small muted">По сфере и опыту выступлений подберём мероприятия, где ваш доклад будет к месту.</p>
+</div>
+<span class="num" style="font-size:160px;line-height:.8;letter-spacing:-.06em;color:#fff;font-weight:300;text-shadow:0 2px 30px rgba(28,30,84,.25)">01<span style="color:rgba(255,255,255,.5)">/03</span></span>
+</aside>
+
+<main style="padding:120px 96px 64px;display:flex;flex-direction:column;gap:48px;max-width:860px">
+<div class="rv" style="--d:1;display:flex;flex-direction:column;gap:16px">
+<h1 class="d-xl">Расскажите о себе</h1>
+<p class="lead">По сфере и опыту выступлений подберём мероприятия, где ваш доклад будет к месту.</p>
+</div>
+
+<form style="display:flex;flex-direction:column;gap:48px">
+<fieldset class="rv" style="--d:2;margin:0;padding:0;border:0;min-width:0">
+<legend class="idx" style="width:100%;padding:0;margin-bottom:20px">01 / Сфера</legend>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<label class="pill"><input type="radio" name="sphere" checked>Backend</label>
+<label class="pill"><input type="radio" name="sphere">Frontend</label>
+<label class="pill"><input type="radio" name="sphere">Mobile</label>
+<label class="pill"><input type="radio" name="sphere">Data и ML</label>
+<label class="pill"><input type="radio" name="sphere">DevOps</label>
+<label class="pill"><input type="radio" name="sphere">QA</label>
+<label class="pill"><input type="radio" name="sphere">Продукт</label>
+<label class="pill"><input type="radio" name="sphere">Дизайн</label>
+<label class="pill"><input type="radio" name="sphere">Аналитика</label>
+<label class="pill"><input type="radio" name="sphere">Другое</label>
+</div>
+</fieldset>
+
+<fieldset class="rv" style="--d:3;margin:0;padding:0;border:0;min-width:0">
+<legend class="idx" style="width:100%;padding:0;margin-bottom:20px">02 / Опыт выступлений</legend>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+<label class="lvl"><input type="radio" name="level"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bars" aria-hidden="true"><i class="on" style="height:8px"></i><i style="height:14px"></i><i style="height:22px"></i></span><span class="h-row">Начинающий</span><span class="small muted">Ещё не выступал или выступал пару раз</span></label>
+<label class="lvl"><input type="radio" name="level"><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bars" aria-hidden="true"><i class="on" style="height:8px"></i><i class="on" style="height:14px"></i><i style="height:22px"></i></span><span class="h-row">Есть опыт</span><span class="small muted">Выступал на митапах или внутри компании</span></label>
+<label class="lvl"><input type="radio" name="level" checked><span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="bars" aria-hidden="true"><i class="on" style="height:8px"></i><i class="on" style="height:14px"></i><i class="on" style="height:22px"></i></span><span class="h-row">Опытный</span><span class="small muted">Регулярно выступаю на конференциях</span></label>
+</div>
+</fieldset>
+
+<div class="rv" style="--d:4;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:28px;border-top:1px solid var(--border)">
+<span class="small muted">Всё можно поменять позже в профиле</span>
+<a href="st-selection.dc.html" class="btn">Далее<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+</form>
+</main>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 1080}, "cursor": {"editor": "enum", "options": ["Слова", "Линза-негатив", "Перекрестие", "Магнитный градиент", "Выкл"], "default": "Слова", "section": "Эффект курсора"}, "letters": {"editor": "enum", "options": ["Мелкие", "Средние", "Крупные"], "default": "Мелкие", "section": "Эффект курсора"}, "zone": {"editor": "enum", "options": ["Как было", "Весь белый фон", "Фон и карточки", "Только карточки"], "default": "Как было", "section": "Эффект курсора"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    if (window.TrixFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  start() {
+    const T = window.TrixTrail
+    this.stopFx = window.TrixFX?.run(this.props, {
+      words: 'onboarding',
+      accent: '#533afd',
+      light: '#fff',
+      legacy: mode => mode === 'Магнитный градиент'
+        ? T.magnet('.mesh:not(.ava):not(.mesh-sm)')
+        : T.mount('.mesh:not(.ava):not(.mesh-sm)', el => ({ color: el.matches('.mesh-mint, .mesh-dawn') ? '#533afd' : '#fff', glyphs: 'words' })),
+    })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>

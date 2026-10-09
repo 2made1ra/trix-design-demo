@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — заявки</title>
+<script src="./support.js"></script>
+<script src="./trail.js"></script>
+<script src="./cursor-fx.js"></script>
+<script src="./verge-fx.js"></script>
+<link rel="stylesheet" href="verge.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@100..1000&amp;family=Onest:wght@300..700&amp;family=Martian+Mono:wdth,wght@75..112.5,400..700&amp;family=Literata:ital,opsz,wght@0,7..72,400..500;1,7..72,400&amp;display=swap">
+<style>
+.list .stream{--tc:40px;--gap:24px}
+.list .st::before{display:none}
+.list .stream::before{left:20px}
+.list .fx-rail{left:19px}
+.list .ava{transition:box-shadow .3s}
+.list .st.hit .ava{box-shadow:0 0 0 3px var(--bg),0 0 0 4px var(--uv)}
+.list .st-time{padding-top:20px;text-align:left;position:relative;z-index:2}
+.app{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border-radius:20px}
+.app:not(.mint):hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.qa li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;padding:24px 0}
+.decide{position:sticky;bottom:24px;z-index:20;display:flex;align-items:center;gap:12px;padding:12px 12px 12px 28px;border-radius:40px}
+</style>
+</helmet>
+<div class="vg">
+<header class="nav"><div class="wrap">
+<div style="display:flex;align-items:center;gap:56px"><a href="#" class="brand">TRIX<b></b></a>
+<nav class="links" aria-label="Разделы"><a href="vg-event-edit.dc.html">Мероприятия</a><a href="vg-apps.dc.html" aria-current="page">Заявки</a></nav></div>
+<a href="#" aria-haspopup="menu" aria-expanded="false" class="k" style="display:inline-flex;align-items:center;gap:12px"><span aria-hidden="true" class="ava uv">СИ</span>Сообщество инженеров надёжности<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2"><path d="m6 9 6 6 6-6"/></svg></a>
+</div></header>
+
+<main class="wrap" style="padding-top:64px;padding-bottom:96px">
+<div data-rv style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px 48px;align-items:flex-end">
+<h1 class="d-hero">Заявки</h1>
+<p class="deck" style="padding-bottom:18px;max-width:460px">Принимайте и отклоняйте заявки спикеров — каждый получит письмо со статусом.</p>
+</div>
+
+<div class="tile slate" data-rv style="margin-top:40px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px;padding:24px">
+<div class="field" style="flex:1 1 360px"><label for="ap-event">Мероприятие</label><div class="combo"><input id="ap-event" class="inp" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" value="Конференция по надёжности сервисов"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div></div>
+<div class="field" style="flex:0 1 260px"><label for="ap-track">Трек</label><div class="combo"><input id="ap-track" class="inp" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" value="Все треки"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div></div>
+<fieldset style="margin:0;padding:0;border:0;min-width:0"><legend class="legend" style="margin-bottom:10px">Статус</legend>
+<div class="picks"><label class="pick"><input type="radio" name="app-status" checked>Все</label><label class="pick"><input type="radio" name="app-status">Новые</label><label class="pick"><input type="radio" name="app-status">Принятые</label><label class="pick"><input type="radio" name="app-status">Отклонённые</label></div>
+</fieldset>
+</div>
+
+<div style="margin-top:48px;display:flex;flex-wrap:wrap;gap:56px;align-items:flex-start">
+<section aria-label="Список заявок" class="list" style="position:sticky;top:96px;flex:1 1 340px;max-width:440px">
+<ul class="stream">
+<li class="st"><div class="st-time" aria-hidden="true"><span class="ava mint">СП</span></div>
+<a href="vg-apps.dc.html" aria-current="true" class="tile app mint fx-field" data-rv>
+<span style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span class="h-20">Сергей Петров</span><span class="tag ink">Новая</span></span>
+<span style="font-size:15px;line-height:1.4">Миграция монолита без остановки сервиса</span>
+<span class="k muted">Золотая лига · «Архитектура и миграции» · подана [дата]</span></a></li>
+<li class="st"><div class="st-time" aria-hidden="true"><span class="ava uv">АК</span></div>
+<a href="#application" class="tile app" data-rv>
+<span style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span class="h-20">Анна Ковалёва</span><span class="tag mint">Новая</span></span>
+<span style="font-size:15px;line-height:1.4">Релизы без страха: канареечные выкладки на практике</span>
+<span class="k muted">Рубиновая лига · «Наблюдаемость» · подана [дата]</span></a></li>
+<li class="st"><div class="st-time" aria-hidden="true"><span class="ava yellow">ДО</span></div>
+<a href="#application" class="tile app" data-rv>
+<span style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span class="h-20">Дмитрий Орлов</span><span class="tag uv">Принята</span></span>
+<span style="font-size:15px;line-height:1.4">Постмортем без поиска виноватых</span>
+<span class="k muted">Бронзовая лига · «Инциденты и постмортемы» · подана [дата]</span></a></li>
+<li class="st"><div class="st-time" aria-hidden="true"><span class="ava pink">МБ</span></div>
+<a href="#application" class="tile app" data-rv>
+<span style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span class="h-20">Мария Белова</span><span class="tag dash">Отклонена</span></span>
+<span style="font-size:15px;line-height:1.4">Трейсинг в очередях: где теряется время</span>
+<span class="k muted">Серебряная лига · «Наблюдаемость» · подана [дата]</span></a></li>
+</ul>
+</section>
+
+<article aria-labelledby="app-title" style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:64px">
+<div data-rv style="display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;align-items:center;gap:12px"><span class="ribbon">Заявка</span><span class="tag mint">Новая</span></div>
+<h2 id="app-title" class="d-2">Миграция монолита без остановки сервиса</h2>
+<p class="k muted">Трек «Архитектура и миграции» · 30 минут · подана [дата]</p>
+</div>
+
+<section aria-labelledby="sp-title" class="tile ink fx-field" data-rv style="padding:40px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px">
+<div style="display:flex;align-items:center;gap:20px">
+<span aria-hidden="true" class="ava mint" style="width:88px;height:88px;font-size:20px">СП</span>
+<div style="display:flex;flex-direction:column;gap:6px"><h3 id="sp-title" class="h-34">Сергей Петров</h3><span class="k muted">Backend · Опытный · Москва</span></div>
+</div>
+<a href="#" class="b b-line b-sm">Открыть профиль</a>
+</div>
+<p style="font-size:17px;max-width:680px">Бэкенд-разработчик в финтехе. Переношу монолиты на сервисы без остановки и рассказываю, как сделать это спокойно.</p>
+<dl class="dl"><dt>Лига</dt><dd><span class="tag yellow">Золотая</span></dd><dt>Выступления</dt><dd><span class="num">[N]</span> подтверждённых</dd><dt>Выступал</dt><dd>Митап Go-разработчиков, Студенческий фестиваль IT-проектов, внутренний митап компании</dd><dt>Ссылки</dt><dd><a href="#link" class="ln">Telegram</a>, <a href="#link" class="ln">GitHub</a></dd></dl>
+</section>
+
+<section data-rv>
+<span class="k muted">01 / Аннотация</span>
+<p class="serif" style="margin-top:20px;font-size:30px;line-height:1.3;max-width:820px">Как мы перевели платёжный монолит на сервисы, не останавливая приём платежей: переключение трафика по частям, откаты без простоя и что пришлось договорить с бизнесом.</p>
+</section>
+
+<section data-rv>
+<span class="k muted">02 / Ответы на вопросы</span>
+<ol class="qa rows" style="margin-top:8px">
+<li><span class="tag uv" style="align-self:start">Q1</span><div style="display:flex;flex-direction:column;gap:8px"><span class="small muted">Выступали ли вы с этим докладом раньше? Если да — где</span><span style="font-size:18px">Нет, это первая версия доклада.</span></div></li>
+<li><span class="tag uv" style="align-self:start">Q2</span><div style="display:flex;flex-direction:column;gap:8px"><span class="small muted">Что слушатели смогут применить после доклада?</span><span style="font-size:18px">Схему переключения трафика со старого сервиса на новый и чек-лист отката.</span></div></li>
+</ol>
+</section>
+
+<div class="decide tile ink">
+<span class="small muted" style="margin-right:auto">Спикер получит письмо со статусом. Дальше договариваетесь напрямую.</span>
+<a href="#" class="b b-line">Отклонить</a>
+<a href="#" class="b b-mint">Принять<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></a>
+</div>
+</article>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2200},"theme":{"editor":"enum","options":["Светлая","Тёмная"],"default":"Светлая","section":"Тема"},"cursor":{"editor":"enum","options":["Слова","Линза-негатив","Перекрестие","Выкл"],"default":"Слова","section":"Эффект курсора"},"letters":{"editor":"enum","options":["Мелкие","Средние","Крупные"],"default":"Мелкие","section":"Эффект курсора"},"zone":{"editor":"enum","options":["Как было","Весь белый фон","Фон и карточки","Только карточки"],"default":"Как было","section":"Эффект курсора"},"reveal":{"editor":"enum","options":["Шторка","Расшифровка","Подъём","Выкл"],"default":"Подъём","section":"Появление"},"display":{"editor":"enum","options":["Шёпот","Резина","Обычный"],"default":"Обычный","section":"Заголовки"},"rail":{"editor":"enum","options":["Рисуется","Статичная"],"default":"Рисуется","section":"Лента"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    if (window.VergeFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  start() {
+    this.stopFx = window.VergeFX?.run(this.props, { words: 'apps' })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>

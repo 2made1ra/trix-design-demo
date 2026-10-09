@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — редактирование мероприятия</title>
+<script src="./support.js"></script>
+<script src="./trail.js"></script>
+<script src="./cursor-fx.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@400;500&amp;family=Space+Mono&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#212121}a:hover{color:#1863dc}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #4c6ee6;outline-offset:2px}
+input:focus,textarea:focus{border-color:#9b60aa}
+</style>
+</helmet>
+<div data-fx style="min-height: 100vh; background: #ffffff; color: #212121; font-family: Inter, Arial, ui-sans-serif, system-ui, sans-serif; font-size: 16px; line-height: 1.5">
+
+<header style="border-bottom: 1px solid #e5e7eb">
+<div style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 0 clamp(20px, 4vw, 40px); min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 40px">
+<a href="#" style="font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif; font-size: 24px; letter-spacing: -0.5px; color: #000000; text-decoration: none">TRIX</a>
+<nav aria-label="Разделы" style="display: flex; flex-wrap: wrap; gap: 24px; font-size: 14px">
+<a href="#" aria-current="page" style="padding: 24px 0 22px; border-bottom: 2px solid #17171c; color: #000000; text-decoration: none">Мероприятия</a>
+<a href="#" style="padding: 24px 0 22px; border-bottom: 2px solid transparent; color: #616161; text-decoration: none">Заявки</a>
+</nav>
+</div>
+<div style="position: relative">
+<a href="#" aria-haspopup="menu" aria-expanded="false" style="display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: #212121; text-decoration: none"><span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 9999px; background: #eeece7; display: inline-flex; align-items: center; justify-content: center">СИ</span>Сообщество инженеров надёжности<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="flex: none; fill: none; stroke: #616161; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="m6 9 6 6 6-6"></path></svg></a>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 40px clamp(20px, 4vw, 40px) 96px">
+<nav aria-label="Путь по разделу" style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px; color: #616161">
+<a href="#" style="color: #616161">Мероприятия</a>
+<span aria-hidden="true">/</span>
+<span>Конференция по надёжности сервисов</span>
+</nav>
+
+<div style="margin-top: 32px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px"><span style="font-family: 'Space Mono', ui-monospace, monospace; font-size: 14px; letter-spacing: 0.28px; text-transform: uppercase; color: #616161">Мероприятие</span><span style="display: inline-flex; align-items: center; gap: 6px; background: #17171c; color: #ffffff; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round"><path d="M20 6 9 17l-5-5"></path></svg>Опубликовано</span></div>
+<h1 style="margin: 0; font-weight: 400; font-size: clamp(36px, 4vw, 48px); line-height: 1.2; letter-spacing: -0.01em; color: #000000">Конференция по надёжности сервисов</h1>
+<p style="margin: 0; font-size: 18px; line-height: 1.4; color: #616161">Изменения сразу появятся на опубликованном лендинге.</p>
+</div>
+
+<div style="margin-top: 48px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 48px">
+<form style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column; gap: 48px">
+<section id="ev-main" aria-labelledby="ev-main-title" style="display: flex; flex-direction: column; gap: 24px; padding-top: 32px; border-top: 1px solid #d9d9dd">
+<h2 id="ev-main-title" style="margin: 0; font-weight: 400; font-size: 24px; line-height: 1.3; color: #000000">Основное</h2>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-title" style="font-size: 14px">Название</label>
+<input id="ev-title" type="text" value="Конференция по надёжности сервисов" style="height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+
+</div>
+<fieldset style="margin: 0; padding: 0; border: 0; min-width: 0">
+<legend style="padding: 0; margin-bottom: 12px; font-size: 14px">Формат</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #17171c; color: #ffffff; font-size: 14px; cursor: pointer"><input type="radio" name="format" checked style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Конференция</label>
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #ffffff; color: #17171c; font-size: 14px; cursor: pointer"><input type="radio" name="format" style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Митап</label>
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #ffffff; color: #17171c; font-size: 14px; cursor: pointer"><input type="radio" name="format" style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Воркшоп</label>
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #ffffff; color: #17171c; font-size: 14px; cursor: pointer"><input type="radio" name="format" style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Другое</label>
+</div>
+</fieldset>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 1 1 220px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-start" style="font-size: 14px">Начало</label>
+<input id="ev-start" type="text" value="[дата]" style="height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+
+</div></div>
+<div style="flex: 1 1 220px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-end" style="font-size: 14px">Окончание</label>
+<input id="ev-end" type="text" value="[дата]" style="height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+
+</div></div>
+</div>
+<fieldset style="margin: 0; padding: 0; border: 0; min-width: 0">
+<legend style="padding: 0; margin-bottom: 12px; font-size: 14px">Где проходит</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #ffffff; color: #17171c; font-size: 14px; cursor: pointer"><input type="radio" name="place" style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Офлайн</label>
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #ffffff; color: #17171c; font-size: 14px; cursor: pointer"><input type="radio" name="place" style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Онлайн</label>
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #17171c; color: #ffffff; font-size: 14px; cursor: pointer"><input type="radio" name="place" checked style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Гибрид</label>
+</div>
+<p style="margin: 12px 0 0; font-size: 13px; line-height: 1.4; color: #616161">Для гибрида и онлайна спикеру покажем, что будет трансляция</p>
+</fieldset>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 1 1 220px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-city" style="font-size: 14px">Город</label>
+<div style="position: relative; display: flex">
+<input id="ev-city" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" value="Санкт-Петербург" style="flex: 1 1 auto; min-width: 0; height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 52px 0 14px; background: #ffffff; font: inherit; color: #212121">
+<button type="button" aria-label="Открыть список" style="position: absolute; top: 2px; right: 2px; width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #616161; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="m6 9 6 6 6-6"></path></svg></button>
+</div>
+</div></div>
+<div style="flex: 1 1 220px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-venue" style="font-size: 14px">Площадка · необязательно</label>
+<input id="ev-venue" type="text" value="[адрес площадки]" style="height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+
+</div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-desc" style="font-size: 14px">О мероприятии</label>
+<textarea id="ev-desc" rows="4" aria-describedby="ev-desc-hint" style="min-height: 112px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 12px 14px; background: #ffffff; font: inherit; line-height: 1.5; color: #212121; resize: vertical">Конференция для инженеров, которые отвечают за сервисы в продакшене: как строить системы, переживающие сбои, и как спокойно переносить нагрузку со старого на новое. Без маркетинга — только опыт команд.</textarea>
+<span id="ev-desc-hint" style="font-size: 13px; line-height: 1.4; color: #616161">Первый абзац лендинга: для кого мероприятие и чем оно отличается</span>
+</div>
+</section>
+
+<section id="ev-audience" aria-labelledby="ev-audience-title" style="display: flex; flex-direction: column; gap: 24px; padding-top: 32px; border-top: 1px solid #d9d9dd">
+<h2 id="ev-audience-title" style="margin: 0; font-weight: 400; font-size: 24px; line-height: 1.3; color: #000000">Аудитория и треки</h2>
+<fieldset style="margin: 0; padding: 0; border: 0; min-width: 0">
+<legend style="padding: 0; margin-bottom: 12px; font-size: 14px">Уровень аудитории</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #ffffff; color: #17171c; font-size: 14px; cursor: pointer"><input type="checkbox" name="level" style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Junior</label>
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #17171c; color: #ffffff; font-size: 14px; cursor: pointer"><input type="checkbox" name="level" checked style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Middle</label>
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #17171c; color: #ffffff; font-size: 14px; cursor: pointer"><input type="checkbox" name="level" checked style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Senior</label>
+<label style="position: relative; display: inline-flex; align-items: center; height: 44px; box-sizing: border-box; padding: 0 18px; border: 1px solid #17171c; border-radius: 30px; background: #17171c; color: #ffffff; font-size: 14px; cursor: pointer"><input type="checkbox" name="level" checked style="position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0">Lead</label>
+</div>
+</fieldset>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-who" style="font-size: 14px">Кто приходит</label>
+<input id="ev-who" type="text" value="Backend- и SRE-инженеры, тимлиды" style="height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 14px">Треки</span>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<input type="text" aria-label="Трек 1" value="Архитектура и миграции" style="flex: 1 1 200px; min-width: 0; height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+<input type="text" aria-label="Коротко о треке 1" value="Как переносить нагрузку со старых систем на новые и не ронять продакшен." style="flex: 2 1 320px; min-width: 0; height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+<button type="button" aria-label="Удалить трек" style="flex: none; width: 44px; height: 44px; border: 0; border-radius: 9999px; background: transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #616161; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<input type="text" aria-label="Трек 2" value="Наблюдаемость" style="flex: 1 1 200px; min-width: 0; height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+<input type="text" aria-label="Коротко о треке 2" value="Метрики, логи и трейсы, которые помогают найти причину сбоя, а не только симптом." style="flex: 2 1 320px; min-width: 0; height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+<button type="button" aria-label="Удалить трек" style="flex: none; width: 44px; height: 44px; border: 0; border-radius: 9999px; background: transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #616161; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<input type="text" aria-label="Трек 3" value="Инциденты и постмортемы" style="flex: 1 1 200px; min-width: 0; height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+<input type="text" aria-label="Коротко о треке 3" value="Разборы реальных сбоев: что случилось, как чинили и что поменяли после." style="flex: 2 1 320px; min-width: 0; height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+<button type="button" aria-label="Удалить трек" style="flex: none; width: 44px; height: 44px; border: 0; border-radius: 9999px; background: transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #616161; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
+</div>
+<span style="font-size: 13px; line-height: 1.4; color: #616161">Спикер выберет трек в заявке. Описание треков покажем на лендинге</span>
+<button type="button" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent; padding: 0; font: inherit; font-size: 14px; color: #212121; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #212121; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="M12 5v14M5 12h14"></path></svg>Добавить трек</button>
+</div>
+</section>
+
+<section id="ev-speakers" aria-labelledby="ev-speakers-title" style="display: flex; flex-direction: column; gap: 24px; padding-top: 32px; border-top: 1px solid #d9d9dd">
+<h2 id="ev-speakers-title" style="margin: 0; font-weight: 400; font-size: 24px; line-height: 1.3; color: #000000">Условия для спикеров</h2>
+<fieldset style="margin: 0; padding: 0; border: 0; min-width: 0">
+<legend style="padding: 0; margin-bottom: 12px; font-size: 14px">Оплата за выступление</legend>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 12px">
+<label style="display: flex; flex-direction: column; gap: 6px; box-sizing: border-box; padding: 20px; border: 1px solid #17171c; box-shadow: inset 0 0 0 1px #17171c; border-radius: 8px; cursor: pointer">
+<span style="display: flex; align-items: center; gap: 10px; font-size: 18px; line-height: 1.4; color: #000000"><input type="radio" name="pay" checked style="flex: none; width: 18px; height: 18px; margin: 0; accent-color: #17171c">Не оплачивается</span>
+<span style="font-size: 14px; line-height: 1.4; color: #616161">На лендинге и в подборке будет метка «Не оплачивается»</span>
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; box-sizing: border-box; padding: 20px; border: 1px solid #d9d9dd; border-radius: 8px; cursor: pointer">
+<span style="display: flex; align-items: center; gap: 10px; font-size: 18px; line-height: 1.4; color: #000000"><input type="radio" name="pay" style="flex: none; width: 18px; height: 18px; margin: 0; accent-color: #17171c">Оплачивается</span>
+<span style="font-size: 14px; line-height: 1.4; color: #616161">Метка «Оплачивается» — спикеры с запросом на оплату увидят мероприятие в подборке</span>
+</label>
+</div>
+</fieldset>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 1 1 220px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-slot" style="font-size: 14px">Доклад, минут</label>
+<input id="ev-slot" type="text" value="[длительность]" inputmode="numeric" style="height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+
+</div></div>
+<div style="flex: 1 1 220px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-qa" style="font-size: 14px">Вопросы, минут</label>
+<input id="ev-qa" type="text" value="[длительность]" inputmode="numeric" style="height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+
+</div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-travel" style="font-size: 14px">Дорога и проживание · необязательно</label>
+<textarea id="ev-travel" rows="2" style="min-height: 56px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 12px 14px; background: #ffffff; font: inherit; line-height: 1.5; color: #212121; resize: vertical">[Условия организатора]</textarea>
+
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-extra" style="font-size: 14px">Что ещё даёте спикерам · необязательно</label>
+<input id="ev-extra" type="text" value="Прогон доклада с программным комитетом" style="height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+
+</div>
+</section>
+
+<section id="ev-intake" aria-labelledby="ev-intake-title" style="display: flex; flex-direction: column; gap: 24px; padding-top: 32px; border-top: 1px solid #d9d9dd">
+<h2 id="ev-intake-title" style="margin: 0; font-weight: 400; font-size: 24px; line-height: 1.3; color: #000000">Приём заявок</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 20px 16px">
+<div style="flex: 1 1 220px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-deadline" style="font-size: 14px">Дедлайн заявок</label>
+<input id="ev-deadline" type="text" value="[дата]" style="height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+
+</div></div>
+<div style="flex: 1 1 220px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ev-answer" style="font-size: 14px">Ответим спикерам до</label>
+<input id="ev-answer" type="text" value="[дата]" aria-describedby="ev-answer-hint" style="height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+<span id="ev-answer-hint" style="font-size: 13px; line-height: 1.4; color: #616161">Покажем на лендинге и в письме спикеру</span>
+</div></div>
+</div>
+<fieldset style="margin: 0; padding: 0; border: 0; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<legend style="padding: 0; margin-bottom: 12px; font-size: 14px">Вопросы в заявке</legend>
+<p style="margin: 0 0 4px; font-size: 13px; line-height: 1.4; color: #616161">Аннотация, трек, длительность и профиль спикера в заявке есть всегда. Здесь — ваши вопросы сверх этого.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px">
+<input type="text" aria-label="Вопрос 1" value="Выступали ли вы с этим докладом раньше? Если да — где" style="flex: 1 1 360px; min-width: 0; height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+<label style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer"><input type="checkbox" checked style="flex: none; width: 18px; height: 18px; margin: 0; accent-color: #17171c">Обязательный</label>
+<button type="button" aria-label="Удалить вопрос" style="flex: none; width: 44px; height: 44px; border: 0; border-radius: 9999px; background: transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #616161; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px">
+<input type="text" aria-label="Вопрос 2" value="Что слушатели смогут применить после доклада?" style="flex: 1 1 360px; min-width: 0; height: 48px; box-sizing: border-box; border: 1px solid #d9d9dd; border-radius: 4px; padding: 0 14px; background: #ffffff; font: inherit; color: #212121">
+<label style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer"><input type="checkbox" style="flex: none; width: 18px; height: 18px; margin: 0; accent-color: #17171c">Обязательный</label>
+<button type="button" aria-label="Удалить вопрос" style="flex: none; width: 44px; height: 44px; border: 0; border-radius: 9999px; background: transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #616161; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+</div>
+<button type="button" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent; padding: 0; font: inherit; font-size: 14px; color: #212121; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: #212121; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round"><path d="M12 5v14M5 12h14"></path></svg>Добавить вопрос</button>
+</fieldset>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding: 20px 24px; border: 1px solid #d9d9dd; border-radius: 8px">
+<div style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px"><h3 style="margin: 0; font-weight: 400; font-size: 20px; line-height: 1.3; color: #000000">Приём заявок</h3><span style="display: inline-block; border: 1px solid #17171c; color: #17171c; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap">Открыт</span></div>
+<p style="margin: 0; font-size: 14px; color: #616161">Закроется сам после дедлайна. Если закрыть раньше, лендинг останется, но новых заявок не будет. Открыть приём можно снова.</p>
+</div>
+<a href="#" style="display: inline-block; border: 1px solid #17171c; background: #ffffff; color: #17171c; border-radius: 30px; padding: 9px 18px; font-size: 14px; font-weight: 500; line-height: 1.71; text-decoration: none">Закрыть приём заявок</a>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 16px 24px; padding-top: 24px; border-top: 1px solid #e5e7eb">
+<span style="margin-right: auto; font-size: 14px; color: #616161">Спикеры с поданными заявками изменения тоже увидят</span>
+<a href="#" style="font-size: 14px; text-decoration: underline; text-underline-offset: 3px">Отмена</a>
+<a href="#" style="display: inline-block; background: #17171c; color: #ffffff; border-radius: 32px; padding: 12px 24px; font-size: 14px; font-weight: 500; line-height: 1.71; text-decoration: none">Сохранить изменения</a>
+</div>
+</form>
+
+<aside style="flex: 1 1 300px; min-width: 0; position: sticky; top: 24px; display: flex; flex-direction: column; gap: 24px">
+<section aria-labelledby="lp-title" style="background: #eeece7; border-radius: 8px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<h2 id="lp-title" style="margin: 0; font-weight: 400; font-size: 20px; line-height: 1.3; color: #000000">Лендинг мероприятия</h2>
+<dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 20px; font-size: 14px">
+<dt style="color: #616161">Статус</dt><dd style="margin: 0"><span style="display: inline-flex; align-items: center; gap: 6px; background: #17171c; color: #ffffff; border-radius: 9999px; padding: 3px 12px; font-size: 13px; white-space: nowrap"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true" style="fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round"><path d="M20 6 9 17l-5-5"></path></svg>Опубликован</span></dd>
+<dt style="color: #616161">Сохранено</dt><dd style="margin: 0">[время]</dd>
+</dl>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; border-top: 1px solid #d9d9dd; font-size: 15px">
+<li style="border-bottom: 1px solid #d9d9dd"><a href="#ev-main" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; color: #212121; text-decoration: none">Основное</a></li>
+<li style="border-bottom: 1px solid #d9d9dd"><a href="#ev-audience" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; color: #212121; text-decoration: none">Аудитория и треки</a></li>
+<li style="border-bottom: 1px solid #d9d9dd"><a href="#ev-speakers" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; color: #212121; text-decoration: none">Условия для спикеров</a></li>
+<li style="border-bottom: 1px solid #d9d9dd"><a href="#ev-intake" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; color: #212121; text-decoration: none">Приём заявок</a></li>
+</ul>
+<p style="margin: 0; font-size: 14px; color: #616161">Лендинг соберём из этих разделов — так его увидят спикеры.</p>
+<a href="#" style="font-size: 14px; text-decoration: underline; text-underline-offset: 3px">Предпросмотр лендинга</a>
+</section>
+</aside>
+</div>
+</main>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 3140}, "cursor": {"editor": "enum", "options": ["Слова", "Линза-негатив", "Перекрестие", "Выкл"], "default": "Слова", "section": "Эффект курсора"}, "letters": {"editor": "enum", "options": ["Мелкие", "Средние", "Крупные"], "default": "Мелкие", "section": "Эффект курсора"}, "zone": {"editor": "enum", "options": ["Как было", "Весь белый фон", "Фон и карточки", "Только карточки"], "default": "Как было", "section": "Эффект курсора"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    if (window.TrixFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  start() {
+    const T = window.TrixTrail
+    this.stopFx = window.TrixFX?.run(this.props, {
+      words: 'event-edit',
+      accent: '#1863dc',
+      light: '#fff',
+    })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>

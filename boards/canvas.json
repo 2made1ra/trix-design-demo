@@ -1,0 +1,468 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 2400,
+      "is_interactive": true,
+      "title": "Baseline · Лендинг мероприятия",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "base-apps.dc.html": {
+      "expand": "fill",
+      "h": 1460,
+      "is_interactive": true,
+      "title": "Baseline · Заявки",
+      "w": 1440,
+      "x": 9120,
+      "y": 0
+    },
+    "base-event-edit.dc.html": {
+      "expand": "fill",
+      "h": 3140,
+      "is_interactive": true,
+      "title": "Baseline · Создание мероприятия",
+      "w": 1440,
+      "x": 7600,
+      "y": 0
+    },
+    "base-growth.dc.html": {
+      "expand": "fill",
+      "h": 3000,
+      "is_interactive": true,
+      "title": "Baseline · Развитие",
+      "w": 1440,
+      "x": 6080,
+      "y": 0
+    },
+    "base-home.dc.html": {
+      "expand": "fill",
+      "h": 5900,
+      "is_interactive": true,
+      "title": "Baseline · Главная TRIX",
+      "w": 1440,
+      "x": -1520,
+      "y": 0
+    },
+    "base-onboarding.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Baseline · Онбординг, шаг 1",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "base-review.dc.html": {
+      "expand": "fill",
+      "h": 1900,
+      "is_interactive": true,
+      "title": "Baseline · Разбор доклада",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "base-selection.dc.html": {
+      "expand": "fill",
+      "h": 1320,
+      "is_interactive": true,
+      "title": "Baseline · Подборка мероприятий",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "bp-apps.dc.html": {
+      "expand": "fill",
+      "h": 1800,
+      "is_interactive": true,
+      "title": "Baseline+ · Заявки",
+      "w": 1440,
+      "x": 9120,
+      "y": 7500
+    },
+    "bp-event-edit.dc.html": {
+      "expand": "fill",
+      "h": 3300,
+      "is_interactive": true,
+      "title": "Baseline+ · Создание мероприятия",
+      "w": 1440,
+      "x": 7600,
+      "y": 7500
+    },
+    "bp-growth.dc.html": {
+      "expand": "fill",
+      "h": 3200,
+      "is_interactive": true,
+      "title": "Baseline+ · Развитие",
+      "w": 1440,
+      "x": 6080,
+      "y": 7500
+    },
+    "bp-home.dc.html": {
+      "expand": "fill",
+      "h": 6150,
+      "is_interactive": true,
+      "title": "Baseline+ · Главная TRIX",
+      "w": 1440,
+      "x": -1520,
+      "y": 7500
+    },
+    "bp-landing.dc.html": {
+      "expand": "fill",
+      "h": 2440,
+      "is_interactive": true,
+      "title": "Baseline+ · Лендинг мероприятия",
+      "w": 1440,
+      "x": 0,
+      "y": 7500
+    },
+    "bp-onboarding.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "title": "Baseline+ · Онбординг, шаг 1",
+      "w": 1440,
+      "x": 1520,
+      "y": 7500
+    },
+    "bp-review.dc.html": {
+      "expand": "fill",
+      "h": 2200,
+      "is_interactive": true,
+      "title": "Baseline+ · Разбор доклада",
+      "w": 1440,
+      "x": 4560,
+      "y": 7500
+    },
+    "bp-selection.dc.html": {
+      "expand": "fill",
+      "h": 1500,
+      "is_interactive": true,
+      "title": "Baseline+ · Подборка мероприятий",
+      "w": 1440,
+      "x": 3040,
+      "y": 7500
+    },
+    "sg-apps.dc.html": {
+      "expand": "fill",
+      "h": 1600,
+      "is_interactive": true,
+      "title": "Sunset Glow · Заявки",
+      "w": 1440,
+      "x": 9120,
+      "y": 15250
+    },
+    "sg-event-edit.dc.html": {
+      "expand": "fill",
+      "h": 3300,
+      "is_interactive": true,
+      "title": "Sunset Glow · Создание мероприятия",
+      "w": 1440,
+      "x": 7600,
+      "y": 15250
+    },
+    "sg-growth.dc.html": {
+      "expand": "fill",
+      "h": 3000,
+      "is_interactive": true,
+      "title": "Sunset Glow · Развитие",
+      "w": 1440,
+      "x": 6080,
+      "y": 15250
+    },
+    "sg-home.dc.html": {
+      "expand": "fill",
+      "h": 5600,
+      "is_interactive": true,
+      "title": "Sunset Glow · Главная TRIX",
+      "w": 1440,
+      "x": -1520,
+      "y": 15250
+    },
+    "sg-landing.dc.html": {
+      "expand": "fill",
+      "h": 2500,
+      "is_interactive": true,
+      "title": "Sunset Glow · Лендинг мероприятия",
+      "w": 1440,
+      "x": 0,
+      "y": 15250
+    },
+    "sg-onboarding.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "is_interactive": true,
+      "title": "Sunset Glow · Онбординг, шаг 1",
+      "w": 1440,
+      "x": 1520,
+      "y": 15250
+    },
+    "sg-review.dc.html": {
+      "expand": "fill",
+      "h": 2100,
+      "is_interactive": true,
+      "title": "Sunset Glow · Разбор доклада",
+      "w": 1440,
+      "x": 4560,
+      "y": 15250
+    },
+    "sg-selection.dc.html": {
+      "expand": "fill",
+      "h": 1500,
+      "is_interactive": true,
+      "title": "Sunset Glow · Подборка мероприятий",
+      "w": 1440,
+      "x": 3040,
+      "y": 15250
+    },
+    "st-apps.dc.html": {
+      "expand": "fill",
+      "h": 1700,
+      "is_interactive": true,
+      "title": "Stripe · Заявки",
+      "w": 1440,
+      "x": 9120,
+      "y": 22450
+    },
+    "st-event-edit.dc.html": {
+      "expand": "fill",
+      "h": 3200,
+      "is_interactive": true,
+      "title": "Stripe · Создание мероприятия",
+      "w": 1440,
+      "x": 7600,
+      "y": 22450
+    },
+    "st-growth.dc.html": {
+      "expand": "fill",
+      "h": 3100,
+      "is_interactive": true,
+      "title": "Stripe · Развитие",
+      "w": 1440,
+      "x": 6080,
+      "y": 22450
+    },
+    "st-home.dc.html": {
+      "expand": "fill",
+      "h": 5400,
+      "is_interactive": true,
+      "title": "Stripe · Главная TRIX",
+      "w": 1440,
+      "x": -1520,
+      "y": 22450
+    },
+    "st-landing.dc.html": {
+      "expand": "fill",
+      "h": 2400,
+      "is_interactive": true,
+      "title": "Stripe · Лендинг мероприятия",
+      "w": 1440,
+      "x": 0,
+      "y": 22450
+    },
+    "st-onboarding.dc.html": {
+      "expand": "fill",
+      "h": 1080,
+      "is_interactive": true,
+      "title": "Stripe · Онбординг, шаг 1",
+      "w": 1440,
+      "x": 1520,
+      "y": 22450
+    },
+    "st-review.dc.html": {
+      "expand": "fill",
+      "h": 2100,
+      "is_interactive": true,
+      "title": "Stripe · Разбор доклада",
+      "w": 1440,
+      "x": 4560,
+      "y": 22450
+    },
+    "st-selection.dc.html": {
+      "expand": "fill",
+      "h": 1500,
+      "is_interactive": true,
+      "title": "Stripe · Подборка мероприятий",
+      "w": 1440,
+      "x": 3040,
+      "y": 22450
+    },
+    "vg-apps.dc.html": {
+      "expand": "fill",
+      "h": 2200,
+      "is_interactive": true,
+      "title": "The Verge · Заявки",
+      "w": 1440,
+      "x": 9120,
+      "y": 29450
+    },
+    "vg-event-edit.dc.html": {
+      "expand": "fill",
+      "h": 3680,
+      "is_interactive": true,
+      "title": "The Verge · Создание мероприятия",
+      "w": 1440,
+      "x": 7600,
+      "y": 29450
+    },
+    "vg-growth.dc.html": {
+      "expand": "fill",
+      "h": 4350,
+      "is_interactive": true,
+      "title": "The Verge · Развитие",
+      "w": 1440,
+      "x": 6080,
+      "y": 29450
+    },
+    "vg-home.dc.html": {
+      "expand": "fill",
+      "h": 6300,
+      "is_interactive": true,
+      "title": "The Verge · Главная TRIX",
+      "w": 1440,
+      "x": -1520,
+      "y": 29450
+    },
+    "vg-landing.dc.html": {
+      "expand": "fill",
+      "h": 2580,
+      "is_interactive": true,
+      "title": "The Verge · Лендинг мероприятия",
+      "w": 1440,
+      "x": 0,
+      "y": 29450
+    },
+    "vg-onboarding.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "is_interactive": true,
+      "title": "The Verge · Онбординг, шаг 1",
+      "w": 1440,
+      "x": 1520,
+      "y": 29450
+    },
+    "vg-review.dc.html": {
+      "expand": "fill",
+      "h": 2900,
+      "is_interactive": true,
+      "title": "The Verge · Разбор доклада",
+      "w": 1440,
+      "x": 4560,
+      "y": 29450
+    },
+    "vg-selection.dc.html": {
+      "expand": "fill",
+      "h": 2440,
+      "is_interactive": true,
+      "title": "The Verge · Подборка мероприятий",
+      "w": 1440,
+      "x": 3040,
+      "y": 29450
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-09T12:00:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/artifact/CAQFqYUReiJC3LBMBEq8Ds",
+      "copiedAt": "2026-10-09T12:30:00Z",
+      "namespace": "sunset-glow",
+      "title": "Sunset Glow",
+      "version": "1791544952-d287"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "baseline": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Baseline — текущий стиль",
+      "w": 240,
+      "x": -1520,
+      "y": -300
+    },
+    "baselineplus": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Baseline+ — Cohere с медиа, тёмными полосами и AI-консолью",
+      "w": 240,
+      "x": -1520,
+      "y": 7200
+    },
+    "stripe": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Stripe — индиго и navy, Inter 300, след курсора-волна на лендинге",
+      "w": 240,
+      "x": -1520,
+      "y": 22150
+    },
+    "sunset": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Sunset Glow — тёплая редакционная",
+      "w": 240,
+      "x": -1520,
+      "y": 14950
+    },
+    "verge": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "The Verge — светлая редакция, лента-таймлайн, анимации в Tweaks",
+      "w": 240,
+      "x": -1520,
+      "y": 29150
+    }
+  },
+  "order": [
+    "base-home.dc.html",
+    "Main.dc.html",
+    "base-onboarding.dc.html",
+    "base-selection.dc.html",
+    "base-review.dc.html",
+    "base-growth.dc.html",
+    "base-event-edit.dc.html",
+    "base-apps.dc.html",
+    "bp-home.dc.html",
+    "bp-landing.dc.html",
+    "bp-onboarding.dc.html",
+    "bp-selection.dc.html",
+    "bp-review.dc.html",
+    "bp-growth.dc.html",
+    "bp-event-edit.dc.html",
+    "bp-apps.dc.html",
+    "sg-home.dc.html",
+    "sg-landing.dc.html",
+    "sg-onboarding.dc.html",
+    "sg-selection.dc.html",
+    "sg-review.dc.html",
+    "sg-growth.dc.html",
+    "sg-event-edit.dc.html",
+    "sg-apps.dc.html",
+    "st-home.dc.html",
+    "st-landing.dc.html",
+    "st-onboarding.dc.html",
+    "st-selection.dc.html",
+    "st-review.dc.html",
+    "st-growth.dc.html",
+    "st-event-edit.dc.html",
+    "st-apps.dc.html",
+    "vg-home.dc.html",
+    "vg-landing.dc.html",
+    "vg-onboarding.dc.html",
+    "vg-selection.dc.html",
+    "vg-review.dc.html",
+    "vg-growth.dc.html",
+    "vg-event-edit.dc.html",
+    "vg-apps.dc.html"
+  ],
+  "pages": [],
+  "title": "TRIX — сравнение дизайн-систем"
+}

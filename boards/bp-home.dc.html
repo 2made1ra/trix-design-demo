@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — лендинг</title>
+<script src="./support.js"></script>
+<script src="./cursor-fx.js"></script>
+<script src="./trail.js"></script>
+<link rel="stylesheet" href="bp.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+.hero-media{position:relative;height:540px;margin-top:64px}
+.hero-media>*{position:absolute}
+.hm-prof{left:48px;top:56px;width:320px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.hm-sel{left:50%;top:48px;width:440px;transform:translateX(-50%)}
+.hm-rev{right:48px;bottom:56px;width:300px;padding:20px;display:flex;flex-direction:column;gap:12px}
+@media (max-width:1240px){.hm-prof{display:none}.hm-sel{left:48px;transform:none}}
+.sk{display:block;height:8px;border-radius:4px;background:var(--hair)}
+.on-dark .sk{background:rgba(255,255,255,.18)}
+.cap{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.cap li{display:flex;flex-direction:column;gap:20px;padding:28px 0 0;border-top:1px solid var(--primary)}
+.cap .mock{height:200px;padding:24px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.mrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;background:#fff;border:1px solid var(--border);border-radius:10px}
+.feat{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:center;padding-top:112px}
+.feat.flip{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+.feat.flip>figure{order:-1}
+.feat .txt{display:flex;flex-direction:column;gap:20px}
+.ticks li{display:flex;gap:12px;align-items:baseline;padding:12px 0;border-top:1px solid var(--hair)}
+.ticks svg{flex:none;width:14px;height:14px;fill:none;stroke:var(--coral);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transform:translateY(2px)}
+.on-dark .ticks li{border-color:rgba(255,255,255,.14)}
+.stage{padding:40px}
+.console .grid4{display:grid;grid-template-columns:minmax(120px,1.3fr) repeat(3,minmax(0,1fr));gap:12px 10px;align-items:center;padding:16px 20px;font-size:14px}
+.bp-in{animation:bp-in 7s var(--ease) infinite both}
+@keyframes bp-in{0%,24%{opacity:0;transform:translateY(8px)}34%,88%{opacity:1;transform:none}96%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.bp-in{animation:none}}
+.sec{display:grid;grid-template-columns:280px 1fr;gap:48px;padding-top:112px}
+.start{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.start li{display:flex;flex-direction:column;gap:8px;padding:24px;background:#fff;border-radius:14px}
+.faq details{border-bottom:1px solid var(--hair)}
+.faq details:first-child{border-top:1px solid var(--hair)}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;list-style:none;cursor:pointer}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary svg{flex:none;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;transition:transform .3s var(--ease)}
+.faq details[open] summary svg{transform:rotate(45deg)}
+.faq details p{padding:0 48px 24px 0;color:var(--muted)}
+.foot-cols{display:flex;flex-wrap:wrap;gap:32px 56px;font-size:14px}
+.foot-cols div{display:flex;flex-direction:column;gap:10px}
+.foot-cols a{text-decoration:none;color:rgba(255,255,255,.86)}
+.sub{display:flex;gap:8px;max-width:440px}
+.sub .inp{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2);color:#fff}
+</style>
+</helmet>
+<div data-fx class="bp">
+
+<div class="announce"><span class="dot" style="color:var(--coral)"></span>TRIX в закрытой бете: подборки мероприятий и разбор доклада<a href="#footer" class="ln">Получить доступ</a></div>
+
+<header class="hdr"><div class="wrap">
+<a href="bp-home.dc.html" class="logo"><i></i>TRIX</a>
+<nav aria-label="Основное меню" class="nav"><a href="bp-selection.dc.html">Мероприятия</a><a href="bp-review.dc.html">Разбор доклада</a><a href="#growth">Развитие</a><a href="#organizers">Организаторам</a></nav>
+<div style="display:flex;align-items:center;gap:24px"><a href="#" class="ln small">Войти</a><a href="bp-onboarding.dc.html" class="btn" style="height:40px;padding:0 20px">Начать</a></div>
+</div></header>
+
+<main class="wrap" style="padding-top:80px;padding-bottom:120px">
+
+<section class="rv" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:32px 48px">
+<div style="flex:1 1 640px;display:flex;flex-direction:column;gap:28px">
+<span class="mono">Для спикеров и организаторов</span>
+<h1 class="d-hero" style="max-width:980px">Найдите, где выступить. Выступайте лучше.</h1>
+</div>
+<div style="flex:0 1 380px;display:flex;flex-direction:column;gap:24px">
+<p class="lead">TRIX подбирает мероприятия под вашу сферу и уровень и честно разбирает доклад: до выступления и после.</p>
+<div style="display:flex;flex-wrap:wrap;gap:12px"><a href="bp-onboarding.dc.html" class="btn">Подобрать мероприятия<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#how" class="btn btn-o">Как это работает</a></div>
+</div>
+</section>
+
+<div class="hero-media mesh mesh-dawn rv" style="--d:2" aria-hidden="true">
+<div class="float hm-prof bob">
+<span class="sk" style="width:72px"></span>
+<div style="display:flex;flex-wrap:wrap;gap:6px"><span class="chip chip-dark">Backend</span><span class="chip">Frontend</span><span class="chip">Data</span></div>
+<span class="sk" style="width:56px"></span>
+<div style="display:flex;flex-wrap:wrap;gap:6px"><span class="chip">Начинающий</span><span class="chip chip-dark">Опытный</span></div>
+</div>
+<div class="console hm-sel">
+<div class="console-bar"><b><svg class="spark" viewBox="0 0 24 24"><path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z"/></svg>Подборка</b><span>3 из 24</span></div>
+<div class="row-d bp-in"><span>Конференция о высоконагруженных системах</span><span class="chip chip-na">до [дата]</span></div>
+<div class="row-d bp-in" style="animation-delay:.25s"><span>Онлайн-школа ищет автора курса</span><span class="chip chip-weak">Оплачивается</span></div>
+<div class="row-d bp-in" style="animation-delay:.5s"><span>Митап Go-разработчиков, Казань</span><span class="chip chip-na">до [дата]</span></div>
+</div>
+<div class="float hm-rev bob2">
+<span class="chip chip-dash" style="align-self:flex-start">slides.pdf</span>
+<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px">Аудитория<span class="chip chip-new">Доработать</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px">Структура<span class="chip chip-dark">В порядке</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px">Тайминг<span class="chip chip-weak">Слабо</span></div>
+</div>
+</div>
+
+<section id="how" style="padding-top:112px">
+<div style="display:flex;flex-direction:column;gap:20px;margin-bottom:48px"><span class="idx">01 / Как работает TRIX</span><h2 class="d-l">Три шага до заявки</h2></div>
+<ol class="cap">
+<li class="rv" style="--d:1">
+<div class="mock card-stone" aria-hidden="true"><span class="sk" style="width:72px"></span><div style="display:flex;flex-wrap:wrap;gap:6px"><span class="chip chip-dark">Backend</span><span class="chip">Frontend</span><span class="chip">Data</span></div><span class="sk" style="width:56px"></span><div style="display:flex;flex-wrap:wrap;gap:6px"><span class="chip">Начинающий</span><span class="chip chip-dark">Опытный</span></div></div>
+<h3 class="h-card">Заполните профиль</h3><p class="muted">Сфера, уровень и цель: выступать или прокачаться. Город, формат и оплата — по желанию.</p></li>
+<li class="rv" style="--d:2">
+<div class="mock card-stone" aria-hidden="true"><div class="mrow"><span class="sk" style="width:120px"></span><span class="chip chip-new">Оплачивается</span></div><div class="mrow"><span class="sk" style="width:104px"></span><span class="chip">до [дата]</span></div><div class="mrow"><span class="sk" style="width:132px"></span><span class="chip">до [дата]</span></div></div>
+<h3 class="h-card">Получите подборку</h3><p class="muted">Мероприятия с объяснением, почему подходят, дедлайном заявки и меткой оплаты.</p></li>
+<li class="rv" style="--d:3">
+<div class="mock card-stone" aria-hidden="true"><div class="mrow" style="font-size:13px">Аудитория<span class="chip chip-new">Доработать</span></div><div class="mrow" style="font-size:13px">Структура<span class="chip chip-dark">В порядке</span></div><div class="mrow" style="font-size:13px">Тайминг<span class="chip chip-weak">Слабо</span></div></div>
+<h3 class="h-card">Подготовьте доклад</h3><p class="muted">Загрузите план или слайды — получите разбор под аудиторию выбранного мероприятия.</p></li>
+</ol>
+</section>
+
+<section class="feat">
+<div class="txt">
+<span class="idx">02 / Подборка мероприятий</span>
+<h2 class="h-sec">Мероприятия под ваш профиль</h2>
+<p class="muted">Мероприятия публикуют организаторы в TRIX, остальные агент собирает из открытых источников. Из них подбираем те, что подходят под вашу сферу, уровень и цель.</p>
+<ul class="ticks">
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Объяснение, почему мероприятие подходит</li>
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Дедлайн заявки и напоминание о нём</li>
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Метка оплаты, если организатор её указал</li>
+</ul>
+<a href="bp-selection.dc.html" class="btn" style="align-self:flex-start">Подобрать мероприятия<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<figure class="mesh mesh-blue stage" style="margin:0">
+<figcaption class="mono" style="position:absolute;left:-9999px">Демо: подборка мероприятий под профиль спикера</figcaption>
+<div class="console">
+<div class="console-bar"><b>Мероприятия для вас</b><span>Подборка · Сохранённые</span></div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.08)"><span class="chip chip-w">Backend</span><span class="chip chip-na">Опытный</span><span class="chip chip-na">Цель: выступать</span></div>
+<div class="row-d bp-in" style="flex-direction:column;align-items:stretch;gap:4px"><div style="display:flex;justify-content:space-between;gap:12px"><span>Конференция о высоконагруженных системах</span><span class="chip chip-na">Не оплачивается</span></div><span class="small" style="color:rgba(255,255,255,.6)">Ваша тема совпадает с треком «Архитектура». Заявки до [дата]</span></div>
+<div class="row-d bp-in" style="flex-direction:column;align-items:stretch;gap:4px;animation-delay:.25s"><div style="display:flex;justify-content:space-between;gap:12px"><span>Онлайн-школа ищет автора курса</span><span class="chip chip-weak">Оплачивается</span></div><span class="small" style="color:rgba(255,255,255,.6)">Нужен практик с опытом выступлений. Отклик до [дата]</span></div>
+<div class="row-d bp-in" style="flex-direction:column;align-items:stretch;gap:4px;animation-delay:.5s"><div style="display:flex;justify-content:space-between;gap:12px"><span>Митап Go-разработчиков, Казань</span><span class="chip chip-na">Оплата не указана</span></div><span class="small" style="color:rgba(255,255,255,.6)">Ищут доклады на 20 минут. Заявки до [дата]</span></div>
+</div>
+</figure>
+</section>
+
+<section class="feat flip">
+<div class="txt">
+<span class="idx">03 / Разбор доклада</span>
+<h2 class="h-sec">Разбор доклада под аудиторию</h2>
+<p class="muted">Загрузите план или слайды и выберите мероприятие. TRIX оценит доклад по понятным критериям и расставит правки по приоритету.</p>
+<ul class="ticks">
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Оценка по критериям: аудитория, структура, тайминг</li>
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Правки по приоритету со ссылками на слайды</li>
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Вопросы, которые вероятно зададут из зала</li>
+</ul>
+<a href="bp-review.dc.html" class="btn btn-o" style="align-self:flex-start">Посмотреть пример разбора<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<figure class="mesh mesh-dawn stage" style="margin:0">
+<figcaption class="mono" style="position:absolute;left:-9999px">Демо: разбор доклада по критериям и первая правка</figcaption>
+<div class="console">
+<div class="console-bar"><b><svg class="spark" viewBox="0 0 24 24"><path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z"/></svg>Миграция монолита без остановки сервиса</b><span>slides.pdf · 30 мин</span></div>
+<div style="display:flex;gap:20px;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.08);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5)"><span style="color:#fff">Оценка</span><span>Правки</span><span>Вопросы из зала</span></div>
+<div class="row-d">Соответствие аудитории<span class="chip chip-fix bp-in">Доработать</span></div>
+<div class="row-d">Структура<span class="chip chip-w bp-in" style="animation-delay:.2s">В порядке</span></div>
+<div class="row-d">Главная мысль<span class="chip chip-fix bp-in" style="animation-delay:.4s">Доработать</span></div>
+<div class="row-d">Укладывается во время<span class="chip chip-weak bp-in" style="animation-delay:.6s">Слабо</span></div>
+<div class="row-d bp-in" style="flex-direction:column;align-items:flex-start;gap:4px;background:rgba(255,255,255,.04);animation-delay:.9s"><span class="mono" style="color:var(--coral-soft)">Правка 01</span>Вынести главную мысль на второй слайд</div>
+</div>
+</figure>
+</section>
+
+<section class="feat">
+<div class="txt">
+<span class="idx">04 / Развитие</span>
+<h2 class="h-sec">Прогресс от доклада к докладу</h2>
+<p class="muted">После выступления загрузите запись и отзывы слушателей. Вы увидите, что стало лучше, и получите материалы под то, что пока проседает.</p>
+<ul class="ticks">
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Разбор после выступления по записи и отзывам</li>
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>История оценок по каждому критерию</li>
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Материалы под слабые места</li>
+</ul>
+<a href="bp-growth.dc.html" class="btn btn-o" style="align-self:flex-start">Как устроено развитие<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<figure class="mesh mesh-mint stage" style="margin:0">
+<figcaption class="mono" style="position:absolute;left:-9999px">Демо: оценки по критериям улучшаются от первого доклада к третьему</figcaption>
+<div class="console">
+<div class="console-bar"><b>Ваш прогресс</b><span>3 доклада · Backend</span></div>
+<div class="grid4">
+<span aria-hidden="true"></span><span class="mono" style="font-size:11px;color:rgba(255,255,255,.5)">Доклад 1</span><span class="mono" style="font-size:11px;color:rgba(255,255,255,.5)">Доклад 2</span><span class="mono" style="font-size:11px;color:rgba(255,255,255,.5)">Доклад 3</span>
+<span>Структура</span><span class="chip chip-fix bp-in" style="justify-self:start">Доработать</span><span class="chip chip-w bp-in" style="justify-self:start;animation-delay:.3s">В порядке</span><span class="chip chip-w bp-in" style="justify-self:start;animation-delay:.6s">В порядке</span>
+<span>Главная мысль</span><span class="chip chip-weak bp-in" style="justify-self:start">Слабо</span><span class="chip chip-fix bp-in" style="justify-self:start;animation-delay:.3s">Доработать</span><span class="chip chip-w bp-in" style="justify-self:start;animation-delay:.6s">В порядке</span>
+<span>Тайминг</span><span class="chip chip-weak bp-in" style="justify-self:start">Слабо</span><span class="chip chip-weak bp-in" style="justify-self:start;animation-delay:.3s">Слабо</span><span class="chip chip-fix bp-in" style="justify-self:start;animation-delay:.6s">Доработать</span>
+</div>
+<div class="row-d bp-in" style="border-top:1px solid rgba(255,255,255,.08);animation-delay:.9s"><span><span style="color:rgba(255,255,255,.6)">Материал для прокачки:</span> репетиция с таймером</span></div>
+</div>
+</figure>
+</section>
+
+<section id="growth" class="card-stone" style="margin-top:112px;padding:56px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:640px"><span class="mono">Для начинающих</span><h2 class="d-l">Если выступать пока рано</h2><p class="lead">TRIX подберёт площадки для старта и поможет подготовиться к первому докладу.</p></div>
+<a href="bp-onboarding.dc.html" class="btn">Заполнить профиль<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<ul class="start">
+<li><h3 class="h-row">Площадки для старта</h3><p class="muted" style="font-size:15px">Митапы и студенческие события, где можно обкатать первый доклад.</p></li>
+<li><h3 class="h-row">Репетиция до выступления</h3><p class="muted" style="font-size:15px">Разбор покажет, что поправить, пока есть время.</p></li>
+<li><h3 class="h-row">Материалы под слабые места</h3><p class="muted" style="font-size:15px">Мастер-классы и техники по критериям, где нужна доработка.</p></li>
+</ul>
+</section>
+
+<section id="organizers" class="band mesh mesh-green on-dark" style="margin-top:112px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:end">
+<div style="display:flex;flex-direction:column;gap:20px"><span class="idx">05 / Организаторам</span><h2 class="d-l">Для организаторов</h2><p class="lead" style="color:rgba(255,255,255,.8)">Опубликуйте мероприятие в TRIX: из одной формы соберём лендинг со ссылкой, а заявки спикеров придут к вам с аннотацией, ответами на ваши вопросы и профилем спикера.</p><a href="bp-event-edit.dc.html" class="btn btn-w" style="align-self:flex-start">Опубликовать мероприятие<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+<ul class="ticks">
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Лендинг мероприятия из одной формы — со ссылкой, которой можно поделиться</li>
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Заявки с аннотацией, треком и ответами на ваши вопросы</li>
+<li><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>Профиль и доклады спикера прямо в заявке</li>
+</ul>
+</section>
+
+<section id="faq" class="sec">
+<div style="display:flex;flex-direction:column;gap:16px"><span class="idx">06 / Вопросы</span><h2 class="h-sec">Остались вопросы?</h2><p class="muted">Не нашли ответ — напишите нам: <a href="#contacts" class="ln">[почта]</a></p></div>
+<div class="faq">
+<details open><summary><span class="h-row">Откуда берутся мероприятия?</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>Из двух источников. Организаторы публикуют мероприятия в TRIX — на них заявку подаёте прямо здесь. Остальные агент собирает из открытых источников: сайтов конференций, агрегаторов и Telegram-каналов — на них заявку подаёте на сайте организатора. Оплату отмечаем, только если организатор её указал.</p></details>
+<details><summary><span class="h-row">Кто видит разбор моего доклада?</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>Содержание разбора видите только вы. В рейтинг идут только факт разбора и рост оценок.</p></details>
+<details><summary><span class="h-row">Какие материалы можно загрузить?</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>До выступления — план, текст или слайды. После — запись выступления и отзывы слушателей.</p></details>
+<details><summary><span class="h-row">Подойдёт ли TRIX, если я ещё не выступал?</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>Да. Укажите уровень «Начинающий» — подберём площадки для старта и материалы для подготовки.</p></details>
+<details><summary><span class="h-row">Сколько стоит TRIX?</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>[Цена и условия бесплатного тарифа]</p></details>
+<details><summary><span class="h-row">Как опубликовать мероприятие?</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>Зарегистрируйтесь как организатор и заполните одну форму: даты, место, аудитория, треки и условия для спикеров. Из неё соберётся лендинг мероприятия — опубликуйте его и поделитесь ссылкой.</p></details>
+<details><summary><span class="h-row">Как устроена работа с заявками?</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><p>Заявки приходят в кабинет организатора: аннотация, трек, ответы на ваши вопросы и профиль спикера. Вы принимаете или отклоняете заявку, спикер получает письмо со статусом, а дальше вы договариваетесь напрямую.</p></details>
+</div>
+</section>
+
+<footer id="footer" class="band mesh mesh-navy on-dark" style="margin-top:112px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:48px">
+<div style="flex:1 1 420px;display:flex;flex-direction:column;gap:20px">
+<span class="idx">Подборка на почту</span>
+<h2 class="h-sec">Новые мероприятия под вашу сферу</h2>
+<label for="footer-email" class="small" style="color:rgba(255,255,255,.62)">Электронная почта</label>
+<div class="sub"><input id="footer-email" class="inp" type="email" placeholder="you@example.com"><button type="button" class="btn btn-w" aria-label="Подписаться" style="padding:0 18px"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+</div>
+<div class="foot-cols">
+<div><span class="mono">Продукт</span><a href="bp-selection.dc.html">Мероприятия</a><a href="bp-review.dc.html">Разбор доклада</a><a href="#growth">Развитие</a></div>
+<div><span class="mono">Организаторам</span><a href="#organizers">Опубликовать мероприятие</a></div>
+<div><span class="mono">Проект</span><a href="#team">Команда</a><a href="#contacts">Контакты</a></div>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);font-size:13px;color:rgba(255,255,255,.62)"><span>© 2026 TRIX</span><a href="#privacy" class="ln">Политика конфиденциальности</a></div>
+</footer>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 6150}, "cursor": {"editor": "enum", "options": ["Слова", "Линза-негатив", "Перекрестие", "Магнитный градиент", "Выкл"], "default": "Слова", "section": "Эффект курсора"}, "letters": {"editor": "enum", "options": ["Мелкие", "Средние", "Крупные"], "default": "Мелкие", "section": "Эффект курсора"}, "zone": {"editor": "enum", "options": ["Как было", "Весь белый фон", "Фон и карточки", "Только карточки"], "default": "Как было", "section": "Эффект курсора"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    if (window.TrixFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  start() {
+    const T = window.TrixTrail
+    this.stopFx = window.TrixFX?.run(this.props, {
+      words: 'home',
+      accent: '#17171c',
+      light: '#fff',
+      spot: () => T.spot('.cap li', '255,119,89'),
+      legacy: mode => mode === 'Магнитный градиент'
+        ? T.magnet('.mesh:not(.ava):not(.mesh-sm)', ['#ff7759', '#c3cfff', '#ffad9b'])
+        : T.mount('.mesh:not(.ava):not(.mesh-sm)', el => ({ color: el.matches('.mesh-green, .mesh-navy') ? '#fff' : '#17171c', glyphs: 'words', words: 'home', avoid: true })),
+    })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — редактирование мероприятия</title>
+<script src="./support.js"></script>
+<script src="./cursor-fx.js"></script>
+<script src="./trail.js"></script>
+<link rel="stylesheet" href="bp.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+.sect{padding:40px;display:flex;flex-direction:column;gap:28px}
+.sect>header{display:flex;flex-direction:column;gap:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px 16px}
+.trk{display:grid;grid-template-columns:28px minmax(0,1fr) minmax(0,2fr) 44px;gap:8px;align-items:center}
+.trk .n{font-family:var(--mono);font-size:12px;color:var(--quiet)}
+.q{display:grid;grid-template-columns:minmax(0,1fr) auto 44px;gap:8px 16px;align-items:center}
+.pay{position:relative;display:flex;flex-direction:column;gap:12px;padding:22px;border:1px solid var(--hair);border-radius:16px;cursor:pointer;transition:border-color .2s,transform .3s var(--ease)}
+.pay:hover{border-color:var(--primary);transform:translateY(-2px)}
+.pay:has(input:checked){border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary);background:var(--stone-2)}
+.pay input{width:18px;height:18px;margin:0;accent-color:var(--primary)}
+.add{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px 0 12px;border:1px dashed var(--hair);border-radius:9999px;background:transparent;font:inherit;font-size:14px;color:var(--ink);cursor:pointer;transition:border-color .2s,background .2s}
+.add:hover{border-color:var(--primary);background:var(--stone-2)}
+.add svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round}
+.toc a{display:grid;grid-template-columns:32px 1fr 20px;align-items:center;gap:8px;padding:12px 0;text-decoration:none;font-size:15px}
+.toc a .n{font-family:var(--mono);font-size:12px;color:var(--quiet)}
+.savebar{position:sticky;bottom:24px;z-index:10;display:flex;align-items:center;gap:24px;padding:12px 12px 12px 24px;border-radius:9999px;background:rgba(23,23,28,.94);backdrop-filter:blur(12px);color:#fff;box-shadow:0 24px 48px -20px rgba(7,24,41,.6)}
+.check{display:inline-flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;white-space:nowrap}
+.check input{width:18px;height:18px;margin:0;accent-color:var(--primary)}
+</style>
+</helmet>
+<div data-fx class="bp" style="background:var(--stone-2)">
+
+<header class="hdr"><div class="wrap">
+<div style="display:flex;align-items:center;gap:48px"><a href="#" class="logo"><i></i>TRIX</a>
+<nav class="nav" aria-label="Разделы"><a href="#" aria-current="page">Мероприятия</a><a href="bp-apps.dc.html">Заявки</a></nav></div>
+<a href="#" aria-haspopup="menu" aria-expanded="false" style="display:inline-flex;align-items:center;gap:10px;font-size:14px;text-decoration:none"><span aria-hidden="true" class="ava ava-g mesh mesh-blue">СИ</span>Сообщество инженеров надёжности<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:var(--muted);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round"><path d="m6 9 6 6 6-6"/></svg></a>
+</div></header>
+
+<main class="wrap" style="padding-top:40px;padding-bottom:64px">
+<nav aria-label="Путь по разделу" class="crumbs"><a href="#">Мероприятия</a><span aria-hidden="true">/</span><span>Конференция по надёжности сервисов</span></nav>
+
+<div class="rv" style="margin-top:40px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:12px"><span class="mono">Мероприятие</span><span class="chip chip-ok"><span class="dot live"></span>Опубликовано</span></div>
+<h1 class="d-l">Конференция по надёжности сервисов</h1>
+<p class="lead">Изменения сразу появятся на опубликованном лендинге.</p>
+</div>
+
+<div style="margin-top:48px;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:32px;align-items:start">
+<form style="display:flex;flex-direction:column;gap:20px;min-width:0">
+
+<section id="ev-main" aria-labelledby="ev-main-title" class="card sect rv" style="--d:1">
+<header><span class="idx">01</span><h2 id="ev-main-title" class="h-card">Основное</h2></header>
+<div class="field"><label for="ev-title">Название</label><input id="ev-title" class="inp" type="text" value="Конференция по надёжности сервисов"></div>
+<fieldset style="margin:0;padding:0;border:0;min-width:0"><legend style="padding:0;margin-bottom:12px;font-size:14px">Формат</legend>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><label class="pill"><input type="radio" name="format" checked>Конференция</label><label class="pill"><input type="radio" name="format">Митап</label><label class="pill"><input type="radio" name="format">Воркшоп</label><label class="pill"><input type="radio" name="format">Другое</label></div></fieldset>
+<div class="two"><div class="field"><label for="ev-start">Начало</label><input id="ev-start" class="inp" type="text" value="[дата]"></div><div class="field"><label for="ev-end">Окончание</label><input id="ev-end" class="inp" type="text" value="[дата]"></div></div>
+<fieldset style="margin:0;padding:0;border:0;min-width:0"><legend style="padding:0;margin-bottom:12px;font-size:14px">Где проходит</legend>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><label class="pill"><input type="radio" name="place">Офлайн</label><label class="pill"><input type="radio" name="place">Онлайн</label><label class="pill"><input type="radio" name="place" checked>Гибрид</label></div>
+<p class="hint" style="margin-top:12px">Для гибрида и онлайна спикеру покажем, что будет трансляция</p></fieldset>
+<div class="two">
+<div class="field"><label for="ev-city">Город</label><div class="combo"><input id="ev-city" class="inp" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" value="Санкт-Петербург"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div></div>
+<div class="field"><label for="ev-venue">Площадка · необязательно</label><input id="ev-venue" class="inp" type="text" value="[адрес площадки]"></div>
+</div>
+<div class="field"><label for="ev-desc">О мероприятии</label><textarea id="ev-desc" class="inp" rows="4" aria-describedby="ev-desc-hint">Конференция для инженеров, которые отвечают за сервисы в продакшене: как строить системы, переживающие сбои, и как спокойно переносить нагрузку со старого на новое. Без маркетинга — только опыт команд.</textarea><span id="ev-desc-hint" class="hint">Первый абзац лендинга: для кого мероприятие и чем оно отличается</span></div>
+</section>
+
+<section id="ev-audience" aria-labelledby="ev-audience-title" class="card sect rv" style="--d:2">
+<header><span class="idx">02</span><h2 id="ev-audience-title" class="h-card">Аудитория и треки</h2></header>
+<fieldset style="margin:0;padding:0;border:0;min-width:0"><legend style="padding:0;margin-bottom:12px;font-size:14px">Уровень аудитории</legend>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><label class="pill"><input type="checkbox" name="level">Junior</label><label class="pill"><input type="checkbox" name="level" checked>Middle</label><label class="pill"><input type="checkbox" name="level" checked>Senior</label><label class="pill"><input type="checkbox" name="level" checked>Lead</label></div></fieldset>
+<div class="field"><label for="ev-who">Кто приходит</label><input id="ev-who" class="inp" type="text" value="Backend- и SRE-инженеры, тимлиды"></div>
+<div class="field"><span class="lbl">Треки</span>
+<div style="display:flex;flex-direction:column;gap:8px">
+<div class="trk"><span class="n">01</span><input class="inp" type="text" aria-label="Трек 1" value="Архитектура и миграции"><input class="inp" type="text" aria-label="Коротко о треке 1" value="Как переносить нагрузку со старых систем на новые и не ронять продакшен."><button type="button" class="icon-btn" aria-label="Удалить трек"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<div class="trk"><span class="n">02</span><input class="inp" type="text" aria-label="Трек 2" value="Наблюдаемость"><input class="inp" type="text" aria-label="Коротко о треке 2" value="Метрики, логи и трейсы, которые помогают найти причину сбоя, а не только симптом."><button type="button" class="icon-btn" aria-label="Удалить трек"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<div class="trk"><span class="n">03</span><input class="inp" type="text" aria-label="Трек 3" value="Инциденты и постмортемы"><input class="inp" type="text" aria-label="Коротко о треке 3" value="Разборы реальных сбоев: что случилось, как чинили и что поменяли после."><button type="button" class="icon-btn" aria-label="Удалить трек"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+</div>
+<span class="hint">Спикер выберет трек в заявке. Описание треков покажем на лендинге</span>
+</div>
+<button type="button" class="add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить трек</button>
+</section>
+
+<section id="ev-speakers" aria-labelledby="ev-speakers-title" class="card sect rv" style="--d:3">
+<header><span class="idx">03</span><h2 id="ev-speakers-title" class="h-card">Условия для спикеров</h2></header>
+<fieldset style="margin:0;padding:0;border:0;min-width:0"><legend style="padding:0;margin-bottom:12px;font-size:14px">Оплата за выступление</legend>
+<div class="two">
+<label class="pay"><span style="display:flex;align-items:center;gap:10px" class="h-row"><input type="radio" name="pay" checked>Не оплачивается</span><span class="small muted">На лендинге и в подборке будет метка «Не оплачивается»</span></label>
+<label class="pay"><span style="display:flex;align-items:center;gap:10px" class="h-row"><input type="radio" name="pay">Оплачивается</span><span class="small muted">Метка «Оплачивается» — спикеры с запросом на оплату увидят мероприятие в подборке</span></label>
+</div></fieldset>
+<div class="two"><div class="field"><label for="ev-slot">Доклад, минут</label><input id="ev-slot" class="inp num" type="text" value="[длительность]" inputmode="numeric"></div><div class="field"><label for="ev-qa">Вопросы, минут</label><input id="ev-qa" class="inp num" type="text" value="[длительность]" inputmode="numeric"></div></div>
+<div class="field"><label for="ev-travel">Дорога и проживание · необязательно</label><textarea id="ev-travel" class="inp" rows="2">[Условия организатора]</textarea></div>
+<div class="field"><label for="ev-extra">Что ещё даёте спикерам · необязательно</label><input id="ev-extra" class="inp" type="text" value="Прогон доклада с программным комитетом"></div>
+</section>
+
+<section id="ev-intake" aria-labelledby="ev-intake-title" class="card sect rv" style="--d:4">
+<header><span class="idx">04</span><h2 id="ev-intake-title" class="h-card">Приём заявок</h2></header>
+<div class="two"><div class="field"><label for="ev-deadline">Дедлайн заявок</label><input id="ev-deadline" class="inp" type="text" value="[дата]"></div><div class="field"><label for="ev-answer">Ответим спикерам до</label><input id="ev-answer" class="inp" type="text" value="[дата]" aria-describedby="ev-answer-hint"><span id="ev-answer-hint" class="hint">Покажем на лендинге и в письме спикеру</span></div></div>
+<fieldset style="margin:0;padding:0;border:0;min-width:0;display:flex;flex-direction:column;gap:10px"><legend style="padding:0;margin-bottom:12px;font-size:14px">Вопросы в заявке</legend>
+<p class="hint" style="margin-bottom:4px">Аннотация, трек, длительность и профиль спикера в заявке есть всегда. Здесь — ваши вопросы сверх этого.</p>
+<div class="q"><input class="inp" type="text" aria-label="Вопрос 1" value="Выступали ли вы с этим докладом раньше? Если да — где"><label class="check"><input type="checkbox" checked>Обязательный</label><button type="button" class="icon-btn" aria-label="Удалить вопрос"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<div class="q"><input class="inp" type="text" aria-label="Вопрос 2" value="Что слушатели смогут применить после доклада?"><label class="check"><input type="checkbox">Обязательный</label><button type="button" class="icon-btn" aria-label="Удалить вопрос"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<button type="button" class="add"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить вопрос</button>
+</fieldset>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 24px;border-radius:16px;background:var(--pale-green)">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;align-items:center;gap:12px"><h3 class="h-row">Приём заявок</h3><span class="chip chip-ok" style="background:#fff"><span class="dot live"></span>Открыт</span></div>
+<p class="small muted">Закроется сам после дедлайна. Если закрыть раньше, лендинг останется, но новых заявок не будет. Открыть приём можно снова.</p></div>
+<a href="#" class="btn-o" style="flex:none;background:#fff">Закрыть приём заявок</a>
+</div>
+</section>
+
+<div class="savebar">
+<span class="small" style="margin-right:auto;color:rgba(255,255,255,.7)">Спикеры с поданными заявками изменения тоже увидят</span>
+<a href="#" class="ln small" style="color:#fff">Отмена</a>
+<a href="#" class="btn btn-w">Сохранить изменения</a>
+</div>
+</form>
+
+<aside style="position:sticky;top:96px;display:flex;flex-direction:column;gap:20px">
+<section aria-labelledby="lp-title" class="card" style="overflow:hidden">
+<a href="bp-landing.dc.html" class="zoom" style="display:block;text-decoration:none">
+<div class="mesh" style="height:200px;border-radius:0;padding:18px;display:flex;flex-direction:column;justify-content:space-between">
+<span class="mono" style="color:var(--ink)">Конференция</span>
+<span style="font-size:26px;line-height:1.02;letter-spacing:-.035em;color:var(--black);max-width:240px">Конференция по надёжности сервисов</span>
+</div></a>
+<div style="padding:24px;display:flex;flex-direction:column;gap:16px">
+<h2 id="lp-title" class="h-row">Лендинг мероприятия</h2>
+<dl class="kv"><dt>Статус</dt><dd><span class="chip chip-ok"><span class="dot live"></span>Опубликован</span></dd><dt>Сохранено</dt><dd class="num" style="font-size:14px">[время]</dd></dl>
+<ul class="toc rows">
+<li><a href="#ev-main" class="row-h"><span class="n">01</span>Основное<svg class="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+<li><a href="#ev-audience" class="row-h"><span class="n">02</span>Аудитория и треки<svg class="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+<li><a href="#ev-speakers" class="row-h"><span class="n">03</span>Условия для спикеров<svg class="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+<li><a href="#ev-intake" class="row-h"><span class="n">04</span>Приём заявок<svg class="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+</ul>
+<p class="small muted">Лендинг соберём из этих разделов — так его увидят спикеры.</p>
+<a href="bp-landing.dc.html" class="ln small" style="align-self:flex-start">Предпросмотр лендинга</a>
+</div>
+</section>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 3300}, "cursor": {"editor": "enum", "options": ["Слова", "Линза-негатив", "Перекрестие", "Выкл"], "default": "Слова", "section": "Эффект курсора"}, "letters": {"editor": "enum", "options": ["Мелкие", "Средние", "Крупные"], "default": "Мелкие", "section": "Эффект курсора"}, "zone": {"editor": "enum", "options": ["Как было", "Весь белый фон", "Фон и карточки", "Только карточки"], "default": "Как было", "section": "Эффект курсора"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    if (window.TrixFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  start() {
+    const T = window.TrixTrail
+    this.stopFx = window.TrixFX?.run(this.props, {
+      words: 'event-edit',
+      accent: '#17171c',
+      light: '#fff',
+      legacy: () => T.mount('.mesh:not(.ava):not(.mesh-sm)', el => ({ color: el.matches('.mesh-green, .mesh-navy') ? '#fff' : '#17171c' })),
+    })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>

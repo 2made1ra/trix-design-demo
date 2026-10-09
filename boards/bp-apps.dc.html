@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TRIX — заявки</title>
+<script src="./support.js"></script>
+<script src="./cursor-fx.js"></script>
+<script src="./trail.js"></script>
+<link rel="stylesheet" href="bp.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+.app{display:flex;gap:14px;padding:18px 16px;border-radius:14px;text-decoration:none;color:var(--ink)}
+.app[aria-current]{background:#fff;box-shadow:0 0 0 1px var(--border),0 12px 28px -18px rgba(7,24,41,.35)}
+.list li{border:0}
+.list li+li{margin-top:4px}
+.qa li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:16px;padding:22px 0}
+.qa .n{font-family:var(--mono);font-size:12px;color:var(--quiet);padding-top:3px}
+.decide{position:sticky;bottom:24px;display:flex;align-items:center;gap:20px;padding:12px 12px 12px 24px;border-radius:9999px;background:rgba(23,23,28,.94);backdrop-filter:blur(12px);color:#fff;box-shadow:0 24px 48px -20px rgba(7,24,41,.6)}
+</style>
+</helmet>
+<div data-fx class="bp">
+
+<header class="hdr"><div class="wrap">
+<div style="display:flex;align-items:center;gap:48px"><a href="#" class="logo"><i></i>TRIX</a>
+<nav class="nav" aria-label="Разделы"><a href="bp-event-edit.dc.html">Мероприятия</a><a href="bp-apps.dc.html" aria-current="page">Заявки</a></nav></div>
+<a href="#" aria-haspopup="menu" aria-expanded="false" style="display:inline-flex;align-items:center;gap:10px;font-size:14px;text-decoration:none"><span aria-hidden="true" class="ava ava-g mesh mesh-blue">СИ</span>Сообщество инженеров надёжности<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:var(--muted);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round"><path d="m6 9 6 6 6-6"/></svg></a>
+</div></header>
+
+<main class="wrap" style="padding-top:56px;padding-bottom:64px">
+<div class="rv" style="display:flex;flex-direction:column;gap:16px">
+<h1 class="d-xl">Заявки</h1>
+<p class="lead">Принимайте и отклоняйте заявки спикеров — каждый получит письмо со статусом.</p>
+</div>
+
+<div class="rv" style="--d:1;margin-top:40px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px;padding:20px;border-radius:16px;background:var(--stone-2);border:1px solid var(--border)">
+<div class="field" style="flex:1 1 360px"><label for="ap-event">Мероприятие</label><div class="combo"><input id="ap-event" class="inp" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" value="Конференция по надёжности сервисов"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div></div>
+<div class="field" style="flex:0 1 260px"><label for="ap-track">Трек</label><div class="combo"><input id="ap-track" class="inp" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" value="Все треки"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div></div>
+<fieldset style="margin:0;padding:0;border:0;min-width:0"><legend style="padding:0;margin-bottom:6px;font-size:14px">Статус</legend>
+<div class="seg"><label><input type="radio" name="app-status" checked>Все</label><label><input type="radio" name="app-status">Новые</label><label><input type="radio" name="app-status">Принятые</label><label><input type="radio" name="app-status">Отклонённые</label></div>
+</fieldset>
+</div>
+
+<div style="margin-top:32px;display:grid;grid-template-columns:420px minmax(0,1fr);gap:48px;align-items:start">
+<section aria-label="Список заявок" style="position:sticky;top:96px;padding:6px;border-radius:20px;background:var(--stone-2);border:1px solid var(--border)">
+<ul class="list">
+<li class="rv" style="--d:2"><a href="bp-apps.dc.html" aria-current="true" class="app">
+<span aria-hidden="true" class="ava ava-g mesh">СП</span>
+<span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font-size:15px;color:var(--black)">Сергей Петров</span><span class="chip chip-new">Новая</span></span>
+<span style="font-size:15px">Миграция монолита без остановки сервиса</span>
+<span class="mono" style="font-size:11px">Золотая лига · «Архитектура и миграции» · подана [дата]</span>
+</span></a></li>
+<li class="rv" style="--d:3"><a href="#application" class="app row-h">
+<span aria-hidden="true" class="ava ava-g mesh mesh-blue">АК</span>
+<span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font-size:15px;color:var(--black)">Анна Ковалёва</span><span class="chip chip-new">Новая</span></span>
+<span style="font-size:15px">Релизы без страха: канареечные выкладки на практике</span>
+<span class="mono" style="font-size:11px">Рубиновая лига · «Наблюдаемость» · подана [дата]</span>
+</span></a></li>
+<li class="rv" style="--d:4"><a href="#application" class="app row-h">
+<span aria-hidden="true" class="ava ava-g mesh mesh-mint" style="color:var(--green);text-shadow:none">ДО</span>
+<span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font-size:15px;color:var(--black)">Дмитрий Орлов</span><span class="chip chip-ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Принята</span></span>
+<span style="font-size:15px">Постмортем без поиска виноватых</span>
+<span class="mono" style="font-size:11px">Бронзовая лига · «Инциденты и постмортемы» · подана [дата]</span>
+</span></a></li>
+<li class="rv" style="--d:5"><a href="#application" class="app row-h">
+<span aria-hidden="true" class="ava ava-g mesh mesh-dawn" style="color:var(--coral-ink);text-shadow:none">МБ</span>
+<span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font-size:15px;color:var(--black)">Мария Белова</span><span class="chip">Отклонена</span></span>
+<span style="font-size:15px">Трейсинг в очередях: где теряется время</span>
+<span class="mono" style="font-size:11px">Серебряная лига · «Наблюдаемость» · подана [дата]</span>
+</span></a></li>
+</ul>
+</section>
+
+<article aria-labelledby="app-title" class="rv" style="--d:2;min-width:0;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:12px"><span class="mono">Заявка</span><span class="chip chip-new">Новая</span></div>
+<h2 id="app-title" class="d-l" style="font-size:48px">Миграция монолита без остановки сервиса</h2>
+<p class="mono" style="font-size:13px">Трек «Архитектура и миграции» · 30 минут · подана [дата]</p>
+</div>
+
+<section aria-labelledby="sp-title" class="card" style="overflow:hidden">
+<div class="mesh" style="height:96px;border-radius:0"></div>
+<div style="padding:0 32px 32px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-top:-36px">
+<div style="display:flex;align-items:flex-end;gap:18px">
+<span aria-hidden="true" class="ava ava-g mesh" style="width:88px;height:88px;font-size:24px;box-shadow:0 0 0 4px #fff">СП</span>
+<div style="display:flex;flex-direction:column;padding-bottom:4px"><h3 id="sp-title" class="h-card">Сергей Петров</h3><span class="small muted">Backend · Опытный · Москва</span></div>
+</div>
+<a href="#" class="btn-o">Открыть профиль</a>
+</div>
+<p style="font-size:17px;max-width:680px">Бэкенд-разработчик в финтехе. Переношу монолиты на сервисы без остановки и рассказываю, как сделать это спокойно.</p>
+<dl class="dl-rows" style="font-size:15px">
+<div style="grid-template-columns:180px 1fr;padding:14px 0"><dt>Лига</dt><dd><span class="chip chip-line">Золотая</span></dd></div>
+<div style="grid-template-columns:180px 1fr;padding:14px 0"><dt>Выступления</dt><dd><span class="num">[N]</span> подтверждённых</dd></div>
+<div style="grid-template-columns:180px 1fr;padding:14px 0"><dt>Выступал</dt><dd>Митап Go-разработчиков, Студенческий фестиваль IT-проектов, внутренний митап компании</dd></div>
+<div style="grid-template-columns:180px 1fr;padding:14px 0"><dt>Ссылки</dt><dd><a href="#link" class="ln">Telegram</a>, <a href="#link" class="ln">GitHub</a></dd></div>
+</dl>
+</div>
+</section>
+
+<section>
+<div class="idx" style="margin-bottom:20px">01 / Аннотация</div>
+<p class="statement" style="font-size:26px;max-width:760px">Как мы перевели платёжный монолит на сервисы, не останавливая приём платежей: переключение трафика по частям, откаты без простоя и что пришлось договорить с бизнесом.</p>
+</section>
+
+<section>
+<div class="idx" style="margin-bottom:8px">02 / Ответы на вопросы</div>
+<ol class="qa rows">
+<li><span class="n">Q1</span><div style="display:flex;flex-direction:column;gap:8px"><span class="small muted">Выступали ли вы с этим докладом раньше? Если да — где</span><span style="font-size:17px">Нет, это первая версия доклада.</span></div></li>
+<li><span class="n">Q2</span><div style="display:flex;flex-direction:column;gap:8px"><span class="small muted">Что слушатели смогут применить после доклада?</span><span style="font-size:17px">Схему переключения трафика со старого сервиса на новый и чек-лист отката.</span></div></li>
+</ol>
+</section>
+
+<div class="decide">
+<span class="small" style="margin-right:auto;color:rgba(255,255,255,.7)">Спикер получит письмо со статусом. Дальше договариваетесь напрямую.</span>
+<a href="#" class="btn-o btn-ow" style="height:48px">Отклонить</a>
+<a href="#" class="btn btn-w">Принять<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></a>
+</div>
+</article>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 1800}, "cursor": {"editor": "enum", "options": ["Слова", "Линза-негатив", "Перекрестие", "Выкл"], "default": "Слова", "section": "Эффект курсора"}, "letters": {"editor": "enum", "options": ["Мелкие", "Средние", "Крупные"], "default": "Мелкие", "section": "Эффект курсора"}, "zone": {"editor": "enum", "options": ["Как было", "Весь белый фон", "Фон и карточки", "Только карточки"], "default": "Как было", "section": "Эффект курсора"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    this.start()
+  }
+  componentDidUpdate(prev) {
+    if (window.TrixFX?.keys.some(k => prev[k] !== this.props[k])) {
+      this.stop()
+      this.start()
+    }
+  }
+  componentWillUnmount() {
+    this.stop()
+  }
+  start() {
+    const T = window.TrixTrail
+    this.stopFx = window.TrixFX?.run(this.props, {
+      words: 'apps',
+      accent: '#17171c',
+      light: '#fff',
+      legacy: () => T.mount('.mesh:not(.ava):not(.mesh-sm)', el => ({ color: el.matches('.mesh-green, .mesh-navy') ? '#fff' : '#17171c' })),
+    })
+  }
+  stop() {
+    this.stopFx?.()
+  }
+  renderVals() {
+    return {}
+  }
+}
+</script>
+</body>
+</html>
