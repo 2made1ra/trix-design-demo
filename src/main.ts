@@ -1,5 +1,5 @@
 import '@/styles.css'
-import '@/styles/speaker.css'
+import '@/styles/fr.css'
 import '@/styles/org.css'
 import { createApp } from 'vue'
 import App from '@/App.vue'
