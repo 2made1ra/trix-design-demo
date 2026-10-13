@@ -27,6 +27,7 @@ export interface StoredOrg {
   site: string | null
   direction_ids: string[]
   city_ids: string[]
+  domains?: string[]
   team: TeamMember[]
   step: 1 | 2 | 3 | null
   completed_at: string | null

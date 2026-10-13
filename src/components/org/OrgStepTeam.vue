@@ -5,7 +5,7 @@
       <div class="tile tile-slate flex items-center gap-4 px-6 py-5">
         <org-avatar :name="me" />
         <div class="flex min-w-0 flex-1 flex-col gap-0.5">
-          <b class="truncate">{{ org?.name }}</b>
+          <b class="truncate">{{ me }}</b>
           <span class="truncate font-mono text-sm text-ink-2">{{ user?.email }}</span>
         </div>
         <span class="tag fill-lime">Администратор</span>
@@ -87,7 +87,9 @@ const save = ref<Save>({ kind: 'idle' })
 let nextId = 1
 const rows = reactive<Row[]>([{ id: nextId++, email: '', error: '' }])
 
-const me = computed(() => user.value?.email.split('@')[0]?.replace(/[._-]/g, ' ') ?? '')
+const me = computed(
+  () => org.value?.team.find((member) => member.email === user.value?.email)?.name || user.value?.email || '',
+)
 const emails = computed(() => rows.map((row) => row.email.trim()).filter(Boolean))
 
 const add = () => {

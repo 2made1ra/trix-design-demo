@@ -151,6 +151,7 @@ export async function acceptInvite(token: string, input: AcceptInviteInput, opti
 
 export interface TeamMember {
   email: string
+  name?: string
   role: 'admin' | 'member'
   status: 'active' | 'invited'
 }
@@ -161,6 +162,7 @@ export interface Organization {
   site: string | null
   direction_ids: string[]
   city_ids: string[]
+  domains?: string[]
   team: TeamMember[]
   /** Текущий шаг онбординга 1–3, после завершения null */
   step: 1 | 2 | 3 | null
@@ -176,6 +178,7 @@ export interface OrganizationProfileInput {
   site?: string
   direction_ids: string[]
   city_ids: string[]
+  domains?: string[]
 }
 
 /** Шаг 1: сохраняет профиль организации и открывает шаг 2. */
@@ -201,7 +204,7 @@ export interface ImportDirectionQuestion {
   id: string
   type: 'directions'
   title: string
-  values: { id: string; raw: string; chosen: string }[]
+  values: { id: string; raw: string; chosen: string; candidates: string[] }[]
   options: { id: string; name: string }[]
 }
 

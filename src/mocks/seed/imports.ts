@@ -20,8 +20,8 @@ export const importQuestions: SpeakerImportQuestion[] = [
     type: 'directions',
     title: 'Колонка «Стек»: 2 значения не похожи на направления из справочника',
     values: [
-      { id: 'v-1', raw: 'python, kafka, airflow', chosen: 'pc-data' },
-      { id: 'v-2', raw: 'swift, kotlin', chosen: 'pc-mobile' },
+      { id: 'v-1', raw: 'python, kafka, airflow', chosen: 'pc-data', candidates: ['pc-backend', 'pc-data'] },
+      { id: 'v-2', raw: 'swift, kotlin', chosen: 'pc-mobile', candidates: ['pc-mobile'] },
     ],
     options: directions.map(({ id, name }) => ({ id, name })),
   },

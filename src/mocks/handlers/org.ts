@@ -19,6 +19,7 @@ export const orgView = (org: StoredOrg): Organization => ({
   site: org.site,
   direction_ids: org.direction_ids,
   city_ids: org.city_ids,
+  domains: org.domains ?? [],
   team: org.team,
   step: org.step,
   onboarding_completed_at: org.completed_at,
@@ -109,7 +110,14 @@ export const acceptInvite = (ctx: Ctx) => {
     site: invite.site,
     direction_ids: [],
     city_ids: [],
-    team: [{ email: invite.email, role: 'admin', status: 'active' }],
+    team: [
+      {
+        email: invite.email,
+        name: [account.first_name, account.last_name].filter(Boolean).join(' '),
+        role: 'admin',
+        status: 'active',
+      },
+    ],
     step: 1,
     completed_at: null,
   }
@@ -131,6 +139,7 @@ export const saveOrganizationProfile = (ctx: Ctx) => {
   org.site = input.site?.trim() || null
   org.direction_ids = input.direction_ids as string[]
   org.city_ids = input.city_ids as string[]
+  org.domains = input.domains ?? []
   if (org.step === 1) org.step = 2
   return orgView(org)
 }

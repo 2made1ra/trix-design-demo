@@ -76,6 +76,45 @@
       <p v-if="errors.cities" class="org-err mt-3" role="alert">{{ errors.cities }}</p>
     </fieldset>
 
+    <fieldset class="min-w-0" data-rv>
+      <legend :class="legendClass">04 / Домены почты</legend>
+      <ul v-if="form.domains.length" class="mb-4 flex flex-wrap gap-2" aria-label="Домены организации">
+        <li
+          v-for="domain in form.domains"
+          :key="domain"
+          class="inline-flex h-9.5 items-center gap-1 rounded-3xl bg-paper-2 pr-1.5 pl-4 font-mono text-sm font-semibold shadow-[inset_0_0_0_1px_var(--field)]"
+        >
+          <span>{{ domain }}</span>
+          <button
+            type="button"
+            class="flex size-6.5 items-center justify-center rounded-full text-ink-2 hover:bg-paper-3 hover:text-ink"
+            :aria-label="`Убрать: ${domain}`"
+            @click="removeDomain(domain)"
+          >
+            <XIcon class="size-3" />
+          </button>
+        </li>
+      </ul>
+      <div class="flex max-w-115 flex-wrap gap-2">
+        <label class="sr-only" for="domain-add">Домен</label>
+        <input
+          id="domain-add"
+          v-model="domainQuery"
+          class="org-inp w-auto min-w-0 flex-[1_1_200px]"
+          type="text"
+          placeholder="company.ru"
+          autocapitalize="off"
+          :aria-invalid="!!errors.domain"
+          @keydown.enter.prevent="addDomain"
+        >
+        <org-button variant="line" @click="addDomain">Добавить домен</org-button>
+      </div>
+      <p v-if="errors.domain" class="org-err mt-3" role="alert">{{ errors.domain }}</p>
+      <p v-else class="mt-3 text-[13px] leading-normal text-ink-2">
+        По домену коллеги и спикеры попадают в организацию только по приглашению
+      </p>
+    </fieldset>
+
     <div class="flex flex-wrap items-center justify-between gap-4 pt-7 shadow-[inset_0_1px_0_var(--line)]" data-rv>
       <span class="text-sm text-ink-2">Онбординг можно прервать — продолжите с этого шага</span>
       <org-button type="submit" :disabled="saving">Далее<ArrowRightIcon /></org-button>
@@ -97,16 +136,21 @@ import { useAuth } from '@/composables/useAuth'
 type State = { kind: 'loading' } | { kind: 'error' } | { kind: 'ready'; directions: PositionCategory[]; cities: City[] }
 
 const router = useRouter()
-const { org, loadOrg } = useAuth()
+const { user, org, loadOrg } = useAuth()
 const state = ref<State>({ kind: 'loading' })
 const saving = ref(false)
 const cityQuery = ref('')
+const domainQuery = ref('')
 const form = reactive({
   name: org.value?.name ?? '',
   directionIds: [...(org.value?.direction_ids ?? [])],
   cityIds: [...(org.value?.city_ids ?? [])],
+  // Первым предлагаем домен почты администратора.
+  domains: org.value?.domains?.length
+    ? [...org.value.domains]
+    : [user.value?.email.split('@')[1] ?? ''].filter(Boolean),
 })
-const errors = reactive({ name: '', directions: '', cities: '' })
+const errors = reactive({ name: '', directions: '', cities: '', domain: '' })
 
 const load = async () => {
   state.value = { kind: 'loading' }
@@ -138,6 +182,22 @@ const removeCity = (id: string) => {
   form.cityIds = form.cityIds.filter((cityId) => cityId !== id)
 }
 
+const addDomain = () => {
+  const domain = domainQuery.value.trim().toLowerCase()
+  if (!domain) return
+  if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(domain)) {
+    errors.domain = 'Домен вида company.ru'
+    return
+  }
+  errors.domain = ''
+  if (!form.domains.includes(domain)) form.domains.push(domain)
+  domainQuery.value = ''
+}
+
+const removeDomain = (domain: string) => {
+  form.domains = form.domains.filter((d) => d !== domain)
+}
+
 const submit = async () => {
   errors.name = form.name.trim() ? '' : 'Укажите название организации'
   errors.directions = form.directionIds.length ? '' : 'Выберите хотя бы одно направление'
@@ -150,6 +210,7 @@ const submit = async () => {
     site: org.value?.site ?? undefined,
     direction_ids: form.directionIds,
     city_ids: form.cityIds,
+    domains: form.domains,
   })
   if (res.status !== 200) {
     saving.value = false

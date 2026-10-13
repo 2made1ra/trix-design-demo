@@ -119,7 +119,7 @@
                   :aria-label="`Направление для «${value.raw}»`"
                 >
                   <button
-                    v-for="option in ctl.currentDirections.value.options"
+                    v-for="option in shown(ctl.currentDirections.value, value)"
                     :key="option.id"
                     type="button"
                     class="pick"
@@ -128,8 +128,26 @@
                   >
                     {{ option.name }}
                   </button>
+                  <select
+                    v-if="others(ctl.currentDirections.value, value).length"
+                    class="org-inp h-10.5 w-auto min-w-0"
+                    :aria-label="`Другое направление для «${value.raw}»`"
+                    :value="''"
+                    @change="pickOther(value.id, $event)"
+                  >
+                    <option value="" disabled>Другое направление…</option>
+                    <option
+                      v-for="option in others(ctl.currentDirections.value, value)"
+                      :key="option.id"
+                      :value="option.id"
+                    >
+                      {{ option.name }}
+                    </option>
+                  </select>
                 </fieldset>
-                <p class="text-[13px] text-ink-2 sm:col-start-3">Так решила модель, поменяйте, если не так</p>
+                <p class="min-w-0 text-[13px] whitespace-normal text-ink-2 sm:col-start-3">
+                  Так решила модель, поменяйте, если не так
+                </p>
               </li>
             </ul>
           </div>
@@ -378,7 +396,7 @@
 <script setup lang="ts">
 import { ArrowRightIcon, CheckIcon, FileSpreadsheetIcon, MoveRightIcon, XIcon } from '@lucide/vue'
 import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
-import type { SpeakerImportRow } from '@/api/demo'
+import type { ImportDirectionQuestion, SpeakerImportRow } from '@/api/demo'
 import { plural } from '@/components/org/format'
 import OrgAvatar from '@/components/org/OrgAvatar.vue'
 import OrgButton from '@/components/org/OrgButton.vue'
@@ -459,6 +477,19 @@ const parseSteps = computed(() => {
     },
   ]
 })
+
+type DirectionValue = ImportDirectionQuestion['values'][number]
+
+// Варианты-кандидаты и уже выбранное направление, остальные уходят в select.
+const shown = (question: ImportDirectionQuestion, value: DirectionValue) =>
+  question.options.filter((o) => value.candidates.includes(o.id) || o.id === props.ctl.dirs[value.id])
+const others = (question: ImportDirectionQuestion, value: DirectionValue) =>
+  question.options.filter((o) => !shown(question, value).includes(o))
+const pickOther = (valueId: string, event: Event) => {
+  const select = event.target as HTMLSelectElement
+  props.ctl.setDirection(valueId, select.value)
+  select.value = ''
+}
 
 const decision = computed(() => {
   const question = props.ctl.currentMail.value

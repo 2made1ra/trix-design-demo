@@ -31,7 +31,7 @@ const account = (id: string, email: string, first: string, last: string, roles: 
   work_emails: [] as string[],
 })
 
-const team: TeamMember[] = [{ email: DEMO_ADMIN_EMAIL, role: 'admin', status: 'active' }]
+const team: TeamMember[] = [{ email: DEMO_ADMIN_EMAIL, name: 'Евгений Крылов', role: 'admin', status: 'active' }]
 
 const seedOffer = (
   id: string,
