@@ -17,7 +17,7 @@ import { useRoute } from 'vue-router'
 import { linkClass } from '@/components/org/classes'
 import OrgOnboardingFrame from '@/components/org/OrgOnboardingFrame.vue'
 import OrgStepProfile from '@/components/org/OrgStepProfile.vue'
-import type OrgStepSpeakers from '@/components/org/OrgStepSpeakers.vue'
+import OrgStepSpeakers from '@/components/org/OrgStepSpeakers.vue'
 import OrgStepTeam from '@/components/org/OrgStepTeam.vue'
 
 const metas = {
