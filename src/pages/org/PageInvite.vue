@@ -150,7 +150,7 @@
 
 <script setup lang="ts">
 import { ArrowRightIcon, ClockIcon, EyeIcon, EyeOffIcon } from '@lucide/vue'
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { type AcceptInviteInput, acceptInvite, getInvite, type InviteInfo } from '@/api/demo'
@@ -163,7 +163,7 @@ type State = { kind: 'loading' } | { kind: 'expired' } | { kind: 'new' | 'exists
 const route = useRoute()
 const router = useRouter()
 const { setToken, logout } = useAuth()
-const token = String(route.params.token)
+const token = computed(() => String(route.params.token))
 const state = ref<State>({ kind: 'loading' })
 const sending = ref(false)
 const showPassword = ref(false)
@@ -194,15 +194,19 @@ const facts = [
   ['От кого', 'TRIX'],
 ]
 
-onMounted(async () => {
-  const res = await getInvite(token)
+const load = async () => {
+  state.value = { kind: 'loading' }
+  const res = await getInvite(token.value)
   if (res.status !== 200) {
     state.value = { kind: 'expired' }
     return
   }
   const { current_email: current, account_exists: exists } = res.data
   state.value = { kind: current ? 'current' : exists ? 'exists' : 'new', info: res.data }
-})
+}
+
+onMounted(load)
+watch(token, load)
 
 const goLogin = () => {
   logout()
@@ -227,7 +231,7 @@ const submit = async () => {
   const input = body()
   if (!input) return
   sending.value = true
-  const res = await acceptInvite(token, input)
+  const res = await acceptInvite(token.value, input)
   sending.value = false
   if (res.status !== 200) {
     if (res.data.key === 'invalid_credentials') errors.password = res.data.message

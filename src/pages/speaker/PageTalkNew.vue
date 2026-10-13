@@ -219,7 +219,7 @@
 
 <script setup lang="ts">
 import { ArrowRight, CircleAlert, FileText, FileX, LoaderCircle, Lock, RotateCw, Upload } from '@lucide/vue'
-import { computed, onMounted, reactive, ref, shallowRef, useTemplateRef } from 'vue'
+import { computed, onMounted, reactive, ref, shallowRef, useTemplateRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { createTalkReview, type EventTrack, listEventTracks } from '@/api/demo'
@@ -242,7 +242,7 @@ const MAX_BYTES = MAX_MB * 1024 * 1024
 const route = useRoute()
 const router = useRouter()
 const root = useTemplateRef<HTMLElement>('root')
-const slug = typeof route.query.event === 'string' ? route.query.event : ''
+const slug = computed(() => (typeof route.query.event === 'string' ? route.query.event : ''))
 const event = shallowRef<EventState>({ status: 'loading' })
 const title = ref('')
 const text = ref('')
@@ -298,12 +298,12 @@ const onDrop = (e: DragEvent) => {
 }
 
 const loadEvent = async () => {
-  if (!slug) {
+  if (!slug.value) {
     event.value = { status: 'missing' }
     return
   }
   event.value = { status: 'loading' }
-  const res = await getConferenceBySlug(slug)
+  const res = await getConferenceBySlug(slug.value)
   if (res.status === 404) {
     event.value = { status: 'missing' }
     return
@@ -312,7 +312,7 @@ const loadEvent = async () => {
     event.value = { status: 'error' }
     return
   }
-  const [tracks, cities] = await Promise.all([listEventTracks(slug), listCities()])
+  const [tracks, cities] = await Promise.all([listEventTracks(slug.value), listCities()])
   event.value = {
     status: 'ready',
     conference: res.data,
@@ -332,7 +332,7 @@ const submit = async () => {
 
   sending.value = true
   const res = await createTalkReview({
-    event_slug: slug,
+    event_slug: slug.value,
     title: title.value.trim() || undefined,
     text: text.value.trim() || undefined,
     file: pdf.value.kind === 'ok' ? pdf.value.file : undefined,
@@ -349,5 +349,6 @@ const submit = async () => {
 }
 
 onMounted(loadEvent)
+watch(slug, loadEvent)
 useFx(root, { words: 'review' })
 </script>

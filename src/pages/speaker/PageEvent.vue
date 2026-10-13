@@ -230,7 +230,7 @@
 
 <script setup lang="ts">
 import { ArrowRight, CalendarDays, ExternalLink, MapPin, RotateCw } from '@lucide/vue'
-import { computed, onMounted, shallowRef, useTemplateRef } from 'vue'
+import { computed, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { type EventTrack, listEventTracks } from '@/api/demo'
 import {
@@ -276,7 +276,7 @@ const { user } = useAuth()
 const root = useTemplateRef<HTMLElement>('root')
 const state = shallowRef<State>({ status: 'loading' })
 
-const slug = String(route.params.slug)
+const slug = computed(() => String(route.params.slug))
 const listPath = computed(() => (user.value ? '/events' : '/speakers'))
 const ready = computed(() => (state.value.status === 'ready' ? state.value : null))
 const trix = computed(() => !!ready.value && isTrixSource(ready.value.conference))
@@ -357,7 +357,7 @@ const steps = computed(() => [
 
 const load = async () => {
   state.value = { status: 'loading' }
-  const res = await getConferenceBySlug(slug)
+  const res = await getConferenceBySlug(slug.value)
   if (res.status === 404) {
     state.value = { status: 'notFound' }
     return
@@ -370,7 +370,7 @@ const load = async () => {
 
   const [cfps, tracks, cities, recommendations] = await Promise.all([
     listCFPs({ conference_id: conference.id }),
-    listEventTracks(slug),
+    listEventTracks(slug.value),
     listCities(),
     user.value ? listRecommendations() : null,
   ])
@@ -388,6 +388,7 @@ const load = async () => {
 }
 
 onMounted(load)
+watch(slug, load)
 
 useFx(root, { words: 'landing', ink: true })
 </script>

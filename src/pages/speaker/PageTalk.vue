@@ -272,7 +272,7 @@
 
 <script setup lang="ts">
 import { ArrowRight, FileText, Lock, Presentation, RotateCw, Upload } from '@lucide/vue'
-import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
+import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { type CriterionState, getTalkReview, type TalkReview, type TalkReviewStage } from '@/api/demo'
 import AppHeader from '@/components/AppHeader.vue'
@@ -291,9 +291,11 @@ const POLL_MS = 1500
 
 const route = useRoute()
 const root = useTemplateRef<HTMLElement>('root')
-const id = String(route.params.id)
+const id = computed(() => String(route.params.id))
 const state = shallowRef<State>({ status: 'loading' })
 let timer = 0
+// Номер запуска: ответ запроса от закрытой страницы или прежнего id игнорируется.
+let run = 0
 
 const steps = [
   { title: 'Читаем материалы', text: 'Текст выступления и слайды из файла.' },
@@ -347,7 +349,9 @@ const lowerFirst = (text: string) =>
   text[1] && text[1] === text[1].toLowerCase() ? text[0]?.toLowerCase() + text.slice(1) : text
 
 const poll = async () => {
-  const res = await getTalkReview(id)
+  const mine = run
+  const res = await getTalkReview(id.value)
+  if (mine !== run) return
   if (res.status === 404) {
     state.value = { status: 'missing' }
     return
@@ -360,12 +364,17 @@ const poll = async () => {
   if (res.data.status === 'processing') timer = window.setTimeout(poll, POLL_MS)
 }
 const start = () => {
+  run++
   clearTimeout(timer)
   state.value = { status: 'loading' }
   return poll()
 }
 
 onMounted(start)
-onBeforeUnmount(() => clearTimeout(timer))
+watch(id, start)
+onBeforeUnmount(() => {
+  run++
+  clearTimeout(timer)
+})
 useFx(root, { words: 'review', rail: true })
 </script>
