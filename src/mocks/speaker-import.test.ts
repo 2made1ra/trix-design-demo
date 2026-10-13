@@ -4,6 +4,7 @@ import {
   createSpeakerImport,
   getSpeakerImport,
   listOrgSpeakers,
+  type SpeakerImportAnswers,
   sendSpeakerImportInvites,
 } from '@/api/demo'
 import { reset } from './db'
@@ -97,6 +98,28 @@ describe('импорт спикеров', () => {
       ['Анна Ковалёва', 'active'],
       ['Анна Ковалёва', 'invited'],
     ])
+  })
+
+  it('повторная рассылка того же файла не дублирует спикеров', async () => {
+    const answers: SpeakerImportAnswers = {
+      directions: { 'v-1': 'pc-data', 'v-2': 'pc-mobile' },
+      missing_email: { 'row-6': { skip: true } },
+    }
+    const first = await startImport()
+    await answerSpeakerImport(first, answers)
+    const firstSent = await sendSpeakerImportInvites(first)
+    if (firstSent.status !== 200) throw new Error(firstSent.data.key)
+    expect(firstSent.data).toEqual({ sent: 5 })
+
+    const second = await startImport()
+    await answerSpeakerImport(second, answers)
+    const secondSent = await sendSpeakerImportInvites(second)
+    if (secondSent.status !== 200) throw new Error(secondSent.data.key)
+    expect(secondSent.data).toEqual({ sent: 0 })
+
+    const after = await listOrgSpeakers()
+    if (after.status !== 200) throw new Error(after.data.key)
+    expect(after.data.total).toBe(35)
   })
 
   it('без входа импорт недоступен', async () => {

@@ -155,7 +155,9 @@ export const listEventCandidates = (ctx: Ctx) => {
       reason: reasonFor(speaker, track),
       offer:
         ctx.db.offers
-          .filter((offer) => offer.event.id === event.id && offer.speaker.id === speaker.id)
+          .filter(
+            (offer) => offer.event.id === event.id && offer.speaker.id === speaker.id && offer.status !== 'declined',
+          )
           .map(offerView)[0] ?? null,
     }))
   return { event: eventView(ctx, event), items }

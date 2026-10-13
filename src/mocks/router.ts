@@ -110,7 +110,7 @@ export const mockFetch = async (url: string, options: RequestInit = {}): Promise
 
   try {
     const result = route.handler(ctx)
-    saveDb()
+    if (method !== 'GET') saveDb()
     return result instanceof Reply ? respond(result.status, result.data) : respond(200, result)
   } catch (error) {
     if (error instanceof ApiError) return respond(error.status, { key: error.key, message: error.key })

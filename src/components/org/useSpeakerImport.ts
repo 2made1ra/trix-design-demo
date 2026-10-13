@@ -39,6 +39,11 @@ export const useSpeakerImport = () => {
   let run = 0
 
   const stopPoll = () => clearTimeout(timer)
+  // Черновики принадлежат одному импорту: ответы прошлого файла не должны попасть в следующий.
+  const clearDrafts = () => {
+    for (const key of Object.keys(dirs)) delete dirs[key]
+    for (const key of Object.keys(mails)) delete mails[key]
+  }
   onBeforeUnmount(() => {
     run++
     stopPoll()
@@ -98,6 +103,7 @@ export const useSpeakerImport = () => {
   const start = async (file: File) => {
     const mine = ++run
     stopPoll()
+    clearDrafts()
     state.value = { kind: 'creating', fileName: file.name }
     const res = await createSpeakerImport(file)
     if (mine !== run) {
@@ -116,6 +122,7 @@ export const useSpeakerImport = () => {
   const reset = () => {
     run++
     stopPoll()
+    clearDrafts()
     state.value = { kind: 'idle' }
   }
 

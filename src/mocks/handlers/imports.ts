@@ -113,8 +113,14 @@ export const sendSpeakerImportInvites = (ctx: Ctx) => {
   const item = importOf(ctx)
   if (stageOf(item) !== 'ready' || item.sent_at) fail(409, 'import_not_ready')
 
-  const invited = rowsOf(item.answers).filter((row) => row.status === 'will_invite')
+  const known = new Set(
+    ctx.db.speakers.filter((speaker) => speaker.org_id === item.org_id).map((speaker) => speaker.email?.toLowerCase()),
+  )
+  const invited = rowsOf(item.answers).filter(
+    (row) => row.status === 'will_invite' && !known.has(row.email?.toLowerCase()),
+  )
   for (const row of invited) {
+    known.add(row.email?.toLowerCase())
     ctx.db.speakers.push({
       id: newId('sp'),
       org_id: item.org_id,
