@@ -1,5 +1,393 @@
 <template>
-  <section class="mx-auto max-w-5xl px-6 py-10">
-    <h1 class="text-2xl font-semibold">Карточка мероприятия</h1>
-  </section>
+  <sp-page>
+    <div ref="root" class="ev flex flex-1 flex-col">
+      <app-header />
+
+      <div v-if="state.status === 'loading'" class="wrap flex-1 pt-10" role="status" aria-busy="true">
+        <span class="sr-only">Загружаем мероприятие</span>
+        <div class="tile skel" aria-hidden="true"><i class="s" /><i class="t" /><i class="m" /><i class="s" /></div>
+      </div>
+
+      <div v-else-if="state.status !== 'ready'" class="wrap flex-1 pt-16 pb-24">
+        <section class="tile flex max-w-160 flex-col gap-5" :role="state.status === 'error' ? 'alert' : undefined">
+          <span class="tag self-start" :class="state.status === 'error' && 'fill-pink'">
+            {{ state.status === 'error' ? 'Ошибка' : '404' }}
+          </span>
+          <h1 class="text-[34px] leading-none font-bold">
+            {{ state.status === 'error' ? 'Не удалось загрузить мероприятие' : 'Такого мероприятия нет' }}
+          </h1>
+          <p class="text-[17px] leading-[1.55] text-ink-2">
+            {{
+              state.status === 'error'
+                ? 'Проверьте соединение и попробуйте ещё раз.'
+                : 'Возможно, ссылка устарела или мероприятие снято с публикации.'
+            }}
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <button v-if="state.status === 'error'" type="button" class="b b-ink b-sm" @click="load">
+              Повторить<RotateCw />
+            </button>
+            <router-link :to="listPath" class="b b-line b-sm">К мероприятиям</router-link>
+          </div>
+        </section>
+      </div>
+
+      <div v-else class="wrap pb-24">
+        <nav class="flex flex-wrap gap-2 py-5 text-[13px] text-ink-2" aria-label="Навигация">
+          <router-link :to="listPath" class="hover:text-ink">Мероприятия</router-link>
+          <span aria-hidden="true">/</span>
+          <span class="text-ink" aria-current="page">{{ state.conference.name }}</span>
+        </nav>
+
+        <div class="ev-cover" role="img" aria-label="Обложка мероприятия">
+          <div class="absolute top-8 left-9 flex flex-col gap-1 text-sm opacity-90">
+            <span>Организатор</span>
+            <b class="text-xl font-medium">{{ organizer }}</b>
+          </div>
+          <div
+            class="absolute -bottom-11 left-9 grid size-26 place-items-center rounded-3xl bg-paper font-sans text-5xl font-black tracking-[-0.02em] text-(--ev-ink) shadow-[0_0_0_5px_var(--bg),0_0_0_6px_var(--line)]"
+            aria-hidden="true"
+          >
+            {{ logo }}
+          </div>
+        </div>
+
+        <section class="pt-18" data-rv>
+          <div class="flex flex-wrap gap-2">
+            <span class="ev-chip acc">{{ kindLabels[state.conference.kind] }}</span>
+            <span class="ev-chip">{{ trix ? 'Заявка через TRIX' : 'Из открытых источников' }}</span>
+          </div>
+          <h1 class="shout mt-4 max-w-240 text-[clamp(48px,6.6vw,96px)] leading-[0.88]">{{ state.conference.name }}</h1>
+          <div class="mt-4 flex flex-wrap gap-x-7 gap-y-2 text-ink-2">
+            <span class="inline-flex items-center gap-2"
+              ><CalendarDays class="size-4.5" aria-hidden="true" />{{ dates }}</span
+            >
+            <span class="inline-flex items-center gap-2"
+              ><MapPin class="size-4.5" aria-hidden="true" />{{ place }}</span
+            >
+            <span>Организатор: {{ organizer }}</span>
+          </div>
+          <p v-if="state.reason" class="why mt-5 max-w-190"><b>Почему подходит</b>{{ state.reason }}</p>
+          <nav class="mt-10 flex gap-7 border-b border-line" aria-label="Разделы мероприятия">
+            <router-link
+              v-for="tab in tabs"
+              :key="tab.hash"
+              :to="{ hash: tab.hash }"
+              class="kicker py-3.5 text-ink-2 hover:text-ink"
+            >
+              {{ tab.label }}
+            </router-link>
+          </nav>
+        </section>
+
+        <div class="grid items-start gap-16 pt-10 lg:grid-cols-[minmax(0,1fr)_380px]">
+          <main class="min-w-0">
+            <section id="about" class="scroll-mt-24 pb-9" data-rv>
+              <h2 class="shout mb-5 text-[44px]">О мероприятии</h2>
+              <p class="max-w-190 text-lg leading-[1.55]">
+                {{ state.conference.description ?? 'Описание пока не добавлено.' }}
+              </p>
+            </section>
+
+            <section id="aud" class="scroll-mt-24 border-t border-line py-9" data-rv>
+              <h2 class="shout mb-5 text-[44px]">Аудитория</h2>
+              <dl class="grid gap-3 sm:grid-cols-3">
+                <div
+                  v-for="fact in facts"
+                  :key="fact.label"
+                  class="flex flex-col gap-1.5 rounded-[20px] bg-paper-2 px-5 py-4.5"
+                >
+                  <dt class="kicker text-ink-2">{{ fact.label }}</dt>
+                  <dd class="m-0">{{ fact.value }}</dd>
+                </div>
+              </dl>
+            </section>
+
+            <section v-if="state.tracks.length" id="tracks" class="scroll-mt-24 border-t border-line py-9" data-rv>
+              <h2 class="shout mb-5 text-[44px]">Треки</h2>
+              <ul class="m-0 list-none p-0">
+                <li
+                  v-for="(track, i) in state.tracks"
+                  :key="track.name"
+                  class="grid grid-cols-[44px_1fr] gap-4.5 border-t border-line py-4.5 first:border-0 first:pt-0"
+                >
+                  <span class="ev-n">{{ String(i + 1).padStart(2, '0') }}</span>
+                  <div>
+                    <h3 class="text-xl leading-[1.3] font-bold">{{ track.name }}</h3>
+                    <p class="mt-1 text-[15px] text-ink-2">{{ track.description }}</p>
+                  </div>
+                </li>
+              </ul>
+            </section>
+
+            <section id="terms" class="scroll-mt-24 border-t border-line py-9" data-rv>
+              <h2 class="shout mb-5 text-[44px]">Условия для спикеров</h2>
+              <dl class="m-0">
+                <div
+                  v-for="term in terms"
+                  :key="term.label"
+                  class="grid gap-x-6 gap-y-1 border-t border-line py-3.5 first:border-0 first:pt-0 sm:grid-cols-[220px_1fr]"
+                >
+                  <dt class="text-ink-2">{{ term.label }}</dt>
+                  <dd class="m-0">
+                    <span v-if="term.chip" class="ev-chip" :class="state.conference.is_paid === null && 'text-quiet'">{{
+                      term.value
+                    }}</span>
+                    <template v-else>{{ term.value }}</template>
+                  </dd>
+                </div>
+              </dl>
+            </section>
+
+            <section id="apply" class="scroll-mt-24 border-t border-line py-9" data-rv>
+              <h2 class="shout mb-5 text-[44px]">Как подать заявку</h2>
+              <p v-if="!trix" class="max-w-190 text-lg leading-[1.55]">Заявка подаётся на сайте организатора.</p>
+              <ol v-else class="m-0 grid list-none gap-3 p-0 sm:grid-cols-3">
+                <li
+                  v-for="(step, i) in steps"
+                  :key="step.title"
+                  class="flex flex-col gap-1.5 rounded-[20px] border border-line p-5"
+                >
+                  <span class="kicker text-ink-2">Шаг {{ i + 1 }}</span>
+                  <h3 class="text-xl leading-[1.3] font-bold">{{ step.title }}</h3>
+                  <p class="text-[15px] text-ink-2">{{ step.text }}</p>
+                </li>
+              </ol>
+            </section>
+          </main>
+
+          <aside class="flex flex-col gap-4 lg:sticky lg:top-24">
+            <section
+              class="flex flex-col gap-5 rounded-[20px] border border-t-4 border-line border-t-(--ev) bg-paper p-7"
+              aria-labelledby="deadline-title"
+              data-rv
+            >
+              <template v-if="state.cfp">
+                <div class="flex items-center justify-between gap-3">
+                  <span class="kicker text-ink-2">Заявки до</span>
+                  <span class="ev-chip" :class="state.cfp.is_open && 'ok'">{{
+                    state.cfp.is_open ? 'Приём открыт' : 'Приём закрыт'
+                  }}</span>
+                </div>
+                <h2 id="deadline-title" class="shout text-[clamp(44px,5vw,72px)] leading-none">
+                  {{ formatDate(state.cfp.closes_at) }}
+                </h2>
+              </template>
+              <h2 v-else id="deadline-title" class="shout text-[44px] leading-none">Даты приёма не указаны</h2>
+              <dl class="m-0 grid grid-cols-[auto_1fr] gap-x-5 gap-y-2.5 text-sm">
+                <dt class="text-ink-2">Даты</dt>
+                <dd class="m-0">{{ dates }}</dd>
+                <dt class="text-ink-2">Место</dt>
+                <dd class="m-0">{{ place }}</dd>
+                <dt class="text-ink-2">Организатор</dt>
+                <dd class="m-0">{{ organizer }}</dd>
+              </dl>
+              <div class="flex flex-col gap-2.5 *:justify-center">
+                <router-link
+                  v-if="user"
+                  :to="{ name: 'talks.new', query: { event: state.conference.slug } }"
+                  class="b b-ink"
+                >
+                  Подготовить доклад<ArrowRight />
+                </router-link>
+                <router-link v-else to="/register" class="b b-ink">Начать<ArrowRight /></router-link>
+                <router-link v-if="trix && user" :to="{ hash: '#apply' }" class="b b-line">Подать заявку</router-link>
+                <a
+                  v-if="!trix && state.conference.website_url"
+                  :href="state.conference.website_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="b b-line"
+                >
+                  Подать на сайте<span class="sr-only"> (сайт организатора)</span><ExternalLink />
+                </a>
+              </div>
+              <p v-if="!trix && domain" class="text-xs leading-[1.45] text-ink-2">
+                Из открытых источников · {{ domain }}
+              </p>
+              <p v-else-if="trix" class="text-xs leading-[1.45] text-ink-2">
+                {{
+                  user
+                    ? 'Данные профиля подставятся в заявку сами.'
+                    : 'Заявку подают после регистрации — данные профиля подставятся в неё сами.'
+                }}
+              </p>
+            </section>
+
+            <section v-if="!user" class="flex flex-col gap-3 rounded-[20px] bg-paper-2 p-7" data-rv>
+              <h3 class="text-xl leading-[1.3] font-bold">Впервые в TRIX?</h3>
+              <p class="text-[15px] text-ink-2">
+                TRIX подбирает мероприятия под ваши темы и помогает подготовить доклад до подачи.
+              </p>
+              <router-link to="/speakers" class="ln self-start text-sm font-semibold">Как работает TRIX →</router-link>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </sp-page>
 </template>
+
+<script setup lang="ts">
+import { ArrowRight, CalendarDays, ExternalLink, MapPin, RotateCw } from '@lucide/vue'
+import { computed, onMounted, shallowRef, useTemplateRef } from 'vue'
+import { useRoute } from 'vue-router'
+import { type EventTrack, listEventTracks } from '@/api/demo'
+import {
+  type Cfp,
+  type City,
+  type Conference,
+  getConferenceBySlug,
+  listCFPs,
+  listCities,
+  listRecommendations,
+} from '@/api/generated'
+import AppHeader from '@/components/AppHeader.vue'
+import {
+  conferencePlace,
+  formatDate,
+  formatLabels,
+  formatRange,
+  isTrixSource,
+  kindLabels,
+  levelLabels,
+  paidLabel,
+} from '@/components/speaker/events'
+import SpPage from '@/components/speaker/SpPage.vue'
+import { useAuth } from '@/composables/useAuth'
+import { useFx } from '@/composables/useFx'
+
+type State =
+  | { status: 'loading' }
+  | { status: 'notFound' }
+  | { status: 'error' }
+  | {
+      status: 'ready'
+      conference: Conference
+      cfp: Cfp | null
+      tracks: EventTrack[]
+      cities: City[]
+      /** Почему подходит — только для вошедшего и только если мероприятие в его подборке */
+      reason: string | null
+    }
+
+const route = useRoute()
+const { user } = useAuth()
+const root = useTemplateRef<HTMLElement>('root')
+const state = shallowRef<State>({ status: 'loading' })
+
+const slug = String(route.params.slug)
+const listPath = computed(() => (user.value ? '/events' : '/speakers'))
+const ready = computed(() => (state.value.status === 'ready' ? state.value : null))
+const trix = computed(() => !!ready.value && isTrixSource(ready.value.conference))
+const organizer = computed(() => ready.value?.conference.organizer_name ?? 'Не указан')
+const logo = computed(() =>
+  organizer.value
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join('')
+    .toUpperCase(),
+)
+const dates = computed(() =>
+  ready.value ? formatRange(ready.value.conference.start_at, ready.value.conference.end_at) : '',
+)
+const place = computed(() => {
+  if (!ready.value) return ''
+  const { city, format } = conferencePlace(ready.value.conference, ready.value.cities)
+  return [city, formatLabels[format].toLowerCase()].filter(Boolean).join(', ')
+})
+const domain = computed(() => {
+  try {
+    return new URL(ready.value?.conference.website_url ?? '').hostname
+  } catch {
+    return ''
+  }
+})
+
+const tabs = computed(() => [
+  { label: 'О мероприятии', hash: '#about' },
+  { label: 'Аудитория', hash: '#aud' },
+  ...(ready.value?.tracks.length ? [{ label: 'Треки', hash: '#tracks' }] : []),
+  { label: 'Условия', hash: '#terms' },
+  { label: 'Заявка', hash: '#apply' },
+])
+const facts = computed(() => {
+  const conference = ready.value?.conference
+  if (!conference) return []
+  const { cities, format } = conferencePlace(conference, ready.value?.cities ?? [])
+  const where = cities.length ? `${cities.join(', ')}, ${formatLabels[format].toLowerCase()}` : formatLabels[format]
+  return [
+    {
+      label: 'Уровень',
+      value: conference.audience_levels.map((level) => levelLabels[level]).join(', ') || 'Любой',
+    },
+    { label: 'Кто приходит', value: conference.audience ?? 'Не указано' },
+    { label: 'Формат', value: where },
+  ]
+})
+const terms = computed(() => {
+  const conference = ready.value?.conference
+  if (!conference) return []
+  const slot = [
+    conference.talk_minutes && `Доклад ${conference.talk_minutes} мин`,
+    conference.qa_minutes && `вопросы ${conference.qa_minutes} мин`,
+  ]
+    .filter(Boolean)
+    .join(' и ')
+  return [
+    { label: 'Длительность слота', value: slot || 'Не указана', chip: false },
+    { label: 'Оплата', value: paidLabel(conference.is_paid), chip: true },
+    { label: 'Дорога и проживание', value: conference.travel_terms ?? 'Не указано', chip: false },
+    ...(conference.speaker_perks
+      ? [{ label: 'Что ещё даём спикерам', value: conference.speaker_perks, chip: false }]
+      : []),
+  ]
+})
+const steps = computed(() => [
+  { title: 'Выберите доклад', text: 'Загрузите материалы или опишите новый доклад.' },
+  { title: 'Ответьте на вопросы', text: 'Укажите трек, длительность и ответьте на вопросы организатора.' },
+  {
+    title: 'Дождитесь решения',
+    text: ready.value?.cfp?.answer_by
+      ? `Ответ придёт письмом до ${formatDate(ready.value.cfp.answer_by)}.`
+      : 'Ответ придёт письмом.',
+  },
+])
+
+const load = async () => {
+  state.value = { status: 'loading' }
+  const res = await getConferenceBySlug(slug)
+  if (res.status === 404) {
+    state.value = { status: 'notFound' }
+    return
+  }
+  if (res.status !== 200) {
+    state.value = { status: 'error' }
+    return
+  }
+  const conference = res.data
+
+  const [cfps, tracks, cities, recommendations] = await Promise.all([
+    listCFPs({ conference_id: conference.id }),
+    listEventTracks(slug),
+    listCities(),
+    user.value ? listRecommendations() : null,
+  ])
+  state.value = {
+    status: 'ready',
+    conference,
+    cfp: cfps.status === 200 ? (cfps.data.items[0] ?? null) : null,
+    tracks: tracks.status === 200 ? tracks.data : [],
+    cities: cities.status === 200 ? cities.data : [],
+    reason:
+      recommendations?.status === 200
+        ? (recommendations.data.items.find((item) => item.conference.id === conference.id)?.reason ?? null)
+        : null,
+  }
+}
+
+onMounted(load)
+
+useFx(root, { words: 'landing', ink: true })
+</script>
