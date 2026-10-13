@@ -1,4 +1,6 @@
 import '@/styles.css'
+import '@/styles/speaker.css'
+import '@/styles/org.css'
 import { createApp } from 'vue'
 import App from '@/App.vue'
 import { createRoutes } from '@/routes'
