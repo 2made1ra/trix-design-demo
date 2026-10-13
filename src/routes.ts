@@ -73,7 +73,8 @@ export const createRoutes = () => {
       if (!auth.isOrgAdmin.value) return auth.startPath.value
       const step = auth.org.value?.step
       if (name === 'org.onboarding') {
-        if (!step) return '/org/speakers'
+        // После онбординга остаётся импорт спикеров из Excel (шаг 3).
+        if (!step) return to.params.step === '3' ? undefined : '/org/speakers'
         // Вперёд по шагам не перескочить, назад можно.
         if (Number(to.params.step) > step || Number(to.params.step) < 1) return `/org/onboarding/${step}`
         return
@@ -84,7 +85,7 @@ export const createRoutes = () => {
 
     if (auth.role.value === 'org-admin') return auth.startPath.value
     if (name === 'onboarding') {
-      if (!auth.needsOnboarding.value) return auth.startPath.value
+      // Прошедший онбординг возвращается сюда из подборки, чтобы поменять профиль.
       if (Number(to.params.step) > 3 || Number(to.params.step) < 1) return '/onboarding/1'
       return
     }
