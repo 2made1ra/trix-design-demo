@@ -6,7 +6,7 @@
       <main class="wrap pt-16">
         <div class="flex flex-wrap items-end justify-between gap-8" data-rv>
           <div class="flex flex-col gap-5">
-            <span class="ribbon self-start">Подборка агента</span>
+            <span class="ribbon self-start">Подборка TRIX</span>
             <h1 class="shout text-d1">Мероприятия для вас</h1>
             <p class="text-[17px] leading-[1.55] text-ink-2">
               {{ profileLine }}
@@ -224,7 +224,7 @@
             >
           </div>
           <p class="px-2 text-sm text-ink-2">
-            Мероприятия публикуют организаторы в TRIX или находит агент в открытых источниках. Оплату отмечаем, только
+            Мероприятия публикуют организаторы в TRIX или находит TRIX в открытых источниках. Оплату отмечаем, только
             если организатор её указал.
           </p>
         </aside>
