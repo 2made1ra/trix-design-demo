@@ -76,6 +76,9 @@
         "rules": {
           "correctness": {
             "noUnusedImports": "off"
+          },
+          "style": {
+            "useImportType": "off"
           }
         }
       }
