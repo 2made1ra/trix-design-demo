@@ -137,7 +137,7 @@
 <script setup lang="ts">
 import { ArrowRight, CircleAlert, Eye, EyeOff, LoaderCircle } from '@lucide/vue'
 import { computed, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { type Error as ApiError, type AuthResult, register, login as signIn } from '@/api/generated'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
@@ -148,7 +148,8 @@ const props = defineProps<{ mode: 'register' | 'login' }>()
 const router = useRouter()
 const { setToken, startPath } = useAuth()
 const login = computed(() => props.mode === 'login')
-const form = reactive({ name: '', email: '', password: '' })
+// Почта из подвала лендинга подставляется в регистрацию.
+const form = reactive({ name: '', email: String(useRoute().query.email ?? ''), password: '' })
 const errors = reactive({ name: '', email: '', password: '', form: '' })
 const emailTaken = ref(false)
 const reveal = ref(false)

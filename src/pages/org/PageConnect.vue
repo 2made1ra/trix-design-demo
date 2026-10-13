@@ -104,6 +104,7 @@
 <script setup lang="ts">
 import { ArrowRightIcon, CheckIcon } from '@lucide/vue'
 import { reactive, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { createOrgApplication } from '@/api/demo'
 import OrgButton from '@/components/org/OrgButton.vue'
@@ -113,7 +114,8 @@ type State = { kind: 'form' } | { kind: 'sent'; token: string }
 
 const state = ref<State>({ kind: 'form' })
 const sending = ref(false)
-const form = reactive({ name: '', email: '', site: '', consent: false })
+// Почта из подвала лендинга подставляется в заявку.
+const form = reactive({ name: '', email: String(useRoute().query.email ?? ''), site: '', consent: false })
 const errors = reactive({ name: '', email: '', consent: '' })
 
 const validate = () => {
