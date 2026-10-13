@@ -5,11 +5,9 @@
     >
       <slot />
     </main>
-    <app-footer />
   </org-shell>
 </template>
 
 <script setup lang="ts">
-import AppFooter from '@/components/AppFooter.vue'
 import OrgShell from '@/components/org/OrgShell.vue'
 </script>

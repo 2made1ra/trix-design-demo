@@ -1,331 +1,248 @@
 <template>
-  <sp-page>
+  <sp-page :calm="false" footer="full">
     <div ref="root">
-      <div
-        class="kicker flex min-h-10 flex-wrap items-center justify-center gap-x-4 gap-y-2 bg-[#131313] px-5 py-2 text-l-mint"
-      >
+      <div class="beta k">
         <span>TRIX в закрытой бете: портфолио, подборка и разбор доклада</span>
-        <router-link to="/register" class="text-white shadow-[inset_0_-1px_0_currentColor]">Начать</router-link>
+        <router-link to="/register" class="ln">Начать</router-link>
       </div>
 
-      <section class="pt-10 pb-18">
-        <app-header transparent :anchors="anchors" />
-        <div class="wrap pt-16">
-          <div class="mb-7 flex flex-wrap items-center gap-x-6 gap-y-2.5" data-rv>
-            <nav class="sw" aria-label="Для кого TRIX">
-              <router-link to="/speakers" class="pick">Спикерам</router-link>
-              <router-link to="/companies" class="pick">Компаниям</router-link>
-            </nav>
-            <span class="text-xl leading-[1.2] font-light tracking-[1.9px]">Портфолио, подборка, разбор доклада</span>
-          </div>
-          <h1
-            class="shout text-[clamp(56px,8.9vw,128px)] leading-[0.88]"
-            data-rv
-            :aria-label="`Найдите, где выступить. ${lines[0]}`"
-          >
-            Найдите, где выступить.
-            <em
-              ref="typed"
-              class="block w-fit bg-[linear-gradient(90deg,#008f72,#0a7f8f_60%,#2f6fd0)] bg-clip-text text-transparent not-italic dark:bg-[linear-gradient(90deg,#3cffd0,#6fd8ff_60%,#8aa6ff)]"
-              aria-hidden="true"
-              >{{ typedText }}<i class="typing-caret text-[#008f72] dark:text-l-mint" /></em
-            >
-          </h1>
-          <div class="mt-12 flex flex-wrap items-end justify-between gap-x-12 gap-y-8">
-            <p class="max-w-190 flex-[1_1_480px] font-serif text-[clamp(24px,2.2vw,32px)] leading-[1.2]" data-rv>
-              TRIX собирает выступления в портфолио, подбирает площадки и честно разбирает доклад:
-              <span class="text-ink-2">до выступления и после.</span>
-            </p>
-            <div class="flex flex-wrap gap-3" data-rv>
-              <router-link to="/register" class="b b-ink">Подобрать мероприятия<ArrowRight /></router-link>
-              <router-link :to="{ hash: '#how' }" class="b b-line">Как это работает</router-link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <app-hero
+        side="sp"
+        :anchors="anchors"
+        whisper="Портфолио, подборка, разбор доклада"
+        headline="Найдите, где выступить."
+        :lines="lines"
+        lead="TRIX собирает выступления в портфолио, подбирает площадки и честно разбирает доклад:"
+        lead-muted="до выступления и после."
+        :cta="{ label: 'Подобрать мероприятия', to: '/register' }"
+      />
 
-      <div class="wrap" data-rv>
-        <div
-          class="ticker loud overflow-hidden rounded-[14px] bg-l-mint whitespace-nowrap text-[#131313]"
-          aria-hidden="true"
-        >
-          <div class="ticker-track">
-            <template v-for="item in ['Портфолио', 'Подборка мероприятий', 'Разбор доклада', 'Развитие']" :key="item">
-              <span class="text-[22px] leading-none font-bold tracking-[-0.03em]">{{ item }}</span>
-              <i class="size-2 rounded-full bg-[#008f72]" />
-            </template>
-          </div>
-        </div>
-      </div>
+      <app-ticker :items="['Портфолио', 'Подборка мероприятий', 'Разбор доклада', 'Развитие']" />
 
       <main class="wrap pt-24 pb-30">
         <div class="stream">
-          <section id="how" class="stream-item scroll-mt-6" aria-labelledby="how-title">
+          <section id="how" class="st stream-item scroll-mt-6" aria-labelledby="how-title">
             <sp-stream-label label="Как это работает" number="01" />
             <div class="flex flex-col gap-8 pb-12">
-              <h2 id="how-title" class="shout text-d2" data-rv>Ваше флоу с TRIX</h2>
-              <ol
-                class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4"
-                data-scene="800,1100,800,800,700,800,3600"
-              >
-                <li class="tile tile-slate flex flex-col gap-7" data-rv>
-                  <div class="flex min-h-43 flex-col justify-center gap-3" aria-hidden="true">
-                    <div :class="mockRow">
-                      <span class="text-sm">Ссылка</span>
-                      <b class="text-sm" data-typed="1">datafest.ru/program</b>
-                    </div>
-                    <div :class="mockRow" data-s="2">
-                      <span class="text-sm">Data Fest, Казань</span><span class="tag">14 ноября</span>
-                    </div>
+              <h2 id="how-title" class="d-2" data-rv>Ваше флоу с TRIX</h2>
+              <ol class="how" data-scene="800,1100,800,800,700,800,3600">
+                <app-how-step
+                  :step="1"
+                  title="Внесите выступление"
+                  text="Ссылка на программу, видео или пост — и выступление в портфолио за 30 секунд."
+                >
+                  <div class="mrow">
+                    <span class="small">Ссылка</span><b class="small" data-typed="1">datafest.ru/program</b>
                   </div>
-                  <div class="flex flex-col gap-2.5">
-                    <span class="kicker text-ink-2">Шаг 1</span>
-                    <h3 class="text-2xl leading-[1.05] font-bold">Внесите выступление</h3>
-                    <p class="text-ink-2">
-                      Ссылка на программу, видео или пост — и выступление в портфолио за 30 секунд.
-                    </p>
+                  <div class="mrow" data-s="2">
+                    <span class="small">Data Fest, Казань</span><span class="tag">14 ноября</span>
                   </div>
-                </li>
-                <li class="tile tile-slate flex flex-col gap-7" data-rv>
-                  <div class="flex min-h-43 flex-col justify-center gap-3" aria-hidden="true">
-                    <div :class="mockRow" data-s="3">
-                      <span class="block h-2 w-26 rounded bg-line" />
-                      <span class="tag fill-ink text-l-mint">Внутреннее</span>
-                    </div>
-                    <div :class="mockRow" data-s="4">
-                      <span class="block h-2 w-30 rounded bg-line" /><span class="tag">до 20 ноября</span>
-                    </div>
-                    <div :class="mockRow" data-s="4">
-                      <span class="block h-2 w-23 rounded bg-line" /><span class="tag fill-mint">Оплачивается</span>
-                    </div>
+                </app-how-step>
+                <app-how-step
+                  :step="2"
+                  title="Получите подборку"
+                  text="Мероприятия вашей компании и открытые конференции — с объяснением, почему подходят."
+                >
+                  <div class="mrow" data-s="3">
+                    <span class="sk w-26" /><span class="tag ink">Внутреннее</span>
                   </div>
-                  <div class="flex flex-col gap-2.5">
-                    <span class="kicker text-ink-2">Шаг 2</span>
-                    <h3 class="text-2xl leading-[1.05] font-bold">Получите подборку</h3>
-                    <p class="text-ink-2">
-                      Мероприятия вашей компании и открытые конференции — с объяснением, почему подходят.
-                    </p>
+                  <div class="mrow" data-s="4">
+                    <span class="sk w-30" /><span class="tag">до 20 ноября</span>
                   </div>
-                </li>
-                <li class="tile tile-slate flex flex-col gap-7" data-rv>
-                  <div class="flex min-h-43 flex-col justify-center gap-3" aria-hidden="true">
-                    <span class="tag tag-dash self-start" data-s="5">slides.pdf</span>
-                    <div v-for="row in reviewRows" :key="row.label" :class="mockRow">
-                      <span class="text-sm">{{ row.label }}</span>
-                      <span class="tag" :class="row.fill" data-s="6">{{ row.status }}</span>
-                    </div>
+                  <div class="mrow" data-s="4">
+                    <span class="sk w-23" /><span class="tag mint">Оплачивается</span>
                   </div>
-                  <div class="flex flex-col gap-2.5">
-                    <span class="kicker text-ink-2">Шаг 3</span>
-                    <h3 class="text-2xl leading-[1.05] font-bold">Подготовьте доклад</h3>
-                    <p class="text-ink-2">Загрузите текст или слайды — получите разбор под аудиторию мероприятия.</p>
+                </app-how-step>
+                <app-how-step
+                  :step="3"
+                  title="Подготовьте доклад"
+                  text="Загрузите текст или слайды — получите разбор под аудиторию мероприятия."
+                >
+                  <span class="tag dash self-start" data-s="5">slides.pdf</span>
+                  <div v-for="row in reviewRows" :key="row.label" class="mrow">
+                    <span class="small">{{ row.label }}</span>
+                    <span class="tag" :class="row.tone" data-s="6">{{ row.status }}</span>
                   </div>
-                </li>
+                </app-how-step>
               </ol>
             </div>
           </section>
 
-          <section
+          <app-feature
             v-for="(feature, i) in features"
             :id="feature.id"
             :key="feature.id"
-            class="stream-item scroll-mt-6"
-            :aria-labelledby="`${feature.id}-title`"
+            :label="feature.label"
+            :number="String(i + 2).padStart(2, '0')"
+            :tag="feature.badge"
+            tone="mint"
+            :title="feature.title"
+            :text="feature.text"
+            :ticks="feature.ticks"
+            :flip="i % 2 === 1"
           >
-            <sp-stream-label :label="feature.label" :number="String(i + 2).padStart(2, '0')" />
-            <div class="flex flex-wrap items-center gap-x-12 gap-y-8 pb-12" :class="{ 'flex-row-reverse': i % 2 }">
-              <div class="flex min-w-0 flex-[1_1_380px] flex-col gap-5" data-rv>
-                <span class="tag self-start fill-mint">{{ feature.badge }}</span>
-                <h2 :id="`${feature.id}-title`" class="shout text-d3">{{ feature.title }}</h2>
-                <p class="text-[17px] leading-[1.55] text-ink-2">{{ feature.text }}</p>
-                <ul class="ticks text-sm">
-                  <li v-for="tick in feature.ticks" :key="tick">{{ tick }}</li>
-                </ul>
-                <router-link
-                  v-if="feature.cta"
-                  to="/register"
-                  class="b self-start"
-                  :class="feature.button === 'ink' ? 'b-ink' : 'b-line'"
-                >
-                  {{ feature.cta }}<ArrowRight />
-                </router-link>
+            <template v-if="feature.cta" #cta>
+              <router-link to="/register" class="b self-start" :class="feature.button === 'ink' ? 'b-ink' : 'b-line'">
+                {{ feature.cta }}<ArrowRight />
+              </router-link>
+            </template>
+
+            <figure
+              v-if="feature.id === 'portfolio'"
+              class="tile ink win"
+              data-rv
+              data-scene="700,1600,1100,1000,1000,4200"
+            >
+              <figcaption class="sr">Выступление по ссылке за 30 секунд и подтверждение компанией</figcaption>
+              <app-win-top title="Новое выступление" note="Портфолио · 6 выступлений" />
+              <div class="mrow">
+                <span class="k muted">Ссылка</span><b data-typed="1">datafest.ru/kazan/program</b>
               </div>
+              <app-scene-bar :step="2" busy="Читаем страницу программы" done="Карточка готова за 12 секунд" />
+              <div class="mrow" data-s="3"><span class="k muted">Мероприятие</span><b>Data Fest, Казань</b></div>
+              <div class="mrow" data-s="3"><span class="k muted">Тема</span><b>Feature store без боли</b></div>
+              <div class="mrow" data-s="3"><span class="k muted">Дата</span><b>14 ноября</b></div>
+              <div class="mrow" data-s="4">
+                <span><b>Команда DevRel</b> <span class="small muted">· увидела выступление</span></span>
+                <span class="stack">
+                  <span class="tag dash" data-s="4-4">На подтверждении</span>
+                  <span class="tag mint" data-s="5">Засчитано</span>
+                </span>
+              </div>
+            </figure>
 
-              <figure
-                v-if="feature.id === 'portfolio'"
-                class="tile surface-ink sp-win min-w-0 flex-[999_1_560px]"
-                data-rv
-                data-scene="700,1600,1100,1000,1000,4200"
-              >
-                <figcaption class="sr-only">Выступление по ссылке за 30 секунд и подтверждение компанией</figcaption>
-                <sp-window-top title="Новое выступление" note="Портфолио · 6 выступлений" />
-                <div class="sp-mrow">
-                  <span class="kicker text-ink-2">Ссылка</span><b data-typed="1">datafest.ru/kazan/program</b>
+            <figure
+              v-else-if="feature.id === 'selection'"
+              class="tile mint win"
+              data-rv
+              data-scene="700,1500,1800,1800,4200"
+            >
+              <figcaption class="sr">Подборка мероприятий и предложение выступить от команды</figcaption>
+              <app-win-top title="Мероприятия для вас" note="Подборка · Сохранённые" />
+              <div class="picks">
+                <span class="tag ink">Backend</span><span class="tag">Опытный</span
+                ><span class="tag">Цель: выступать</span>
+              </div>
+              <app-scene-bar
+                :step="1"
+                busy="Подбираем мероприятия под профиль"
+                done="Нашли 3 мероприятия и 1 предложение"
+              />
+              <div class="mrow note" data-s="2">
+                <div class="cell">
+                  <b>DevRel предлагает выступить</b>
+                  <span class="small">Конференция о данных, трек ML · ответить до 20 ноября</span>
                 </div>
-                <sp-scene-bar :step="2" busy="Читаем страницу программы" done="Карточка готова за 12 секунд" />
-                <div class="sp-mrow" data-s="3">
-                  <span class="kicker text-ink-2">Мероприятие</span><b>Data Fest, Казань</b>
+                <span class="tag ink">Предложение</span>
+              </div>
+              <div v-for="event in demoEvents" :key="event.title" class="mrow" data-s="3">
+                <div class="cell">
+                  <b>{{ event.title }}</b>
+                  <span class="small muted">{{ event.text }}</span>
+                  <span class="k muted">{{ event.source }}</span>
                 </div>
-                <div class="sp-mrow" data-s="3">
-                  <span class="kicker text-ink-2">Тема</span><b>Feature store без боли</b>
-                </div>
-                <div class="sp-mrow" data-s="3"><span class="kicker text-ink-2">Дата</span><b>14 ноября</b></div>
-                <div class="sp-mrow" data-s="4">
-                  <span><b>Команда DevRel</b> <span class="text-sm text-ink-2">· увидела выступление</span></span>
-                  <span class="grid items-center justify-items-end *:col-start-1 *:row-start-1">
-                    <span class="tag tag-dash" data-s="4-4">На подтверждении</span>
-                    <span class="tag fill-mint" data-s="5">Засчитано</span>
-                  </span>
-                </div>
-              </figure>
+                <span class="tag" :class="event.tone">{{ event.paid }}</span>
+              </div>
+            </figure>
 
-              <figure
-                v-else-if="feature.id === 'selection'"
-                class="tile surface-mint sp-win min-w-0 flex-[999_1_560px]"
-                data-rv
-                data-scene="700,1500,1800,1800,4200"
-              >
-                <figcaption class="sr-only">Подборка мероприятий и предложение выступить от команды</figcaption>
-                <sp-window-top title="Мероприятия для вас" note="Подборка · Сохранённые" />
-                <div class="flex flex-wrap gap-2">
-                  <span class="tag fill-ink text-l-mint">Backend</span>
-                  <span class="tag">Опытный</span>
-                  <span class="tag">Цель: выступать</span>
-                </div>
-                <sp-scene-bar
-                  :step="1"
-                  busy="Подбираем мероприятия под профиль"
-                  done="Нашли 3 мероприятия и 1 предложение"
-                />
-                <div class="sp-mrow" data-s="2">
-                  <div class="flex flex-col gap-1">
-                    <b>DevRel предлагает выступить</b>
-                    <span class="text-sm">Конференция о данных, трек ML · ответить до 20 ноября</span>
-                  </div>
-                  <span class="tag fill-ink text-l-mint">Предложение</span>
-                </div>
-                <div v-for="event in demoEvents" :key="event.title" class="sp-mrow" data-s="3">
-                  <div class="flex flex-col gap-1">
-                    <b>{{ event.title }}</b>
-                    <span class="text-sm text-ink-2">{{ event.text }}</span>
-                    <span class="kicker text-ink-2">{{ event.source }}</span>
-                  </div>
-                  <span class="tag" :class="event.fill">{{ event.paid }}</span>
-                </div>
-              </figure>
+            <figure
+              v-else-if="feature.id === 'review'"
+              class="tile lime win"
+              data-rv
+              data-scene="800,900,1900,500,500,500,700,4500"
+            >
+              <figcaption class="sr">Разбор доклада по критериям и первая правка</figcaption>
+              <app-win-top title="Миграция монолита без остановки сервиса">
+                <span class="k lock"><Lock />Видите только вы</span>
+              </app-win-top>
+              <div class="picks">
+                <span class="tag" data-s="1">slides.pdf</span
+                ><span class="tag">Конференция о высоконагруженных системах</span><span class="tag">30 мин</span>
+              </div>
+              <app-scene-bar :step="2" busy="Разбираем доклад под аудиторию" done="Готово: 4 критерия, 2 правки" />
+              <div class="flex gap-6 k muted">
+                <span class="text-ink">Оценка</span><span>Правки</span><span>Вопросы из зала</span>
+              </div>
+              <div v-for="(row, j) in criteria" :key="row.label" class="mrow solid">
+                <span>{{ row.label }}</span>
+                <span class="tag" :class="row.tone" :data-s="j + 3">{{ row.status }}</span>
+              </div>
+              <div class="tile ink rounded-2xl px-5 py-4.5" data-s="7">
+                <span class="k text-mint">Правка 01</span>
+                <p class="h-20 mt-2" data-typed="7">Вынести главную мысль на второй слайд</p>
+              </div>
+            </figure>
 
-              <figure
-                v-else-if="feature.id === 'review'"
-                class="tile surface-lime sp-win min-w-0 flex-[999_1_560px]"
-                data-rv
-                data-scene="800,900,1900,500,500,500,700,4500"
-              >
-                <figcaption class="sr-only">Разбор доклада по критериям и первая правка</figcaption>
-                <sp-window-top title="Миграция монолита без остановки сервиса">
-                  <span class="kicker flex items-center gap-1.5"><Lock class="size-3.5" />Видите только вы</span>
-                </sp-window-top>
-                <div class="flex flex-wrap gap-2">
-                  <span class="tag" data-s="1">slides.pdf</span>
-                  <span class="tag">Конференция о высоконагруженных системах</span>
-                  <span class="tag">30 мин</span>
-                </div>
-                <sp-scene-bar :step="2" busy="Разбираем доклад под аудиторию" done="Готово: 4 критерия, 2 правки" />
-                <div v-for="(row, j) in criteria" :key="row.label" class="sp-mrow solid">
+            <figure
+              v-else-if="feature.id === 'growth'"
+              class="tile mint win"
+              data-rv
+              data-scene="700,1200,1200,1300,4200"
+            >
+              <figcaption class="sr">Оценки по критериям и оценки зала растут от первого доклада к третьему</figcaption>
+              <app-win-top title="Ваш прогресс" note="3 доклада · Backend" />
+              <div class="grid4 panel">
+                <span aria-hidden="true" />
+                <span v-for="n in 3" :key="n" class="k muted">Доклад {{ n }}</span>
+                <template v-for="row in progress" :key="row.label">
                   <span>{{ row.label }}</span>
-                  <span class="tag" :class="row.fill" :data-s="j + 3">{{ row.status }}</span>
-                </div>
-                <div class="tile surface-ink rounded-2xl px-5 py-4.5" data-s="7">
-                  <span class="kicker text-l-mint">Правка 01</span>
-                  <p class="mt-2 text-xl leading-[1.1] font-bold" data-typed="7">
-                    Вынести главную мысль на второй слайд
-                  </p>
-                </div>
-              </figure>
-
-              <figure
-                v-else-if="feature.id === 'growth'"
-                class="tile surface-mint sp-win min-w-0 flex-[999_1_560px]"
-                data-rv
-                data-scene="700,1200,1200,1300,4200"
-              >
-                <figcaption class="sr-only">
-                  Оценки по критериям и оценки зала растут от первого доклада к третьему
-                </figcaption>
-                <sp-window-top title="Ваш прогресс" note="3 доклада · Backend" />
-                <div
-                  class="grid grid-cols-[minmax(110px,1.2fr)_repeat(3,minmax(0,1fr))] items-center gap-2 rounded-[14px] bg-paper p-4"
-                >
-                  <span aria-hidden="true" />
-                  <span v-for="n in 3" :key="n" class="kicker text-ink-2">Доклад {{ n }}</span>
-                  <template v-for="row in progress" :key="row.label">
-                    <span>{{ row.label }}</span>
-                    <span
-                      v-for="(mark, j) in row.marks"
-                      :key="j"
-                      class="tag justify-self-start"
-                      :class="marks[mark].fill"
-                      :data-s="j + 1"
-                    >
-                      {{ marks[mark].label }}
-                    </span>
-                  </template>
-                  <span>Оценки зала</span>
-                  <b v-for="(score, j) in ['4,1', '4,4', '4,7']" :key="score" :data-s="j + 1">{{ score }}</b>
-                </div>
-                <div class="sp-mrow" data-s="4">
-                  <span>
-                    <span class="kicker text-ink-2">Материал для прокачки: </span>
-                    <span data-typed="4">лекция о тайминге доклада</span>
+                  <span
+                    v-for="(mark, j) in row.marks"
+                    :key="j"
+                    class="tag justify-self-start"
+                    :class="marks[mark].tone"
+                    :data-s="j + 1"
+                  >
+                    {{ marks[mark].label }}
                   </span>
-                </div>
-              </figure>
+                </template>
+                <span>Оценки зала</span>
+                <b v-for="(score, j) in ['4,1', '4,4', '4,7']" :key="score" class="num" :data-s="j + 1">{{ score }}</b>
+              </div>
+              <div class="mrow" data-s="4">
+                <span>
+                  <span class="k muted">Материал для прокачки:</span>
+                  <span data-typed="4">лекция о тайминге доклада</span>
+                </span>
+              </div>
+            </figure>
 
-              <figure
-                v-else-if="feature.id === 'first'"
-                class="tile surface-ink sp-win min-w-0 flex-[999_1_560px]"
-                data-rv
-                data-scene="900,1100,1300,1500,4200"
-              >
-                <figcaption class="sr-only">Площадки для первого доклада и разбор репетиции по аудио</figcaption>
-                <sp-window-top title="Площадки для старта" note="Backend · Казань" />
-                <div class="flex flex-wrap gap-2">
-                  <span class="pick">Все</span>
-                  <span class="pick" data-press="1">Первый доклад</span>
-                  <span class="pick">Онлайн</span>
+            <figure
+              v-else-if="feature.id === 'first'"
+              class="tile ink win"
+              data-rv
+              data-scene="900,1100,1300,1500,4200"
+            >
+              <figcaption class="sr">Площадки для первого доклада и разбор репетиции по аудио</figcaption>
+              <app-win-top title="Площадки для старта" note="Backend · Казань" />
+              <div class="picks">
+                <span class="pick">Все</span><span class="pick" data-press="1">Первый доклад</span
+                ><span class="pick">Онлайн</span>
+              </div>
+              <div v-for="place in places" :key="place.title" class="mrow" :data-x="place.start ? undefined : 2">
+                <div class="cell">
+                  <b>{{ place.title }}</b>
+                  <span class="small muted">{{ place.text }}</span>
                 </div>
-                <div v-for="place in places" :key="place.title" class="sp-mrow" :data-x="place.start ? undefined : 2">
-                  <div class="flex flex-col gap-1">
-                    <b>{{ place.title }}</b>
-                    <span class="text-sm text-ink-2">{{ place.text }}</span>
-                  </div>
-                  <span class="tag" :class="place.start && 'fill-mint'">{{
-                    place.start ? 'Для старта' : 'Опытным'
-                  }}</span>
+                <span class="tag" :class="place.start && 'mint'">{{ place.start ? 'Для старта' : 'Опытным' }}</span>
+              </div>
+              <div class="tile mint flex items-center justify-between gap-4 rounded-2xl px-5 py-4.5" data-s="3">
+                <div>
+                  <span class="k">Репетиция · аудио 9:48</span>
+                  <p class="h-20 mt-2">Темп речи</p>
                 </div>
-                <div
-                  class="tile surface-mint flex items-center justify-between gap-4 rounded-2xl px-5 py-4.5"
-                  data-s="3"
-                >
-                  <div>
-                    <span class="kicker">Репетиция · аудио 9:48</span>
-                    <p class="mt-2 text-xl leading-[1.1] font-bold">Темп речи</p>
-                  </div>
-                  <span class="tag fill-yellow" data-s="4">Доработать</span>
-                </div>
-              </figure>
+                <span class="tag yellow" data-s="4">Доработать</span>
+              </div>
+            </figure>
 
-              <figure v-else class="tile tile-slate sp-win min-w-0 flex-[999_1_560px]" data-rv>
-                <figcaption class="sr-only">Кто что видит в TRIX</figcaption>
+            <figure v-else class="tile slate win" data-rv>
+              <figcaption class="sr">Кто что видит в TRIX</figcaption>
+              <div class="overflow-x-auto">
                 <table class="who">
                   <thead>
                     <tr>
-                      <th scope="col"><span class="sr-only">Данные</span></th>
-                      <th
-                        v-for="col in ['Вы', 'Ваша компания', 'Другие компании']"
-                        :key="col"
-                        scope="col"
-                        class="kicker"
-                      >
+                      <th scope="col"><span class="sr">Данные</span></th>
+                      <th v-for="col in ['Вы', 'Ваша компания', 'Другие компании']" :key="col" scope="col" class="k">
                         {{ col }}
                       </th>
                     </tr>
@@ -333,8 +250,8 @@
                   <tbody>
                     <tr v-for="row in visibility" :key="row.label" :class="{ key: row.key }">
                       <th scope="row">{{ row.label }}</th>
-                      <td v-for="(cell, j) in row.cells" :key="j" :class="!cell.tag && 'text-sm'">
-                        <span v-if="cell.tag" class="tag" :class="cell.tag === 'yes' ? 'fill-mint' : 'tag-dash'">{{
+                      <td v-for="(cell, j) in row.cells" :key="j" :class="!cell.tag && 'small'">
+                        <span v-if="cell.tag" class="tag" :class="cell.tag === 'yes' ? 'mint' : 'dash'">{{
                           cell.tag === 'yes' ? 'Да' : 'Нет'
                         }}</span>
                         <template v-else>{{ cell.text }}</template>
@@ -342,58 +259,35 @@
                     </tr>
                   </tbody>
                 </table>
-              </figure>
-            </div>
-          </section>
+              </div>
+            </figure>
+          </app-feature>
 
-          <section id="faq" class="stream-item scroll-mt-6" aria-labelledby="faq-title">
-            <sp-stream-label label="Вопросы" number="08" />
-            <div class="flex flex-wrap items-start gap-12" data-rv>
-              <div class="faq min-w-0 flex-[999_1_560px]">
-                <details v-for="(item, i) in faq" :key="item.question" :open="i === 0">
-                  <summary>
-                    <span class="text-2xl leading-[1.05] font-bold">{{ item.question }}</span><i aria-hidden="true" />
-                  </summary>
-                  <p class="text-ink-2">{{ item.answer }}</p>
-                </details>
-              </div>
-              <div class="flex min-w-0 flex-[1_1_340px] flex-col gap-4">
-                <h2 id="faq-title" class="shout text-d3">Остались вопросы?</h2>
-                <p class="text-[17px] leading-[1.55] text-ink-2">
-                  Не нашли ответ — напишите нам:
-                  <a href="mailto:hello@trixy.space" class="ln text-ink">hello@trixy.space</a>
-                </p>
-              </div>
-            </div>
-          </section>
+          <app-faq :items="faq">
+            Не нашли ответ — напишите нам:
+            <a href="mailto:hello@trixy.space" class="ln text-ink">hello@trixy.space</a>
+          </app-faq>
         </div>
       </main>
-
-      <section class="wrap pb-12" aria-labelledby="start-title">
-        <div class="tile surface-mint flex flex-wrap items-center justify-between gap-x-12 gap-y-6 p-10" data-rv>
-          <div class="flex flex-col gap-3">
-            <span class="kicker">Начать</span>
-            <h2 id="start-title" class="shout text-d3">Начните с одного выступления</h2>
-          </div>
-          <router-link to="/register" class="b b-ink">Подобрать мероприятия<ArrowRight /></router-link>
-        </div>
-      </section>
     </div>
   </sp-page>
 </template>
 
 <script setup lang="ts">
 import { ArrowRight, Lock } from '@lucide/vue'
-import { ref, useTemplateRef } from 'vue'
-import AppHeader from '@/components/AppHeader.vue'
+import { useTemplateRef } from 'vue'
+import AppFaq from '@/components/AppFaq.vue'
+import AppFeature from '@/components/AppFeature.vue'
+import AppHero from '@/components/AppHero.vue'
+import AppHowStep from '@/components/AppHowStep.vue'
+import AppSceneBar from '@/components/AppSceneBar.vue'
+import AppTicker from '@/components/AppTicker.vue'
+import AppWinTop from '@/components/AppWinTop.vue'
 import SpPage from '@/components/speaker/SpPage.vue'
-import SpSceneBar from '@/components/speaker/SpSceneBar.vue'
 import SpStreamLabel from '@/components/speaker/SpStreamLabel.vue'
-import SpWindowTop from '@/components/speaker/SpWindowTop.vue'
-import { useFx, useScenes, useTyping } from '@/composables/useFx'
+import { useFx, useScenes } from '@/composables/useFx'
 
 const root = useTemplateRef<HTMLElement>('root')
-const typed = useTemplateRef<HTMLElement>('typed')
 const lines = [
   'Выступайте лучше.',
   'Готовьтесь под зал.',
@@ -401,23 +295,19 @@ const lines = [
   'Соберите портфолио.',
   'Звучите увереннее.',
 ]
-const typedText = ref(lines[0])
 
 const anchors = [
-  { label: 'Портфолио', to: { hash: '#portfolio' } },
-  { label: 'Подборка', to: { hash: '#selection' } },
-  { label: 'Разбор доклада', to: { hash: '#review' } },
-  { label: 'Развитие', to: { hash: '#growth' } },
-  { label: 'Вопросы', to: { hash: '#faq' } },
+  { label: 'Портфолио', hash: '#portfolio' },
+  { label: 'Подборка', hash: '#selection' },
+  { label: 'Разбор доклада', hash: '#review' },
+  { label: 'Развитие', hash: '#growth' },
+  { label: 'Вопросы', hash: '#faq' },
 ]
 
-const mockRow =
-  'flex items-center justify-between gap-3 rounded-[14px] bg-paper px-3.5 py-3 shadow-[inset_0_0_0_1px_var(--line-2)]'
-
 const reviewRows = [
-  { label: 'Аудитория', status: 'Доработать', fill: 'fill-yellow' },
-  { label: 'Структура', status: 'В порядке', fill: 'fill-mint' },
-  { label: 'Тайминг', status: 'Слабо', fill: 'fill-pink' },
+  { label: 'Аудитория', status: 'Доработать', tone: 'yellow' },
+  { label: 'Структура', status: 'В порядке', tone: 'mint' },
+  { label: 'Тайминг', status: 'Слабо', tone: 'pink' },
 ]
 
 const features = [
@@ -513,33 +403,33 @@ const demoEvents = [
     text: 'Ваша тема совпадает с треком «Производительность». Заявки до 25 ноября',
     source: 'Внутреннее · Заявка через TRIX',
     paid: 'Не оплачивается',
-    fill: '',
+    tone: '',
   },
   {
     title: 'Конференция о высоконагруженных системах',
     text: 'Нужен опыт выступлений — у вас 6 в портфолио. Заявки до 30 ноября',
     source: 'Подать на сайте ↗',
     paid: 'Оплата не указана',
-    fill: 'tag-dash',
+    tone: 'dash',
   },
   {
     title: 'Открытая конференция по Go',
     text: 'Ищут доклады на 30 минут. Заявки до 5 декабря',
     source: 'Заявка через TRIX',
     paid: 'Оплачивается',
-    fill: 'fill-ink text-l-mint',
+    tone: 'ink',
   },
 ]
 const criteria = [
-  { label: 'Соответствие аудитории', status: 'Доработать', fill: 'fill-yellow' },
-  { label: 'Структура', status: 'В порядке', fill: 'fill-mint' },
-  { label: 'Главная мысль', status: 'Доработать', fill: 'fill-yellow' },
-  { label: 'Укладывается во время', status: 'Слабо', fill: 'fill-pink' },
+  { label: 'Соответствие аудитории', status: 'Доработать', tone: 'yellow' },
+  { label: 'Структура', status: 'В порядке', tone: 'mint' },
+  { label: 'Главная мысль', status: 'Доработать', tone: 'yellow' },
+  { label: 'Укладывается во время', status: 'Слабо', tone: 'pink' },
 ]
 const marks = {
-  ok: { label: 'В порядке', fill: 'fill-mint' },
-  fix: { label: 'Доработать', fill: 'fill-yellow' },
-  weak: { label: 'Слабо', fill: 'fill-pink' },
+  ok: { label: 'В порядке', tone: 'mint' },
+  fix: { label: 'Доработать', tone: 'yellow' },
+  weak: { label: 'Слабо', tone: 'pink' },
 } as const
 const progress: { label: string; marks: (keyof typeof marks)[] }[] = [
   { label: 'Структура', marks: ['fix', 'ok', 'ok'] },
@@ -600,7 +490,4 @@ const faq = [
 
 useFx(root, { words: 'home', ink: true, fade: 0, rate: 260 })
 useScenes(root)
-useTyping(typed, lines, (text) => {
-  typedText.value = text
-})
 </script>

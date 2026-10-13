@@ -1,7 +1,7 @@
 <template>
-  <div class="scene-bar" :data-s="step">
+  <div class="bar" :data-s="step">
     <i />
-    <span class="kicker text-ink-2">
+    <span class="k muted">
       <span :data-s="`${step}-${step}`">{{ busy }}</span>
       <span :data-s="step + 1">{{ done }}</span>
     </span>

@@ -1,47 +1,63 @@
 <template>
-  <header class="z-40" :class="transparent ? 'relative' : 'sticky top-0 border-b border-line-2 bg-paper'">
-    <div class="wrap flex min-h-17 flex-wrap items-center justify-between gap-x-8">
-      <router-link v-if="!bare" :to="user ? startPath : '/'" class="brand text-ink hover:text-ink">TRIX</router-link>
-      <span v-else />
-
-      <nav
-        v-if="navLinks.length"
-        aria-label="Разделы"
-        class="order-3 flex w-full gap-7 overflow-x-auto md:order-none md:mr-auto md:ml-6 md:w-auto"
-      >
-        <router-link
-          v-for="link in navLinks"
-          :key="link.label"
-          :to="link.to"
-          class="kicker flex h-12 shrink-0 items-center text-ink md:h-17"
-          :class="link.active && 'shadow-[inset_0_-2px_0_var(--ink)]'"
-          :aria-current="link.active ? 'page' : undefined"
+  <header class="nav" :class="{ bare: variant === 'landing' || variant === 'fork' }">
+    <div class="wrap">
+      <template v-if="variant !== 'fork'">
+        <router-link :to="home" class="brand">TRIX</router-link>
+        <nav
+          v-if="links.length"
+          :aria-label="variant === 'landing' ? 'Основное меню' : 'Разделы'"
+          class="links"
+          :class="{ left: !landing }"
         >
-          {{ link.label }}
+          <router-link
+            v-for="link in links"
+            :key="link.label"
+            :to="link.to"
+            :aria-current="link.active ? 'page' : undefined"
+          >
+            {{ link.label }}
+          </router-link>
+        </nav>
+      </template>
+
+      <div class="flex items-center gap-7 max-sm:gap-4" :class="{ 'ml-auto': variant === 'fork' }">
+        <nav v-if="variant === 'org' && isSpeaker" class="sw" aria-label="Режим кабинета">
+          <span aria-current="page">Организация</span>
+          <router-link :to="{ name: 'events' }">Личное</router-link>
+        </nav>
+
+        <template v-if="!user">
+          <router-link :to="{ name: 'login' }" class="k">Войти</router-link>
+          <router-link v-if="variant !== 'fork'" :to="join" class="b b-mint b-sm">
+            {{ joinLabel }}<ArrowRight v-if="landing" />
+          </router-link>
+        </template>
+        <router-link v-else-if="landing" :to="startPath" class="b b-mint b-sm max-sm:hidden">
+          В кабинет<ArrowRight />
         </router-link>
-      </nav>
 
-      <div v-if="user" ref="menu" class="relative">
-        <button
-          type="button"
-          class="ava fill-mint"
-          aria-label="Меню аккаунта"
-          :aria-expanded="open"
-          @click="open = !open"
-        >
-          {{ initials }}
-        </button>
-        <div v-if="open" class="float absolute top-full right-0 z-50 mt-2 flex w-64 flex-col gap-3 p-4">
-          <span class="truncate text-sm text-ink-2">{{ user.email }}</span>
-          <button type="button" class="b b-line b-sm" @click="signOut">
-            <LogOut />
-            Выйти из аккаунта
+        <div v-if="user" ref="menu" class="relative">
+          <button
+            type="button"
+            class="ava"
+            :class="variant === 'org' || company ? 'lime' : 'mint'"
+            :aria-label="variant === 'org' ? 'Профиль организации' : 'Меню аккаунта'"
+            :aria-expanded="open"
+            @click="open = !open"
+          >
+            {{ initials }}
           </button>
+          <div v-if="open" class="float absolute top-full right-0 z-50 mt-2 flex w-64 flex-col gap-3 p-4">
+            <div class="min-w-0">
+              <div v-if="variant === 'org'" class="truncate font-semibold">{{ org?.name }}</div>
+              <div class="truncate text-sm text-ink-2">{{ user.email }}</div>
+            </div>
+            <button type="button" class="b b-line b-sm" @click="signOut">
+              <LogOut />
+              Выйти из аккаунта
+            </button>
+          </div>
         </div>
-      </div>
-      <div v-else class="flex items-center gap-7">
-        <router-link :to="{ name: 'login' }" class="kicker text-ink">Войти</router-link>
-        <router-link v-if="!bare" :to="{ name: 'register' }" class="b b-mint b-sm"> Начать<ArrowRight /> </router-link>
       </div>
     </div>
   </header>
@@ -50,41 +66,96 @@
 <script setup lang="ts">
 import { ArrowRight, LogOut } from '@lucide/vue'
 import { onClickOutside } from '@vueuse/core'
-import { computed, ref, useTemplateRef } from 'vue'
+import { computed, onMounted, ref, useTemplateRef } from 'vue'
 import { type RouteLocationRaw, useRoute, useRouter } from 'vue-router'
+import { listOrgEvents } from '@/api/demo'
 import { useAuth } from '@/composables/useAuth'
 
 type Link = { label: string; to: RouteLocationRaw; active?: boolean }
 
-const props = defineProps<{
-  /** Прозрачная шапка внутри героя лендинга */
-  transparent?: boolean
-  /** Без логотипа и кнопки «Начать»: развилка */
-  bare?: boolean
-  /** Якоря лендинга для гостя */
-  anchors?: Link[]
-}>()
+const props = withDefaults(
+  defineProps<{
+    /** Шапка лендинга, развилки, кабинета спикера или кабинета организации */
+    variant?: 'landing' | 'fork' | 'cabinet' | 'org'
+    side?: 'sp' | 'co'
+    /** Якоря лендинга */
+    anchors?: { label: string; hash: string }[]
+  }>(),
+  { variant: 'cabinet', side: 'sp' },
+)
 
 const route = useRoute()
 const router = useRouter()
-const { user, startPath, logout } = useAuth()
+const { user, org, isSpeaker, startPath, logout } = useAuth()
 const menu = useTemplateRef<HTMLElement>('menu')
 const open = ref(false)
+const nextEventId = ref<string | null>(null)
 
 onClickOutside(menu, () => {
   open.value = false
 })
 
-const navLinks = computed<Link[]>(() =>
-  user.value
-    ? [{ label: 'Мероприятия', to: '/events', active: ['events', 'conferences.show'].includes(String(route.name)) }]
-    : (props.anchors ?? []),
+onMounted(async () => {
+  if (props.variant !== 'org') return
+  const res = await listOrgEvents()
+  if (res.status === 200) nextEventId.value = res.data.upcoming[0]?.id ?? null
+})
+
+const landing = computed(() => props.variant === 'landing')
+const company = computed(() => props.side === 'co')
+const name = computed(() => String(route.name))
+const home = computed<RouteLocationRaw>(() => {
+  if (props.variant === 'landing') return { name: 'home' }
+  if (props.variant === 'org') return { name: 'companies.landing' }
+  return user.value ? startPath.value : { name: 'speakers.landing' }
+})
+const join = computed<RouteLocationRaw>(() =>
+  landing.value && company.value ? { name: 'connect' } : { name: 'register' },
 )
-const initials = computed(() => (user.value?.email ?? '').slice(0, 2))
+const joinLabel = computed(() => (landing.value && company.value ? 'Подключить организацию' : 'Начать'))
+
+const links = computed<Link[]>(() => {
+  if (props.variant === 'landing') return (props.anchors ?? []).map((a) => ({ label: a.label, to: { hash: a.hash } }))
+  if (props.variant === 'cabinet') {
+    const items: Link[] = [
+      { label: 'Мероприятия', to: { name: 'events' }, active: ['events', 'conferences.show'].includes(name.value) },
+    ]
+    if (user.value)
+      items.push(
+        { label: 'Мои доклады', to: { name: 'talks.new' }, active: name.value.startsWith('talks.') },
+        { label: 'Развитие', to: { name: 'speakers.landing', hash: '#growth' } },
+      )
+    return items
+  }
+  if (props.variant === 'org')
+    return [
+      { label: 'Новые выступления', to: { name: 'org.speakers', hash: '#new' } },
+      { label: 'Спикеры', to: { name: 'org.speakers' }, active: name.value === 'org.speakers' },
+      { label: 'Мероприятия', to: { name: 'org.events' }, active: name.value === 'org.events' },
+      {
+        label: 'Кого позвать',
+        to: nextEventId.value
+          ? { name: 'org.events.invite', params: { id: nextEventId.value } }
+          : { name: 'org.events' },
+        active: name.value === 'org.events.invite',
+      },
+    ]
+  return []
+})
+
+const initials = computed(() => {
+  if (props.variant !== 'org') return (user.value?.email ?? '').slice(0, 2)
+  return (org.value?.name ?? 'Организация')
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join('')
+})
 
 const signOut = async () => {
   open.value = false
   logout()
-  await router.push('/')
+  await router.push(props.variant === 'org' ? { name: 'companies.landing' } : '/')
 }
 </script>
