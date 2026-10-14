@@ -58,7 +58,9 @@
             <p v-if="errors.consent" class="err" role="alert"><CircleAlertIcon />{{ errors.consent }}</p>
           </div>
         </fieldset>
-        <button type="submit" class="b b-mint go" :disabled="sending">Отправить заявку<ArrowRightIcon /></button>
+        <app-button type="submit" variant="mint" class="go" :disabled="sending"
+          >Отправить заявку<ArrowRightIcon /></app-button
+        >
       </form>
       <p class="small muted" data-rv>
         Уже в команде?
@@ -76,10 +78,10 @@
         </p>
       </div>
       <div class="acts" data-rv>
-        <router-link :to="{ name: 'companies.landing' }" class="b b-mint">На главную<ArrowRightIcon /></router-link>
-        <router-link :to="{ name: 'invite', params: { token: state.token } }" class="b b-line">
+        <app-button :to="{ name: 'companies.landing' }" variant="mint">На главную<ArrowRightIcon /></app-button>
+        <app-button :to="{ name: 'invite', params: { token: state.token } }" variant="line">
           Открыть приглашение из письма
-        </router-link>
+        </app-button>
       </div>
     </section>
 
@@ -100,6 +102,7 @@ import { reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { createOrgApplication } from '@/api/demo'
+import AppButton from '@/components/AppButton.vue'
 import AppField from '@/components/AppField.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
 import AppTag from '@/components/AppTag.vue'

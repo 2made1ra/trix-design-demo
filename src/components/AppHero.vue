@@ -19,8 +19,8 @@
           <span class="muted">{{ leadMuted }}</span>
         </p>
         <div class="flex flex-wrap gap-3" data-rv>
-          <router-link :to="cta.to" class="b b-ink">{{ cta.label }}<ArrowRight /></router-link>
-          <router-link :to="{ hash: '#how' }" class="b b-line">Как это работает</router-link>
+          <app-button :to="cta.to" variant="ink">{{ cta.label }}<ArrowRight /></app-button>
+          <app-button :to="{ hash: '#how' }" variant="line">Как это работает</app-button>
         </div>
       </div>
     </div>
@@ -31,6 +31,7 @@
 import { ArrowRight } from '@lucide/vue'
 import { ref, useTemplateRef } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
+import AppButton from '@/components/AppButton.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppPick from '@/components/AppPick.vue'
 import { useTyping } from '@/composables/useFx'

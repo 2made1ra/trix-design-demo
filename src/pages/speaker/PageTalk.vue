@@ -28,10 +28,10 @@
             }}
           </p>
           <div class="sel-acts">
-            <button v-if="state.status === 'error'" type="button" class="b b-ink b-sm" @click="start">
+            <app-button v-if="state.status === 'error'" variant="ink" sm @click="start">
               Повторить<RotateCw />
-            </button>
-            <router-link to="/events" class="b b-line b-sm">К мероприятиям</router-link>
+            </app-button>
+            <app-button to="/events" variant="line" sm>К мероприятиям</app-button>
           </div>
         </app-tile>
 
@@ -102,10 +102,10 @@
                 <p>{{ state.review.error?.message ?? 'Что-то пошло не так на нашей стороне.' }}</p>
               </template>
               <div class="sel-acts mt-1">
-                <router-link :to="uploadPath" class="b b-ink">Загрузить заново<Upload /></router-link>
-                <router-link v-if="state.review.error?.key === 'text_not_extracted'" :to="uploadPath" class="b b-line">
+                <app-button :to="uploadPath" variant="ink">Загрузить заново<Upload /></app-button>
+                <app-button v-if="state.review.error?.key === 'text_not_extracted'" :to="uploadPath" variant="line">
                   Вставить текст вручную
-                </router-link>
+                </app-button>
               </div>
             </div>
 
@@ -135,8 +135,8 @@
                   >. Материалы: {{ state.review.materials.join(' и ') }}
                 </p>
                 <div class="flex flex-wrap gap-3">
-                  <router-link :to="uploadPath" class="b b-mint"><Upload />Загрузить новую версию</router-link>
-                  <router-link to="/events" class="b b-line">Вернуться к подборке<ArrowRight /></router-link>
+                  <app-button :to="uploadPath" variant="mint"><Upload />Загрузить новую версию</app-button>
+                  <app-button to="/events" variant="line">Вернуться к подборке<ArrowRight /></app-button>
                 </div>
               </div>
             </div>
@@ -238,6 +238,7 @@ import { ArrowRight, FileText, Lock, Presentation, RotateCw, Upload } from '@luc
 import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { type CriterionState, getTalkReview, type TalkReview, type TalkReviewStage } from '@/api/demo'
+import AppButton from '@/components/AppButton.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'

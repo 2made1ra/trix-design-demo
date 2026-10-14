@@ -28,10 +28,10 @@
             }}
           </p>
           <div class="sel-acts">
-            <button v-if="event.status === 'error'" type="button" class="b b-ink b-sm" @click="loadEvent">
+            <app-button v-if="event.status === 'error'" variant="ink" sm @click="loadEvent">
               Повторить<RotateCw />
-            </button>
-            <router-link to="/events" class="b b-line b-sm">К мероприятиям</router-link>
+            </app-button>
+            <app-button to="/events" variant="line" sm>К мероприятиям</app-button>
           </div>
         </app-tile>
 
@@ -154,12 +154,12 @@
 
               <div class="next flex-wrap" data-rv>
                 <router-link :to="`/c/${event.conference.slug}`" class="k ln">Отмена</router-link>
-                <button type="submit" class="b b-mint" :disabled="sending" :aria-busy="sending">
+                <app-button type="submit" variant="mint" :disabled="sending" :aria-busy="sending">
                   <template v-if="sending">
                     <LoaderCircle class="animate-spin" aria-hidden="true" />Отправляем
                   </template>
                   <template v-else>Получить разбор<ArrowRight /></template>
-                </button>
+                </app-button>
               </div>
             </form>
 
@@ -211,6 +211,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { createTalkReview, type EventTrack, listEventTracks } from '@/api/demo'
 import { type City, type Conference, getConferenceBySlug, listCities } from '@/api/generated'
+import AppButton from '@/components/AppButton.vue'
 import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppTag from '@/components/AppTag.vue'

@@ -82,9 +82,9 @@
             ]"
           >
             <template #cta>
-              <router-link :to="{ name: 'connect' }" class="b b-ink self-start">
+              <app-button :to="{ name: 'connect' }" variant="ink" class="self-start">
                 Подключить организацию<ArrowRight />
-              </router-link>
+              </app-button>
             </template>
             <app-tile as="figure" tone="ink" class="win" data-rv data-scene="700,1000,1200,4200">
               <figcaption class="sr">База спикеров с фильтром по направлению, NPS и городу</figcaption>
@@ -135,7 +135,9 @@
                   <span class="small muted">Data Fest, Казань · программа по ссылке</span>
                 </div>
                 <span class="stack">
-                  <span class="b b-ink b-sm" aria-hidden="true" data-s="0-1" data-press="1">Подтвердить</span>
+                  <app-button as="span" variant="ink" sm aria-hidden="true" data-s="0-1" data-press="1"
+                    >Подтвердить</app-button
+                  >
                   <app-tag tone="ink" data-s="2">Засчитано</app-tag>
                 </span>
               </div>
@@ -176,7 +178,9 @@
             <app-tile as="figure" tone="mint" class="win" data-rv data-scene="700,1500,900,1000,4200">
               <figcaption class="sr">Подбор своих спикеров под конференцию и предложение выступить</figcaption>
               <app-win-top title="Конференция о данных" note="Трек ML · заявки до 20 ноября" />
-              <span class="b b-ink b-sm self-start" aria-hidden="true" data-press="1">Кого позвать</span>
+              <app-button as="span" variant="ink" sm class="self-start" aria-hidden="true" data-press="1"
+                >Кого позвать</app-button
+              >
               <app-scene-bar :step="1" busy="Подбираем спикеров под трек" done="Нашли 3 подходящих" />
               <div class="mrow" data-s="2">
                 <div class="cell">
@@ -184,7 +188,7 @@
                   <span class="small muted">Тема совпадает с треком, NPS 9.7 на последних выступлениях</span>
                 </div>
                 <span class="stack">
-                  <span class="b b-line b-sm" aria-hidden="true" data-s="2-2">Предложить</span>
+                  <app-button as="span" variant="line" sm aria-hidden="true" data-s="2-2">Предложить</app-button>
                   <app-tag data-s="3-3">Предложено</app-tag>
                   <app-tag tone="ink" data-s="4">Согласна</app-tag>
                 </span>
@@ -194,14 +198,14 @@
                   <b>Илья Морозов</b>
                   <span class="small muted">Выступал на этой конференции в прошлом году, NPS 9.5</span>
                 </div>
-                <span class="b b-line b-sm" aria-hidden="true">Предложить</span>
+                <app-button as="span" variant="line" sm aria-hidden="true">Предложить</app-button>
               </div>
               <div class="mrow" data-s="2">
                 <div class="cell">
                   <b>Дмитрий Романов</b>
                   <span class="small muted">Сильная тема по MLOps, первая большая сцена</span>
                 </div>
-                <span class="b b-line b-sm" aria-hidden="true">Предложить</span>
+                <app-button as="span" variant="line" sm aria-hidden="true">Предложить</app-button>
               </div>
             </app-tile>
           </app-feature>
@@ -222,9 +226,9 @@
             flip
           >
             <template #cta>
-              <router-link :to="{ name: 'connect' }" class="b b-line self-start">
+              <app-button :to="{ name: 'connect' }" variant="line" class="self-start">
                 Опубликовать мероприятие<ArrowRight />
-              </router-link>
+              </app-button>
             </template>
             <app-tile as="figure" tone="lime" class="win" data-rv data-scene="700,1700,1000,1000,900,900,4500">
               <figcaption class="sr">Черновик мероприятия по ссылке, публикация и первая заявка</figcaption>
@@ -236,7 +240,9 @@
               <div class="mrow" data-s="3"><span class="k muted">Название</span><b>Митап Go-разработчиков</b></div>
               <div class="mrow" data-s="3"><span class="k muted">Дата и город</span><b>20 ноября · Казань</b></div>
               <div class="mrow" data-s="3"><span class="k muted">Видимость</span><app-tag>Открытое</app-tag></div>
-              <span class="b b-ink b-sm self-start" aria-hidden="true" data-press="4">Опубликовать</span>
+              <app-button as="span" variant="ink" sm class="self-start" aria-hidden="true" data-press="4"
+                >Опубликовать</app-button
+              >
               <div class="mrow" data-s="5">
                 <span><b>Лендинг готов</b> <span class="small muted">· ссылка скопирована</span></span>
                 <app-tag tone="ink">Открыть</app-tag>
@@ -283,7 +289,9 @@
               <div class="mrow" data-s="3">
                 <span>Слепая зона</span><app-tag tone="pink">Mobile · Дальний Восток</app-tag>
               </div>
-              <span class="b b-mint b-sm self-start" aria-hidden="true" data-s="3">Выгрузить отчёт</span>
+              <app-button as="span" variant="mint" sm class="self-start" aria-hidden="true" data-s="3"
+                >Выгрузить отчёт</app-button
+              >
             </app-tile>
           </app-feature>
 
@@ -341,6 +349,7 @@
 <script setup lang="ts">
 import { ArrowRight } from '@lucide/vue'
 import { useTemplateRef } from 'vue'
+import AppButton from '@/components/AppButton.vue'
 import AppFaq from '@/components/AppFaq.vue'
 import AppFeature from '@/components/AppFeature.vue'
 import AppHero from '@/components/AppHero.vue'

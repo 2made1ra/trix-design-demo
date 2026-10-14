@@ -4,7 +4,7 @@
       <div v-if="ctl.state.value.kind === 'failed'" class="alert" role="alert">
         <CircleAlertIcon />
         <p class="small"><b>Не удалось разобрать файл.</b> {{ ctl.state.value.message }}</p>
-        <button type="button" class="b b-ink b-sm" @click="ctl.reset()">Загрузить заново</button>
+        <app-button variant="ink" sm @click="ctl.reset()">Загрузить заново</app-button>
       </div>
 
       <section class="g-drop" aria-labelledby="drop-title" data-rv>
@@ -12,7 +12,7 @@
           <span class="drop-ic" aria-hidden="true"><UploadIcon /></span>
           <h2 id="drop-title" class="h-24">Перетащите Excel или CSV — подойдёт таблица в любом виде</h2>
           <p class="small muted">Колонки могут называться как угодно, порядок не важен</p>
-          <button type="button" class="b b-ink" @click="startDemo">Выбрать файл</button>
+          <app-button variant="ink" @click="startDemo">Выбрать файл</app-button>
           <label class="ln small cursor-pointer">
             Выбрать свой файл с компьютера
             <input ref="input" class="sr" type="file" accept=".xlsx,.xls,.csv" @change="onPick">
@@ -21,7 +21,7 @@
       </section>
 
       <div class="next" data-rv>
-        <router-link :to="{ path: '/org/onboarding/2' }" class="b b-line b-sm">Назад</router-link>
+        <app-button :to="{ path: '/org/onboarding/2' }" variant="line" sm>Назад</app-button>
         <button type="button" class="ln small" :disabled="skipping" @click="skip">Пропустить, загружу позже</button>
       </div>
     </section>
@@ -38,7 +38,7 @@
           Пока спикер не примет приглашение, у него статус «Приглашён». Вы видите только данные из своей таблицы.
         </p>
         <div class="wrow">
-          <router-link :to="{ name: 'org.speakers' }" class="b b-ink">Перейти к спикерам<ArrowRightIcon /></router-link>
+          <app-button :to="{ name: 'org.speakers' }" variant="ink">Перейти к спикерам<ArrowRightIcon /></app-button>
           <button type="button" class="ln small lnb" @click="ctl.reset()">Загрузить ещё файл</button>
         </div>
       </app-tile>
@@ -53,6 +53,7 @@ import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { completeOrganizationOnboarding } from '@/api/demo'
+import AppButton from '@/components/AppButton.vue'
 import AppTile from '@/components/AppTile.vue'
 import { demoFile, plural } from '@/components/org/format'
 import OrgImportWindow from '@/components/org/OrgImportWindow.vue'

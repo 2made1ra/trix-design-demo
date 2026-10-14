@@ -32,28 +32,28 @@
           </button>
           <p v-if="row.error" class="err" role="alert"><CircleAlertIcon />{{ row.error }}</p>
         </div>
-        <div><button type="button" class="b b-line b-sm" @click="add">Добавить ещё</button></div>
+        <div><app-button variant="line" sm @click="add">Добавить ещё</app-button></div>
       </div>
     </fieldset>
 
     <div v-if="save.kind === 'error'" class="alert" role="alert">
       <CircleAlertIcon />
       <p class="small"><b>Не удалось отправить приглашения.</b> {{ save.message }}</p>
-      <button type="button" class="b b-ink b-sm" @click="submit(emails)">Повторить</button>
+      <app-button variant="ink" sm @click="submit(emails)">Повторить</app-button>
     </div>
 
     <div class="next" data-rv>
       <div class="nx-l">
-        <router-link :to="{ path: '/org/onboarding/1' }" class="b b-line">Назад</router-link>
+        <app-button :to="{ path: '/org/onboarding/1' }" variant="line">Назад</app-button>
         <span class="small muted">Коллеги получат письмо и сразу попадут в интерфейс организации</span>
       </div>
       <div class="nx-r">
         <button type="button" class="ln small" :disabled="save.kind === 'saving'" @click="submit([])">
           Пропустить
         </button>
-        <button type="submit" class="b b-mint" :disabled="save.kind === 'saving'">
+        <app-button type="submit" variant="mint" :disabled="save.kind === 'saving'">
           {{ emails.length ? 'Пригласить и продолжить' : 'Продолжить' }}<ArrowRightIcon />
-        </button>
+        </app-button>
       </div>
     </div>
   </form>
@@ -64,6 +64,7 @@ import { ArrowRightIcon, CircleAlertIcon, Trash2Icon } from '@lucide/vue'
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { inviteColleagues } from '@/api/demo'
+import AppButton from '@/components/AppButton.vue'
 import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import { initials } from '@/components/org/format'

@@ -31,13 +31,13 @@
 
         <template v-if="!user">
           <router-link :to="{ name: 'login' }" class="k">Войти</router-link>
-          <router-link v-if="variant !== 'fork'" :to="join" class="b b-mint b-sm">
+          <app-button v-if="variant !== 'fork'" :to="join" variant="mint" sm>
             {{ joinLabel }}<ArrowRight v-if="landing" />
-          </router-link>
+          </app-button>
         </template>
-        <router-link v-else-if="landing" :to="startPath" class="b b-mint b-sm max-sm:hidden">
+        <app-button v-else-if="landing" :to="startPath" variant="mint" sm class="max-sm:hidden">
           В кабинет<ArrowRight />
-        </router-link>
+        </app-button>
 
         <div v-if="user" ref="menu" class="relative">
           <button
@@ -55,10 +55,10 @@
               <div v-if="variant === 'org'" class="truncate font-semibold">{{ org?.name }}</div>
               <div class="truncate text-sm text-ink-2">{{ user.email }}</div>
             </div>
-            <button type="button" class="b b-line b-sm" @click="signOut">
+            <app-button variant="line" sm @click="signOut">
               <LogOut />
               Выйти из аккаунта
-            </button>
+            </app-button>
           </div>
         </div>
       </div>
@@ -72,6 +72,7 @@ import { onClickOutside } from '@vueuse/core'
 import { computed, onMounted, ref, useTemplateRef } from 'vue'
 import { type RouteLocationRaw, useRoute, useRouter } from 'vue-router'
 import { listOrgEvents } from '@/api/demo'
+import AppButton from '@/components/AppButton.vue'
 import { useAuth } from '@/composables/useAuth'
 
 type Link = { label: string; to: RouteLocationRaw; active?: boolean }

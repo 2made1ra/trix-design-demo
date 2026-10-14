@@ -26,10 +26,10 @@
             }}
           </p>
           <div class="sel-acts">
-            <button v-if="state.status === 'error'" type="button" class="b b-ink b-sm" @click="load">
+            <app-button v-if="state.status === 'error'" variant="ink" sm @click="load">
               Повторить<RotateCw />
-            </button>
-            <router-link :to="listPath" class="b b-line b-sm">К мероприятиям</router-link>
+            </app-button>
+            <app-button :to="listPath" variant="line" sm>К мероприятиям</app-button>
           </div>
         </app-tile>
       </div>
@@ -159,24 +159,24 @@
                 <dd>{{ organizer }}</dd>
               </dl>
               <div class="ev-cta">
-                <router-link
+                <app-button
                   v-if="user"
+                  variant="ink"
                   :to="{ name: 'talks.new', query: { event: state.conference.slug } }"
-                  class="b b-ink"
                 >
                   Подготовить доклад<ArrowRight />
-                </router-link>
-                <router-link v-else to="/register" class="b b-ink">Начать<ArrowRight /></router-link>
-                <router-link v-if="trix && user" :to="{ hash: '#apply' }" class="b b-line">Подать заявку</router-link>
-                <a
+                </app-button>
+                <app-button v-else to="/register" variant="ink">Начать<ArrowRight /></app-button>
+                <app-button v-if="trix && user" :to="{ hash: '#apply' }" variant="line">Подать заявку</app-button>
+                <app-button
                   v-if="!trix && state.conference.website_url"
+                  variant="line"
                   :href="state.conference.website_url"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="b b-line"
                 >
                   Подать на сайте<span class="sr"> (сайт организатора)</span><ExternalLink />
-                </a>
+                </app-button>
               </div>
               <p v-if="!trix && domain" class="ev-micro">Из открытых источников · {{ domain }}</p>
               <p v-else-if="trix" class="ev-micro">
@@ -214,6 +214,7 @@ import {
   listCities,
   listRecommendations,
 } from '@/api/generated'
+import AppButton from '@/components/AppButton.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'

@@ -82,9 +82,9 @@
             :flip="i % 2 === 1"
           >
             <template v-if="feature.cta" #cta>
-              <router-link to="/register" class="b self-start" :class="feature.button === 'ink' ? 'b-ink' : 'b-line'">
+              <app-button to="/register" class="self-start" :variant="feature.button === 'ink' ? 'ink' : 'line'">
                 {{ feature.cta }}<ArrowRight />
-              </router-link>
+              </app-button>
             </template>
 
             <app-tile
@@ -284,6 +284,7 @@
 <script setup lang="ts">
 import { ArrowRight, Lock } from '@lucide/vue'
 import { useTemplateRef } from 'vue'
+import AppButton from '@/components/AppButton.vue'
 import AppFaq from '@/components/AppFaq.vue'
 import AppFeature from '@/components/AppFeature.vue'
 import AppHero from '@/components/AppHero.vue'

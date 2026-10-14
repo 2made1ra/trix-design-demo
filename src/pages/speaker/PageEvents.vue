@@ -59,12 +59,10 @@
             </dl>
             <p v-if="offer.message" class="why"><b>Сообщение</b>{{ offer.message }}</p>
             <div class="sel-acts items-center">
-              <button type="button" class="b b-mint b-sm" :disabled="answering" @click="answer('accept')">
+              <app-button variant="mint" sm :disabled="answering" @click="answer('accept')">
                 Принять<span class="sr">: подготовить доклад</span>
-              </button>
-              <button type="button" class="b b-line b-sm" :disabled="answering" @click="answer('decline')">
-                Отказаться
-              </button>
+              </app-button>
+              <app-button variant="line" sm :disabled="answering" @click="answer('decline')"> Отказаться </app-button>
               <span class="small muted">После «Принять» — подготовить доклад</span>
             </div>
           </app-tile>
@@ -88,7 +86,7 @@
             <h2 id="err-title" class="h-34">Не удалось загрузить подборку</h2>
             <p class="deck">Проверьте соединение и попробуйте ещё раз. Профиль и фильтры сохранены.</p>
             <div class="sel-acts">
-              <button type="button" class="b b-ink b-sm" @click="load">Повторить<RotateCw /></button>
+              <app-button variant="ink" sm @click="load">Повторить<RotateCw /></app-button>
             </div>
           </app-tile>
 
@@ -97,8 +95,8 @@
             <h2 id="empty-title" class="h-34">Ничего не нашли</h2>
             <p class="deck">Расширьте фильтры или измените профиль.</p>
             <div class="sel-acts">
-              <button type="button" class="b b-ink b-sm" @click="resetFilters">Сбросить фильтры</button>
-              <router-link to="/onboarding/1" class="b b-line b-sm">Изменить профиль</router-link>
+              <app-button variant="ink" sm @click="resetFilters">Сбросить фильтры</app-button>
+              <app-button to="/onboarding/1" variant="line" sm>Изменить профиль</app-button>
             </div>
           </app-tile>
 
@@ -134,25 +132,22 @@
                     }}</app-tag>
                   </span>
                   <template v-if="isTrixSource(item.conference)">
-                    <router-link
-                      :to="`/c/${item.conference.slug}`"
-                      class="b b-sm"
-                      :class="i === featured ? 'b-ink' : 'b-line'"
-                    >
+                    <app-button sm :to="`/c/${item.conference.slug}`" :variant="i === featured ? 'ink' : 'line'">
                       Подать заявку<ArrowRight />
-                    </router-link>
+                    </app-button>
                   </template>
                   <template v-else>
                     <app-tag tone="dash">Из открытых источников</app-tag>
-                    <a
+                    <app-button
                       v-if="item.conference.website_url"
+                      variant="line"
+                      sm
                       :href="item.conference.website_url"
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="b b-line b-sm"
                     >
                       Подать на сайте<span class="sr"> (сайт организатора)</span><ExternalLink />
-                    </a>
+                    </app-button>
                   </template>
                   <router-link :to="{ name: 'talks.new', query: { event: item.conference.slug } }" class="k ln">
                     Подготовить доклад
@@ -181,8 +176,8 @@
             <span class="k">Развитие</span>
             <h2 class="h-24">Пока не готовы выступать?</h2>
             <p class="small muted">Подберём площадки для старта и материалы для прокачки.</p>
-            <router-link to="/onboarding/1" class="b b-mint b-sm mt-1.5 self-start"
-              >Уточнить цель<ArrowRight /></router-link
+            <app-button to="/onboarding/1" variant="mint" sm class="mt-1.5 self-start"
+              >Уточнить цель<ArrowRight /></app-button
             >
           </app-tile>
           <p class="small muted px-2">
@@ -212,6 +207,7 @@ import {
   type PositionCategory,
   type Recommendation,
 } from '@/api/generated'
+import AppButton from '@/components/AppButton.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppPick from '@/components/AppPick.vue'
 import AppTag from '@/components/AppTag.vue'

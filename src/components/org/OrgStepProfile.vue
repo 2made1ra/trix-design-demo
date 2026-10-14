@@ -2,7 +2,7 @@
   <p v-if="state.kind === 'loading'" class="muted" role="status">Загружаем справочники…</p>
   <div v-else-if="state.kind === 'error'" class="flex flex-col items-start gap-4" role="alert">
     <p>Не удалось загрузить справочники.</p>
-    <button type="button" class="b b-line" @click="load">Попробовать снова</button>
+    <app-button variant="line" @click="load">Попробовать снова</app-button>
   </div>
 
   <form v-else class="flex flex-col gap-12" novalidate @submit.prevent="submit">
@@ -61,7 +61,7 @@
         <datalist id="city-list">
           <option v-for="city in state.cities" :key="city.id" :value="city.name" />
         </datalist>
-        <button type="button" class="b b-line" @click="addCity">Добавить город</button>
+        <app-button variant="line" @click="addCity">Добавить город</app-button>
       </div>
       <p v-if="errors.cities" class="err mt-3" role="alert"><CircleAlertIcon />{{ errors.cities }}</p>
     </fieldset>
@@ -89,7 +89,7 @@
           :aria-invalid="!!errors.domain"
           @keydown.enter.prevent="addDomain"
         >
-        <button type="button" class="b b-line" @click="addDomain">Добавить домен</button>
+        <app-button variant="line" @click="addDomain">Добавить домен</app-button>
       </div>
       <p v-if="errors.domain" class="err mt-3" role="alert"><CircleAlertIcon />{{ errors.domain }}</p>
       <p v-else class="hint mt-3 max-w-130">
@@ -99,7 +99,7 @@
 
     <div class="next" data-rv>
       <span class="small muted">Онбординг можно прервать — продолжите с этого шага</span>
-      <button type="submit" class="b b-mint" :disabled="saving">Далее<ArrowRightIcon /></button>
+      <app-button type="submit" variant="mint" :disabled="saving">Далее<ArrowRightIcon /></app-button>
     </div>
   </form>
 </template>
@@ -111,6 +111,7 @@ import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { saveOrganizationProfile } from '@/api/demo'
 import { type City, listCities, listPositionCategories, type PositionCategory } from '@/api/generated'
+import AppButton from '@/components/AppButton.vue'
 import AppField from '@/components/AppField.vue'
 import AppPick from '@/components/AppPick.vue'
 import AppPicks from '@/components/AppPicks.vue'

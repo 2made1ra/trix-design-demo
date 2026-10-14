@@ -77,7 +77,7 @@
               </div>
               <span class="half-row">
                 <span class="k">{{ half.kicker }}</span>
-                <span class="b b-ink b-sm">Смотреть<ArrowRight /></span>
+                <app-button as="span" variant="ink" sm>Смотреть<ArrowRight /></app-button>
               </span>
               <span class="half-t shout">{{ half.title }}</span>
               <span class="half-d">{{ half.text }}</span>
@@ -92,6 +92,7 @@
 <script setup lang="ts">
 import { ArrowRight } from '@lucide/vue'
 import { computed, onBeforeUnmount, onMounted, reactive, ref, useTemplateRef, watch } from 'vue'
+import AppButton from '@/components/AppButton.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'

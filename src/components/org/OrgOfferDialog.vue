@@ -69,8 +69,10 @@
           <p class="small muted">Спикер увидит предложение у себя в подборке и ответит: принять или отказаться.</p>
           <p v-if="state.kind === 'error'" class="err" role="alert"><CircleAlertIcon />{{ state.message }}</p>
           <div class="dlg-act">
-            <button type="submit" class="b b-mint" :disabled="state.kind === 'sending'">Отправить предложение</button>
-            <button type="button" class="b b-line" @click="emit('close')">Отмена</button>
+            <app-button type="submit" variant="mint" :disabled="state.kind === 'sending'"
+              >Отправить предложение</app-button
+            >
+            <app-button variant="line" @click="emit('close')">Отмена</app-button>
           </div>
         </form>
       </div>
@@ -99,8 +101,8 @@
           </div>
         </dl>
         <div class="dlg-act">
-          <button type="button" class="b b-mint" @click="emit('close')">Вернуться к кандидатам</button>
-          <router-link :to="{ name: 'login' }" class="b b-line" @click="asSpeaker">Как это видит спикер</router-link>
+          <app-button variant="mint" @click="emit('close')">Вернуться к кандидатам</app-button>
+          <app-button :to="{ name: 'login' }" variant="line" @click="asSpeaker">Как это видит спикер</app-button>
         </div>
       </div>
     </div>
@@ -111,6 +113,7 @@
 import { CheckIcon, ChevronDownIcon, CircleAlertIcon, XIcon } from '@lucide/vue'
 import { computed, nextTick, reactive, ref, useTemplateRef, watch } from 'vue'
 import { createOffer, type Offer, type OrgEvent, type OrgSpeaker } from '@/api/demo'
+import AppButton from '@/components/AppButton.vue'
 import AppField from '@/components/AppField.vue'
 import AppTag from '@/components/AppTag.vue'
 import { formatDate } from '@/components/org/eventLabels'

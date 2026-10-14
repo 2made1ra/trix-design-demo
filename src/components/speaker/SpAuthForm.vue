@@ -80,12 +80,12 @@
 
         <p v-if="errors.form" class="err" role="alert"><CircleAlert />{{ errors.form }}</p>
 
-        <button type="submit" class="b b-mint w-full" :disabled="sending" :aria-busy="sending">
+        <app-button type="submit" variant="mint" class="w-full" :disabled="sending" :aria-busy="sending">
           <template v-if="sending">
             <span class="spin" aria-hidden="true" />{{ login ? 'Входим' : 'Создаём аккаунт' }}
           </template>
           <template v-else>{{ login ? 'Войти' : 'Создать аккаунт' }}<ArrowRight /></template>
-        </button>
+        </app-button>
         <p class="sr-only" role="status">{{ sending ? (login ? 'Входим' : 'Создаём аккаунт') : '' }}</p>
         <p v-if="!login" class="small muted">
           Нажимая «Создать аккаунт», вы соглашаетесь с <a href="#terms" class="ln">условиями использования</a> и
@@ -117,6 +117,7 @@ import { computed, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { type Error as ApiError, type AuthResult, register, login as signIn } from '@/api/generated'
+import AppButton from '@/components/AppButton.vue'
 import AppField from '@/components/AppField.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
 import AppPick from '@/components/AppPick.vue'

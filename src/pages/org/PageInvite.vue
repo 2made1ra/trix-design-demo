@@ -27,8 +27,8 @@
         </p>
       </div>
       <div class="acts" data-rv>
-        <router-link :to="{ name: 'connect' }" class="b b-mint">Запросить новое</router-link>
-        <router-link :to="{ name: 'companies.landing' }" class="b b-line">На главную</router-link>
+        <app-button :to="{ name: 'connect' }" variant="mint">Запросить новое</app-button>
+        <app-button :to="{ name: 'companies.landing' }" variant="line">На главную</app-button>
       </div>
     </section>
 
@@ -90,14 +90,14 @@
           </fieldset>
 
           <div v-if="state.kind === 'current'" class="acts">
-            <button type="submit" class="b b-mint" :disabled="sending">
+            <app-button type="submit" variant="mint" :disabled="sending">
               {{ texts[state.kind].action }}<ArrowRightIcon />
-            </button>
-            <button type="button" class="b b-line" @click="goLogin">Войти под другим</button>
+            </app-button>
+            <app-button variant="line" @click="goLogin">Войти под другим</app-button>
           </div>
-          <button v-else type="submit" class="b b-mint go" :disabled="sending">
+          <app-button v-else type="submit" variant="mint" class="go" :disabled="sending">
             {{ texts[state.kind].action }}<ArrowRightIcon />
-          </button>
+          </app-button>
         </form>
 
         <p v-if="state.kind === 'new'" class="small muted" data-rv>
@@ -124,6 +124,7 @@ import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { type AcceptInviteInput, acceptInvite, getInvite, type InviteInfo } from '@/api/demo'
+import AppButton from '@/components/AppButton.vue'
 import AppField from '@/components/AppField.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
 import AppTag from '@/components/AppTag.vue'

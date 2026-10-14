@@ -27,7 +27,7 @@
           <div v-else-if="dict.kind === 'error'" class="alert alert-soft" role="alert">
             <CircleAlert />
             <p class="small">Не удалось загрузить список сфер. Проверьте соединение и попробуйте ещё раз.</p>
-            <button type="button" class="b b-ink b-sm" @click="loadDictionaries">Повторить</button>
+            <app-button variant="ink" sm @click="loadDictionaries">Повторить</app-button>
           </div>
           <div v-else class="flex flex-wrap gap-2">
             <app-pick
@@ -101,7 +101,7 @@
           <p class="small">
             Не удалось загрузить список городов и форматов. Проверьте соединение и попробуйте ещё раз.
           </p>
-          <button type="button" class="b b-ink b-sm" @click="loadDictionaries">Повторить</button>
+          <app-button variant="ink" sm @click="loadDictionaries">Повторить</app-button>
         </div>
         <template v-else>
           <div data-rv>
@@ -170,20 +170,20 @@
       <div v-if="save.kind === 'error'" class="alert" role="alert">
         <CircleAlert />
         <p class="small"><b>Не удалось сохранить ответы.</b> Выбор на месте, попробуйте ещё раз.</p>
-        <button type="button" class="b b-ink b-sm" @click="next">Повторить</button>
+        <app-button variant="ink" sm @click="next">Повторить</app-button>
       </div>
 
       <div class="next max-sm:flex-wrap" data-rv>
-        <router-link v-if="step > 1" :to="`/onboarding/${step - 1}`" class="b b-line"><ArrowLeft />Назад</router-link>
+        <app-button v-if="step > 1" :to="`/onboarding/${step - 1}`" variant="line"><ArrowLeft />Назад</app-button>
         <span v-else class="small muted">Всё можно поменять позже в профиле</span>
         <div class="next-r">
           <button v-if="step === 2" type="button" class="k ln" :disabled="busy" @click="skip">Пропустить</button>
           <span v-if="step === 3" class="small muted">Всё можно поменять позже в профиле</span>
-          <button type="submit" class="b b-mint" :disabled="!valid || busy">
+          <app-button type="submit" variant="mint" :disabled="!valid || busy">
             <LoaderCircle v-if="save.kind === 'saving'" class="animate-spin" />
             {{ step === 3 ? 'Показать подборку' : 'Далее' }}
             <ArrowRight v-if="save.kind !== 'saving'" />
-          </button>
+          </app-button>
         </div>
       </div>
     </form>
@@ -225,6 +225,7 @@ import {
   type PositionCategory,
   skipOnboarding,
 } from '@/api/generated'
+import AppButton from '@/components/AppButton.vue'
 import AppLevel from '@/components/AppLevel.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
 import AppPick from '@/components/AppPick.vue'

@@ -8,8 +8,8 @@
         <div v-else-if="state.kind === 'error'" class="flex flex-col items-start gap-4" role="alert">
           <p>{{ state.message }}</p>
           <div class="flex flex-wrap gap-3">
-            <button type="button" class="b b-line" @click="load">Попробовать снова</button>
-            <router-link :to="{ name: 'org.events' }" class="b b-line">К мероприятиям</router-link>
+            <app-button variant="line" @click="load">Попробовать снова</app-button>
+            <app-button :to="{ name: 'org.events' }" variant="line">К мероприятиям</app-button>
           </div>
         </div>
 
@@ -102,15 +102,15 @@
                     <app-tag tone="mint">Предложение отправлено</app-tag>
                     <span class="small muted">{{ formatDate(item.offer.sent_at) }}</span>
                   </span>
-                  <button
+                  <app-button
                     v-else
-                    type="button"
-                    class="b b-mint b-sm"
+                    variant="mint"
+                    sm
                     :aria-label="`Предложить выступить: ${item.speaker.name}`"
                     @click="openOffer(item.speaker)"
                   >
                     Предложить выступить
-                  </button>
+                  </app-button>
                 </div>
               </app-tile>
             </ul>
@@ -145,6 +145,7 @@ import {
   type OrgEvent,
   type OrgSpeaker,
 } from '@/api/demo'
+import AppButton from '@/components/AppButton.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'

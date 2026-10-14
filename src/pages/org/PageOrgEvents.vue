@@ -13,15 +13,9 @@
             </p>
           </div>
           <div class="add">
-            <button
-              type="button"
-              class="b b-line"
-              :aria-expanded="adding"
-              aria-controls="add-event"
-              @click="adding = !adding"
-            >
+            <app-button variant="line" :aria-expanded="adding" aria-controls="add-event" @click="adding = !adding">
               <PlusIcon />Добавить мероприятие по ссылке
-            </button>
+            </app-button>
             <span class="small muted">Вставьте ссылку на программу или лендинг, остальное заполним сами</span>
           </div>
         </div>
@@ -45,13 +39,13 @@
             placeholder="https://timepad.ru/event/go-meetup"
             :error="addError"
           />
-          <button type="submit" class="b b-mint" :disabled="saving">Добавить</button>
+          <app-button type="submit" variant="mint" :disabled="saving">Добавить</app-button>
         </app-tile>
 
         <p v-if="state.kind === 'loading'" class="muted" role="status">Загружаем мероприятия…</p>
         <div v-else-if="state.kind === 'error'" class="flex flex-col items-start gap-4" role="alert">
           <p>Не удалось загрузить мероприятия.</p>
-          <button type="button" class="b b-line" @click="load">Попробовать снова</button>
+          <app-button variant="line" @click="load">Попробовать снова</app-button>
         </div>
 
         <section
@@ -66,9 +60,7 @@
             Добавьте по ссылке на программу или лендинг. Мероприятие появится здесь, и можно будет выбрать, кого
             позвать.
           </p>
-          <button type="button" class="b b-mint" @click="adding = true">
-            <PlusIcon />Добавить мероприятие по ссылке
-          </button>
+          <app-button variant="mint" @click="adding = true"> <PlusIcon />Добавить мероприятие по ссылке </app-button>
         </section>
 
         <template v-else>
@@ -118,9 +110,9 @@
                   <span class="num">{{ event.offers_count }}</span>
                   <span class="small muted">Предложено спикерам</span>
                 </span>
-                <router-link v-if="tab === 'upcoming'" :to="inviteLink(event)" class="b b-mint">
+                <app-button v-if="tab === 'upcoming'" :to="inviteLink(event)" variant="mint">
                   Кого позвать<ArrowRightIcon />
-                </router-link>
+                </app-button>
               </div>
             </app-tile>
           </ul>
@@ -135,6 +127,7 @@ import { ArrowRightIcon, PlusIcon } from '@lucide/vue'
 import { computed, onMounted, ref, useTemplateRef } from 'vue'
 import { toast } from 'vue-sonner'
 import { addOrgEvent, listOrgEvents, type OrgEvent } from '@/api/demo'
+import AppButton from '@/components/AppButton.vue'
 import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppTag from '@/components/AppTag.vue'

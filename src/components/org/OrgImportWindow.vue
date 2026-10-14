@@ -47,7 +47,7 @@
             </div>
             <div class="imp-bar" role="progressbar" aria-label="Загрузка файла" aria-busy="true"><i /></div>
             <p class="small muted" role="status">Загружаем файл</p>
-            <div class="wrow"><button type="button" class="b b-line b-sm" @click="ctl.cancel()">Отменить</button></div>
+            <div class="wrow"><app-button variant="line" sm @click="ctl.cancel()">Отменить</app-button></div>
           </section>
 
           <section v-else-if="stage === 'parse'" class="s" aria-label="Разбор файла">
@@ -61,7 +61,7 @@
                 <span class="muted">{{ step.note }}</span>
               </li>
             </ul>
-            <div class="wrow"><button type="button" class="b b-line b-sm" @click="ctl.cancel()">Отменить</button></div>
+            <div class="wrow"><app-button variant="line" sm @click="ctl.cancel()">Отменить</app-button></div>
           </section>
 
           <section v-else-if="stage === 'ask' && imp" class="s" aria-label="Решения по файлу">
@@ -120,14 +120,10 @@
                     :aria-invalid="!!mailError"
                     aria-describedby="mail-hint"
                   />
-                  <button type="submit" class="b b-ink b-sm self-end">Добавить</button>
-                  <button
-                    type="button"
-                    class="b b-line b-sm self-end"
-                    @click="ctl.skipMail(ctl.currentMail.value.row_id)"
-                  >
+                  <app-button type="submit" variant="ink" sm class="self-end">Добавить</app-button>
+                  <app-button variant="line" sm class="self-end" @click="ctl.skipMail(ctl.currentMail.value.row_id)">
                     Не приглашать
-                  </button>
+                  </app-button>
                 </form>
                 <p id="mail-hint" :class="mailError ? 'err' : 'hint'" role="status" aria-live="polite">
                   {{ mailError || 'Без почты приглашение не отправить, строка останется в таблице без приглашения' }}
@@ -149,21 +145,15 @@
             </app-tile>
 
             <div class="qact">
-              <button type="button" class="b b-line b-sm" :disabled="q === 0" @click="ctl.go(q - 1)">Назад</button>
+              <app-button variant="line" sm :disabled="q === 0" @click="ctl.go(q - 1)">Назад</app-button>
               <div class="qact-r">
                 <span class="small muted">{{ hint }}</span>
-                <button v-if="q < imp.questions.length - 1" type="button" class="b b-ink b-sm" @click="ctl.go(q + 1)">
+                <app-button v-if="q < imp.questions.length - 1" variant="ink" sm @click="ctl.go(q + 1)">
                   Дальше
-                </button>
-                <button
-                  v-else
-                  type="button"
-                  class="b b-mint"
-                  :disabled="ctl.unresolved.value || busy"
-                  @click="ctl.toReview()"
-                >
+                </app-button>
+                <app-button v-else variant="mint" :disabled="ctl.unresolved.value || busy" @click="ctl.toReview()">
                   Перейти к проверке<ArrowRightIcon />
-                </button>
+                </app-button>
               </div>
             </div>
             <fieldset class="dots" aria-label="Вопросы">
@@ -288,17 +278,17 @@
                     Вас пригласили в TRIX от имени {{ orgName }}. Мы уже заполнили профиль данными из таблицы: проверьте
                     их и подберите мероприятия под ваш доклад.
                   </p>
-                  <span class="b b-mint b-sm pointer-events-none self-start">Принять приглашение</span>
+                  <app-button as="span" variant="mint" sm class="pointer-events-none self-start"
+                    >Принять приглашение</app-button
+                  >
                 </app-tile>
               </details>
             </div>
             <div class="act-r">
-              <button type="button" class="b b-line b-sm" :disabled="busy" @click="ctl.toAsk()">
-                Назад к решениям
-              </button>
-              <button type="button" class="b b-mint" :disabled="busy || !imp.summary.ready" @click="ctl.send()">
+              <app-button variant="line" sm :disabled="busy" @click="ctl.toAsk()"> Назад к решениям </app-button>
+              <app-button variant="mint" :disabled="busy || !imp.summary.ready" @click="ctl.send()">
                 Разослать {{ invitesText }}<ArrowRightIcon />
-              </button>
+              </app-button>
             </div>
           </div>
         </div>
@@ -317,8 +307,8 @@
           <h3 id="abort-title">Прервать импорт?</h3>
           <p id="abort-text" class="small muted">Файл не сохранится, придётся загрузить его заново</p>
           <div class="wrow">
-            <button type="button" class="b b-mint b-sm" @click="abort = false">Продолжить</button>
-            <button type="button" class="b b-line b-sm" @click="ctl.cancel()">Прервать</button>
+            <app-button variant="mint" sm @click="abort = false">Продолжить</app-button>
+            <app-button variant="line" sm @click="ctl.cancel()">Прервать</app-button>
           </div>
         </app-tile>
       </div>
@@ -330,6 +320,7 @@
 import { ArrowRightIcon, CheckIcon, ChevronDownIcon, FileSpreadsheetIcon, MoveRightIcon, XIcon } from '@lucide/vue'
 import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import type { ImportDirectionQuestion, SpeakerImportRow } from '@/api/demo'
+import AppButton from '@/components/AppButton.vue'
 import AppField from '@/components/AppField.vue'
 import AppPick from '@/components/AppPick.vue'
 import AppPicks from '@/components/AppPicks.vue'

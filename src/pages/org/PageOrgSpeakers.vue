@@ -16,7 +16,7 @@
         <p v-if="state.kind === 'loading'" class="muted" role="status">Загружаем спикеров…</p>
         <div v-else-if="state.kind === 'error'" class="flex flex-col items-start gap-4" role="alert">
           <p>Не удалось загрузить спикеров.</p>
-          <button type="button" class="b b-line" @click="load">Попробовать снова</button>
+          <app-button variant="line" @click="load">Попробовать снова</app-button>
         </div>
 
         <app-tile
@@ -32,12 +32,12 @@
             <h2 id="empty-title" class="h-34">Спикеров пока нет: загрузите Excel или отправьте ссылку-приглашение</h2>
             <p class="muted">Спикер принимает приглашение сам, и только после этого вы видите его выступления.</p>
             <div class="flex flex-wrap gap-3">
-              <router-link :to="{ path: '/org/onboarding/3' }" class="b b-mint">
+              <app-button :to="{ path: '/org/onboarding/3' }" variant="mint">
                 Загрузить Excel<ArrowRightIcon />
-              </router-link>
-              <button type="button" class="b b-line" @click="copyLink">
+              </app-button>
+              <app-button variant="line" @click="copyLink">
                 {{ copied ? 'Ссылка скопирована' : 'Скопировать ссылку-приглашение' }}
-              </button>
+              </app-button>
             </div>
           </div>
         </app-tile>
@@ -94,9 +94,7 @@
               >
                 {{ confirmError || 'Подтверждённое выступление засчитывается спикеру.' }}
               </p>
-              <button type="button" class="b b-mint" :disabled="confirming" @click="confirm">
-                Подтвердить<CheckIcon />
-              </button>
+              <app-button variant="mint" :disabled="confirming" @click="confirm"> Подтвердить<CheckIcon /> </app-button>
             </div>
           </app-tile>
 
@@ -225,7 +223,7 @@
                       }}</app-tag>
                     </td>
                     <td>
-                      <router-link :to="offerLink(item.id)" class="b b-line b-sm">Предложить выступить</router-link>
+                      <app-button :to="offerLink(item.id)" variant="line" sm>Предложить выступить</app-button>
                     </td>
                   </tr>
                 </tbody>
@@ -295,6 +293,7 @@ import {
   type PositionCategory,
   type PositionLevel,
 } from '@/api/generated'
+import AppButton from '@/components/AppButton.vue'
 import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppPick from '@/components/AppPick.vue'
