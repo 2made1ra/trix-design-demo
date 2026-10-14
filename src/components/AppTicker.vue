@@ -1,6 +1,6 @@
 <template>
   <div class="wrap" data-rv>
-    <div class="ticker" aria-hidden="true">
+    <div class="ticker" :class="{ ink }" aria-hidden="true">
       <div class="tk ticker-track">
         <template v-for="item in items" :key="item">
           <span>{{ item }}</span>
@@ -12,5 +12,5 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ items: string[] }>()
+defineProps<{ items: string[]; ink?: boolean }>()
 </script>
