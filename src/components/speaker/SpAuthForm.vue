@@ -1,26 +1,17 @@
 <template>
-  <app-onboarding-frame big="TRIX" sub=".">
+  <app-onboarding-frame big="TRIX" sub="." wide>
     <template #float>
-      <span class="kicker text-ink-2">Закрытая бета</span>
-      <p class="text-2xl leading-[1.05] font-bold">За пару минут — подборка мероприятий и разбор доклада</p>
-      <ul class="ticks text-sm">
+      <span class="k muted">Закрытая бета</span>
+      <p class="h-24">За пару минут — подборка мероприятий и разбор доклада</p>
+      <ul class="ticks small">
         <li>Мероприятия под вашу сферу и опыт, с объяснением, почему подходят</li>
         <li>Разбор доклада под аудиторию выбранного мероприятия</li>
         <li>Разбор видите только вы</li>
       </ul>
       <div class="flex flex-col gap-2">
-        <span class="kicker text-ink-2">После регистрации</span>
-        <ol
-          class="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-sm text-ink-2"
-          aria-label="Шаги после регистрации"
-        >
-          <li
-            v-for="(item, i) in ['Сфера и опыт', 'Цель', 'Формат', 'Подборка']"
-            :key="item"
-            class="flex items-center gap-2.5"
-          >
-            <span v-if="i" class="text-quiet" aria-hidden="true">→</span>{{ item }}
-          </li>
+        <span class="k muted">После регистрации</span>
+        <ol class="path small" aria-label="Шаги после регистрации">
+          <li v-for="item in ['Сфера и опыт', 'Цель', 'Формат', 'Подборка']" :key="item">{{ item }}</li>
         </ol>
       </div>
     </template>
@@ -30,10 +21,10 @@
       <router-link replace to="/login" role="tab" class="pick" :aria-selected="login">Вход</router-link>
     </div>
 
-    <section class="flex max-w-140 flex-col gap-10" role="tabpanel">
+    <section class="pnl" role="tabpanel">
       <div class="flex flex-col gap-4" data-rv>
-        <h1 class="shout text-d1">{{ login ? 'С возвращением' : 'Создайте аккаунт' }}</h1>
-        <p class="text-xl leading-[1.55] text-ink-2">
+        <h1 class="d-1">{{ login ? 'С возвращением' : 'Создайте аккаунт' }}</h1>
+        <p class="deck text-xl">
           {{
             login
               ? 'Подборка и разборы ждут в профиле.'
@@ -43,7 +34,7 @@
       </div>
 
       <form class="flex flex-col gap-7" novalidate data-rv @submit.prevent="submit">
-        <fieldset class="m-0 flex min-w-0 flex-col gap-6 border-0 p-0" :disabled="sending">
+        <fieldset class="fs" :disabled="sending">
           <div v-if="!login" class="field">
             <label for="auth-name">Имя</label>
             <input
@@ -83,12 +74,16 @@
           </div>
 
           <div class="field">
-            <label for="auth-pass">Пароль</label>
-            <div class="relative">
+            <div v-if="login" class="flex items-baseline justify-between gap-4">
+              <label for="auth-pass">Пароль</label>
+              <a href="#reset" class="small ln">Забыли пароль?</a>
+            </div>
+            <label v-else for="auth-pass">Пароль</label>
+            <div class="pw">
               <input
                 id="auth-pass"
                 v-model="form.password"
-                class="inp pr-13"
+                class="inp"
                 :type="reveal ? 'text' : 'password'"
                 :autocomplete="login ? 'current-password' : 'new-password'"
                 :aria-invalid="!!errors.password"
@@ -97,12 +92,11 @@
               >
               <button
                 type="button"
-                class="absolute top-0.75 right-0.75 flex size-11 items-center justify-center rounded-xs text-ink-2 hover:text-ink"
                 :aria-label="reveal ? 'Скрыть пароль' : 'Показать пароль'"
                 @click="reveal = !reveal"
               >
-                <EyeOff v-if="reveal" class="size-4.5" />
-                <Eye v-else class="size-4.5" />
+                <EyeOff v-if="reveal" />
+                <Eye v-else />
               </button>
             </div>
             <p v-if="errors.password" id="auth-pass-err" class="err"><CircleAlert />{{ errors.password }}</p>
@@ -114,28 +108,37 @@
 
         <button type="submit" class="b b-mint w-full" :disabled="sending" :aria-busy="sending">
           <template v-if="sending">
-            <LoaderCircle class="animate-spin" aria-hidden="true" />{{ login ? 'Входим' : 'Создаём аккаунт' }}
+            <span class="spin" aria-hidden="true" />{{ login ? 'Входим' : 'Создаём аккаунт' }}
           </template>
           <template v-else>{{ login ? 'Войти' : 'Создать аккаунт' }}<ArrowRight /></template>
         </button>
         <p class="sr-only" role="status">{{ sending ? (login ? 'Входим' : 'Создаём аккаунт') : '' }}</p>
-        <p v-if="!login" class="text-sm text-ink-2">
-          Нажимая «Создать аккаунт», вы соглашаетесь с условиями использования и политикой конфиденциальности.
+        <p v-if="!login" class="small muted">
+          Нажимая «Создать аккаунт», вы соглашаетесь с <a href="#terms" class="ln">условиями использования</a> и
+          <a href="#privacy-policy" class="ln">политикой конфиденциальности</a>.
         </p>
       </form>
 
-      <p class="text-sm text-ink-2" data-rv>
+      <p class="small muted" data-rv>
         {{ login ? 'Нет аккаунта?' : 'Уже есть аккаунт?' }}
-        <router-link replace :to="login ? '/register' : '/login'" class="ln font-semibold text-ink">
+        <router-link replace :to="login ? '/register' : '/login'" class="lnb text-ink">
           {{ login ? 'Зарегистрироваться' : 'Войти' }}
         </router-link>
       </p>
     </section>
+    <template #footer>
+      <footer class="rf k muted">
+        <span>© 2026 TRIX</span>
+        <div>
+          <a href="#help" class="ln">Помощь</a><a href="#privacy-policy" class="ln">Политика конфиденциальности</a>
+        </div>
+      </footer>
+    </template>
   </app-onboarding-frame>
 </template>
 
 <script setup lang="ts">
-import { ArrowRight, CircleAlert, Eye, EyeOff, LoaderCircle } from '@lucide/vue'
+import { ArrowRight, CircleAlert, Eye, EyeOff } from '@lucide/vue'
 import { computed, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'

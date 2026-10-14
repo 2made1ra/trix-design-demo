@@ -1,23 +1,16 @@
 <template>
-  <sp-page>
+  <sp-page :footer="false">
     <div ref="root" class="flex flex-1 flex-col">
-      <div class="grid flex-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-        <aside class="glow-block @container m-4 flex flex-col justify-between gap-10 p-6 sm:p-10 lg:mr-0" data-rv>
-          <router-link to="/" class="brand self-start text-ink hover:text-ink">TRIX</router-link>
-          <div
-            class="float flex max-w-95 animate-[bob_7s_ease-in-out_infinite] flex-col gap-4 p-7 motion-reduce:animate-none"
-          >
+      <div class="split">
+        <aside class="side glow" data-rv>
+          <router-link to="/" class="brand self-start">TRIX</router-link>
+          <div class="float bob flex flex-col p-7" :class="wide ? 'max-w-100 gap-4.5' : 'max-w-95 gap-4'">
             <slot name="float" />
           </div>
-          <span
-            class="hidden text-[38cqi] leading-[0.74] font-bold tracking-[-0.05em] whitespace-nowrap text-ink/90 lg:block"
-            aria-hidden="true"
-          >
-            {{ big }}<span class="font-light text-ink/30">{{ sub }}</span>
-          </span>
+          <span class="big" aria-hidden="true">{{ big }}<span>{{ sub }}</span></span>
         </aside>
 
-        <main class="flex max-w-215 min-w-0 flex-col gap-12 px-4 pt-[clamp(40px,8vh,120px)] pb-14 sm:px-10 xl:px-24">
+        <main class="split-main">
           <slot />
         </main>
       </div>
@@ -35,6 +28,8 @@ defineProps<{
   /** Крупная цифра или слово у нижнего края панели */
   big: string
   sub?: string
+  /** Шире плашка с большим текстом (регистрация) */
+  wide?: boolean
 }>()
 
 const root = useTemplateRef<HTMLElement>('root')
