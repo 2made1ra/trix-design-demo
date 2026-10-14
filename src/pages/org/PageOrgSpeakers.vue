@@ -64,9 +64,9 @@
               <div class="gap-6">
                 <fieldset class="rate" aria-describedby="rate-hint">
                   <legend class="legend mb-2.5">Оценка команды, 1–5</legend>
-                  <label v-for="n in 5" :key="n" class="pick">
-                    <input v-model="score" type="radio" name="rate" :value="n">{{ n }}
-                  </label>
+                  <app-pick v-for="n in 5" :key="n" v-model="score" type="radio" name="rate" :value="n">
+                    {{ n }}
+                  </app-pick>
                 </fieldset>
                 <p id="rate-hint" class="hint -mt-2">1 — слабо, 5 — сильно. Спикер оценку не видит.</p>
                 <label class="swt">
@@ -287,6 +287,7 @@ import {
   type PositionLevel,
 } from '@/api/generated'
 import AppHeader from '@/components/AppHeader.vue'
+import AppPick from '@/components/AppPick.vue'
 import { formatNps, initials, plural } from '@/components/org/format'
 import { levelNames, levelOptions } from '@/components/org/levels'
 import SpPage from '@/components/speaker/SpPage.vue'

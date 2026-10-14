@@ -17,8 +17,8 @@
     </template>
 
     <div class="sw self-start" role="tablist" aria-label="Регистрация или вход" data-rv>
-      <router-link replace to="/register" role="tab" class="pick" :aria-selected="!login">Регистрация</router-link>
-      <router-link replace to="/login" role="tab" class="pick" :aria-selected="login">Вход</router-link>
+      <app-pick replace to="/register" role="tab" :aria-selected="!login">Регистрация</app-pick>
+      <app-pick replace to="/login" role="tab" :aria-selected="login">Вход</app-pick>
     </div>
 
     <section class="pnl" role="tabpanel">
@@ -144,6 +144,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { type Error as ApiError, type AuthResult, register, login as signIn } from '@/api/generated'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
+import AppPick from '@/components/AppPick.vue'
 import { useAuth } from '@/composables/useAuth'
 
 const props = defineProps<{ mode: 'register' | 'login' }>()

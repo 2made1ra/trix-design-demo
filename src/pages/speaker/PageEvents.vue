@@ -22,16 +22,14 @@
         </div>
 
         <div class="mt-10 flex flex-wrap gap-2" data-rv>
-          <button
+          <app-pick
             v-for="(filter, key) in filters"
             :key="key"
-            type="button"
-            class="pick"
-            :aria-pressed="key === 'all' ? !active.size : active.has(key)"
+            :pressed="key === 'all' ? !active.size : active.has(key)"
             @click="toggle(key)"
           >
             {{ filter.label }}
-          </button>
+          </app-pick>
         </div>
       </main>
 
@@ -215,6 +213,7 @@ import {
   type Recommendation,
 } from '@/api/generated'
 import AppHeader from '@/components/AppHeader.vue'
+import AppPick from '@/components/AppPick.vue'
 import AppTicker from '@/components/AppTicker.vue'
 import {
   conferencePlace,

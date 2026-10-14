@@ -30,10 +30,16 @@
             <button type="button" class="b b-ink b-sm" @click="loadDictionaries">Повторить</button>
           </div>
           <div v-else class="flex flex-wrap gap-2">
-            <label v-for="category in dict.categories" :key="category.id" class="pick">
-              <input v-model="draft.sphereId" type="radio" name="sphere" :value="category.id">
+            <app-pick
+              v-for="category in dict.categories"
+              :key="category.id"
+              v-model="draft.sphereId"
+              type="radio"
+              name="sphere"
+              :value="category.id"
+            >
               {{ category.name }}
-            </label>
+            </app-pick>
           </div>
         </fieldset>
 
@@ -128,10 +134,15 @@
           <fieldset class="m-0 min-w-0 border-0 p-0" data-rv>
             <legend class="idx k muted">02 / Формат</legend>
             <div class="flex flex-wrap gap-2">
-              <label v-for="format in formats" :key="format.value" class="pick">
-                <input v-model="draft.formats" type="checkbox" :value="format.value">
+              <app-pick
+                v-for="format in formats"
+                :key="format.value"
+                v-model="draft.formats"
+                type="checkbox"
+                :value="format.value"
+              >
                 {{ format.title }}
-              </label>
+              </app-pick>
             </div>
             <p class="hint mt-2.5">Можно выбрать несколько.</p>
           </fieldset>
@@ -216,6 +227,7 @@ import {
 } from '@/api/generated'
 import AppLevel from '@/components/AppLevel.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
+import AppPick from '@/components/AppPick.vue'
 import AppProgress from '@/components/AppProgress.vue'
 import { draft } from '@/components/speaker/onboardingDraft'
 import { useAuth } from '@/composables/useAuth'

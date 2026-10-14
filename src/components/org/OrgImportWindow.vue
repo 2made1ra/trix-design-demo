@@ -75,17 +75,15 @@
                 <li v-for="value in ctl.currentDirections.value.values" :key="value.id">
                   <span class="mono">{{ value.raw }}</span>
                   <MoveRightIcon aria-hidden="true" />
-                  <fieldset class="picks" :aria-label="`Направление для «${value.raw}»`">
-                    <button
+                  <app-picks as="fieldset" :aria-label="`Направление для «${value.raw}»`">
+                    <app-pick
                       v-for="option in shown(ctl.currentDirections.value, value)"
                       :key="option.id"
-                      type="button"
-                      class="pick"
-                      :aria-pressed="ctl.dirs[value.id] === option.id"
+                      :pressed="ctl.dirs[value.id] === option.id"
                       @click="ctl.setDirection(value.id, option.id)"
                     >
                       {{ option.name }}
-                    </button>
+                    </app-pick>
                     <select
                       v-if="others(ctl.currentDirections.value, value).length"
                       class="inp h-10.5 w-auto min-w-0"
@@ -102,7 +100,7 @@
                         {{ option.name }}
                       </option>
                     </select>
-                  </fieldset>
+                  </app-picks>
                   <p class="hint why2">Так решила модель, поменяйте, если не так</p>
                 </li>
               </ul>
@@ -335,6 +333,8 @@
 import { ArrowRightIcon, CheckIcon, ChevronDownIcon, FileSpreadsheetIcon, MoveRightIcon, XIcon } from '@lucide/vue'
 import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import type { ImportDirectionQuestion, SpeakerImportRow } from '@/api/demo'
+import AppPick from '@/components/AppPick.vue'
+import AppPicks from '@/components/AppPicks.vue'
 import { initials, plural } from '@/components/org/format'
 import { useModal } from '@/components/org/useModal'
 import type { SpeakerImportController } from '@/components/org/useSpeakerImport'

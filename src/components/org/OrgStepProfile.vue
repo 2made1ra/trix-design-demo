@@ -26,12 +26,17 @@
     <fieldset class="fld" data-rv>
       <legend class="idx k muted">02 / Направления</legend>
       <p class="hint mb-4">Выберите всё, чем занимаются ваши спикеры. Можно несколько.</p>
-      <div class="picks">
-        <label v-for="direction in state.directions" :key="direction.id" class="pick">
-          <input v-model="form.directionIds" type="checkbox" :value="direction.id">
+      <app-picks>
+        <app-pick
+          v-for="direction in state.directions"
+          :key="direction.id"
+          v-model="form.directionIds"
+          type="checkbox"
+          :value="direction.id"
+        >
           {{ direction.name }}
-        </label>
-      </div>
+        </app-pick>
+      </app-picks>
       <p v-if="errors.directions" class="err mt-3" role="alert"><CircleAlertIcon />{{ errors.directions }}</p>
     </fieldset>
 
@@ -110,6 +115,8 @@ import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { saveOrganizationProfile } from '@/api/demo'
 import { type City, listCities, listPositionCategories, type PositionCategory } from '@/api/generated'
+import AppPick from '@/components/AppPick.vue'
+import AppPicks from '@/components/AppPicks.vue'
 import { useAuth } from '@/composables/useAuth'
 
 type State = { kind: 'loading' } | { kind: 'error' } | { kind: 'ready'; directions: PositionCategory[]; cities: City[] }

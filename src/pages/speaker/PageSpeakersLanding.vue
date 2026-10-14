@@ -119,10 +119,10 @@
             >
               <figcaption class="sr">Подборка мероприятий и предложение выступить от команды</figcaption>
               <app-win-top title="Мероприятия для вас" note="Подборка · Сохранённые" />
-              <div class="picks">
+              <app-picks>
                 <span class="tag ink">Backend</span><span class="tag">Опытный</span
                 ><span class="tag">Цель: выступать</span>
-              </div>
+              </app-picks>
               <app-scene-bar
                 :step="1"
                 busy="Подбираем мероприятия под профиль"
@@ -155,10 +155,10 @@
               <app-win-top title="Миграция монолита без остановки сервиса">
                 <span class="k lock"><Lock />Видите только вы</span>
               </app-win-top>
-              <div class="picks">
+              <app-picks>
                 <span class="tag" data-s="1">slides.pdf</span
                 ><span class="tag">Конференция о высоконагруженных системах</span><span class="tag">30 мин</span>
-              </div>
+              </app-picks>
               <app-scene-bar :step="2" busy="Разбираем доклад под аудиторию" done="Готово: 4 критерия, 2 правки" />
               <div class="flex gap-6 k muted">
                 <span class="text-ink">Оценка</span><span>Правки</span><span>Вопросы из зала</span>
@@ -215,10 +215,9 @@
             >
               <figcaption class="sr">Площадки для первого доклада и разбор репетиции по аудио</figcaption>
               <app-win-top title="Площадки для старта" note="Backend · Казань" />
-              <div class="picks">
-                <span class="pick">Все</span><span class="pick" data-press="1">Первый доклад</span
-                ><span class="pick">Онлайн</span>
-              </div>
+              <app-picks>
+                <app-pick>Все</app-pick><app-pick data-press="1">Первый доклад</app-pick><app-pick>Онлайн</app-pick>
+              </app-picks>
               <div v-for="place in places" :key="place.title" class="mrow" :data-x="place.start ? undefined : 2">
                 <div class="cell">
                   <b>{{ place.title }}</b>
@@ -280,6 +279,8 @@ import AppFaq from '@/components/AppFaq.vue'
 import AppFeature from '@/components/AppFeature.vue'
 import AppHero from '@/components/AppHero.vue'
 import AppHowStep from '@/components/AppHowStep.vue'
+import AppPick from '@/components/AppPick.vue'
+import AppPicks from '@/components/AppPicks.vue'
 import AppSceneBar from '@/components/AppSceneBar.vue'
 import AppTicker from '@/components/AppTicker.vue'
 import AppWinTop from '@/components/AppWinTop.vue'

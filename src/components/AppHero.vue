@@ -4,8 +4,8 @@
     <div class="wrap pt-16">
       <div class="mb-7 flex flex-wrap items-center gap-x-6 gap-y-2.5" data-rv>
         <nav class="sw" aria-label="Для кого TRIX">
-          <router-link :to="{ name: 'speakers.landing' }" class="pick">Спикерам</router-link>
-          <router-link :to="{ name: 'companies.landing' }" class="pick">Компаниям</router-link>
+          <app-pick :to="{ name: 'speakers.landing' }">Спикерам</app-pick>
+          <app-pick :to="{ name: 'companies.landing' }">Компаниям</app-pick>
         </nav>
         <span class="whisper">{{ whisper }}</span>
       </div>
@@ -32,6 +32,7 @@ import { ArrowRight } from '@lucide/vue'
 import { ref, useTemplateRef } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
+import AppPick from '@/components/AppPick.vue'
 import { useTyping } from '@/composables/useFx'
 
 const props = defineProps<{

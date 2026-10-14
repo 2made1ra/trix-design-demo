@@ -56,10 +56,9 @@
                   title="Видите всех и зовёте нужных"
                   text="Выступления, оценки зала и темы в одном окне. Под мероприятие TRIX предложит своих спикеров."
                 >
-                  <div class="picks">
-                    <span class="pick" data-press="6">Data Science</span
-                    ><span class="pick" data-press="7">NPS от 9.4</span>
-                  </div>
+                  <app-picks>
+                    <app-pick data-press="6">Data Science</app-pick><app-pick data-press="7">NPS от 9.4</app-pick>
+                  </app-picks>
                   <div class="mrow" data-s="8">
                     <span class="small">Нашли спикеров</span><b class="num">8</b>
                   </div>
@@ -90,10 +89,10 @@
             <figure class="tile ink win" data-rv data-scene="700,1000,1200,4200">
               <figcaption class="sr">База спикеров с фильтром по направлению, NPS и городу</figcaption>
               <app-win-top title="Спикеры" note="212 · 14 городов" />
-              <div class="picks">
+              <app-picks>
                 <span class="tag mint" data-s="1">Data Science</span><span class="tag mint" data-s="1">NPS от 9.4</span
                 ><span class="tag mint" data-s="1">Не Москва</span><span class="tag">Конференции</span>
-              </div>
+              </app-picks>
               <app-scene-bar :step="1" busy="Фильтруем 212 спикеров" done="Нашли 8 спикеров" />
               <div v-for="person in people" :key="person.name" class="mrow" :data-s="person.invited ? 3 : 2">
                 <div class="person">
@@ -345,6 +344,8 @@ import AppFaq from '@/components/AppFaq.vue'
 import AppFeature from '@/components/AppFeature.vue'
 import AppHero from '@/components/AppHero.vue'
 import AppHowStep from '@/components/AppHowStep.vue'
+import AppPick from '@/components/AppPick.vue'
+import AppPicks from '@/components/AppPicks.vue'
 import AppSceneBar from '@/components/AppSceneBar.vue'
 import AppTicker from '@/components/AppTicker.vue'
 import AppWinTop from '@/components/AppWinTop.vue'
