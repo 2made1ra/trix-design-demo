@@ -9,16 +9,7 @@
   >
     <template #float>
       <span class="k muted">Шаг {{ step }} из 3</span>
-      <div
-        role="progressbar"
-        aria-label="Онбординг организации"
-        aria-valuemin="0"
-        aria-valuemax="3"
-        :aria-valuenow="step"
-        class="prog"
-      >
-        <span v-for="n in 3" :key="n" :class="{ on: n <= step }" />
-      </div>
+      <app-progress :current="step" label="Онбординг организации" />
       <p class="small muted">{{ meta.hint }}</p>
     </template>
 
@@ -59,6 +50,7 @@ import { CheckIcon } from '@lucide/vue'
 import { computed, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
+import AppProgress from '@/components/AppProgress.vue'
 import OrgStepProfile from '@/components/org/OrgStepProfile.vue'
 import OrgStepSpeakers from '@/components/org/OrgStepSpeakers.vue'
 import OrgStepTeam from '@/components/org/OrgStepTeam.vue'

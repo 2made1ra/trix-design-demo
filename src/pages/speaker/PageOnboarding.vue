@@ -2,16 +2,7 @@
   <app-onboarding-frame :big="`0${step}`" sub="/03">
     <template #float>
       <span class="k muted">Шаг {{ step }} из 3</span>
-      <div
-        role="progressbar"
-        aria-label="Заполнение профиля"
-        aria-valuemin="0"
-        aria-valuemax="3"
-        :aria-valuenow="step"
-        class="prog"
-      >
-        <span v-for="n in 3" :key="n" :class="{ on: n <= step }" />
-      </div>
+      <app-progress :current="step" label="Заполнение профиля" />
       <p class="small muted">{{ current.hint }}</p>
     </template>
 
@@ -49,15 +40,19 @@
         <fieldset class="m-0 min-w-0 border-0 p-0" data-rv>
           <legend class="idx k muted">02 / Опыт выступлений</legend>
           <div class="lvls">
-            <label v-for="(level, i) in levels" :key="level.value" class="lvl">
-              <input v-model="draft.experience" type="radio" name="level" :value="level.value">
-              <span class="lvl-tick"><Check /></span>
+            <app-level
+              v-for="(level, i) in levels"
+              :key="level.value"
+              v-model="draft.experience"
+              name="level"
+              :value="level.value"
+              :title="level.title"
+              :text="level.text"
+            >
               <span class="bars" aria-hidden="true">
                 <i v-for="n in 3" :key="n" :class="{ on: n <= i + 1 }" :style="{ height: `${[8, 14, 22][n - 1]}px` }" />
               </span>
-              <span class="h-20">{{ level.title }}</span>
-              <span class="small muted">{{ level.text }}</span>
-            </label>
+            </app-level>
           </div>
         </fieldset>
       </template>
@@ -66,13 +61,17 @@
         <fieldset class="m-0 min-w-0 border-0 p-0" data-rv>
           <legend class="idx k muted">01 / Цель</legend>
           <div class="lvls">
-            <label v-for="goal in goals" :key="goal.value" class="lvl">
-              <input v-model="draft.goal" type="radio" name="goal" :value="goal.value">
-              <span class="lvl-tick"><Check /></span>
+            <app-level
+              v-for="goal in goals"
+              :key="goal.value"
+              v-model="draft.goal"
+              name="goal"
+              :value="goal.value"
+              :title="goal.title"
+              :text="goal.text"
+            >
               <component :is="goal.icon" class="gi" aria-hidden="true" />
-              <span class="h-20">{{ goal.title }}</span>
-              <span class="small muted">{{ goal.text }}</span>
-            </label>
+            </app-level>
           </div>
         </fieldset>
 
@@ -202,7 +201,7 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowLeft, ArrowRight, Check, ChevronDown, CircleAlert, LoaderCircle, Mic, TrendingUp } from '@lucide/vue'
+import { ArrowLeft, ArrowRight, ChevronDown, CircleAlert, LoaderCircle, Mic, TrendingUp } from '@lucide/vue'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
@@ -215,7 +214,9 @@ import {
   type PositionCategory,
   skipOnboarding,
 } from '@/api/generated'
+import AppLevel from '@/components/AppLevel.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
+import AppProgress from '@/components/AppProgress.vue'
 import { draft } from '@/components/speaker/onboardingDraft'
 import { useAuth } from '@/composables/useAuth'
 
