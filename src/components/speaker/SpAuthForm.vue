@@ -121,7 +121,7 @@
 
       <p class="small muted" data-rv>
         {{ login ? 'Нет аккаунта?' : 'Уже есть аккаунт?' }}
-        <router-link replace :to="login ? '/register' : '/login'" class="lnb text-ink">
+        <router-link replace :to="login ? '/register' : '/login'" class="lnb ln font-semibold text-ink hover:text-link">
           {{ login ? 'Зарегистрироваться' : 'Войти' }}
         </router-link>
       </p>

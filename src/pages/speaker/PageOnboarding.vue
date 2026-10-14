@@ -104,7 +104,7 @@
             <span v-if="dict.kind === 'loading'" class="sk inp-sk" role="status">
               <span class="sr-only">Загружаем список городов</span>
             </span>
-            <div v-else class="combo">
+            <div v-else class="combo max-w-105">
               <input
                 id="ob-city"
                 v-model="cityQuery"
