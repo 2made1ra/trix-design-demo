@@ -53,21 +53,16 @@
           <div class="mt-14 flex flex-wrap items-start gap-12">
             <form class="flex min-w-0 flex-[999_1_560px] flex-col gap-12" novalidate @submit.prevent="submit">
               <fieldset class="m-0 flex min-w-0 flex-col gap-12 border-0 p-0" :disabled="sending">
-                <div class="field" data-rv>
-                  <span class="idx k muted" aria-hidden="true">01 / Доклад</span>
-                  <label for="talk-title">Название доклада</label>
-                  <input
-                    id="talk-title"
-                    v-model="title"
-                    class="inp"
-                    type="text"
-                    placeholder="Например, «Как мы перешли на очереди»"
-                  >
-                </div>
+                <app-field
+                  id="talk-title"
+                  v-model="title"
+                  kicker="01 / Доклад"
+                  label="Название доклада"
+                  placeholder="Например, «Как мы перешли на очереди»"
+                  data-rv
+                />
 
-                <div class="field" data-rv>
-                  <span class="idx k muted" aria-hidden="true">02 / Материалы</span>
-                  <label for="talk-text">Текст выступления</label>
+                <app-field id="talk-text" kicker="02 / Материалы" label="Текст выступления" data-rv>
                   <textarea
                     id="talk-text"
                     v-model="text"
@@ -82,7 +77,7 @@
                     <span class="hint">Текст можно вставить из заметок или документа, форматирование не важно.</span>
                     <span id="talk-text-count" class="k muted" aria-live="polite">{{ count }}</span>
                   </div>
-                </div>
+                </app-field>
 
                 <div class="field" data-rv>
                   <span id="pdf-label" class="legend">PDF презентации</span>
@@ -213,6 +208,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { createTalkReview, type EventTrack, listEventTracks } from '@/api/demo'
 import { type City, type Conference, getConferenceBySlug, listCities } from '@/api/generated'
+import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import { conferencePlace, formatLabels, isTrixSource, kindLabels, levelLabels } from '@/components/speaker/events'
 import SpPage from '@/components/speaker/SpPage.vue'

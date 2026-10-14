@@ -69,42 +69,24 @@
                 <span class="tag mint">Подтверждена</span>
               </div>
             </div>
-            <div v-if="state.kind === 'new'" class="field">
-              <label for="name">Имя</label>
-              <input
-                id="name"
-                v-model="form.name"
-                class="inp"
-                type="text"
-                autocomplete="name"
-                placeholder="Имя и фамилия"
-                :aria-invalid="!!errors.name"
-              >
-              <p v-if="errors.name" class="err" role="alert"><CircleAlertIcon />{{ errors.name }}</p>
-            </div>
-            <div class="field">
-              <label for="password">Пароль</label>
-              <div class="pw">
-                <input
-                  id="password"
-                  v-model="form.password"
-                  class="inp"
-                  :type="showPassword ? 'text' : 'password'"
-                  :autocomplete="state.kind === 'new' ? 'new-password' : 'current-password'"
-                  :aria-invalid="!!errors.password"
-                  aria-describedby="password-hint"
-                >
-                <button
-                  type="button"
-                  :aria-label="showPassword ? 'Скрыть пароль' : 'Показать пароль'"
-                  @click="showPassword = !showPassword"
-                >
-                  <component :is="showPassword ? EyeOffIcon : EyeIcon" />
-                </button>
-              </div>
-              <p v-if="errors.password" class="err" role="alert"><CircleAlertIcon />{{ errors.password }}</p>
-              <p v-else-if="state.kind === 'new'" id="password-hint" class="hint">Не короче 8 символов</p>
-            </div>
+            <app-field
+              v-if="state.kind === 'new'"
+              id="name"
+              v-model="form.name"
+              label="Имя"
+              autocomplete="name"
+              placeholder="Имя и фамилия"
+              :error="errors.name"
+            />
+            <app-field
+              id="password"
+              v-model="form.password"
+              label="Пароль"
+              type="password"
+              :autocomplete="state.kind === 'new' ? 'new-password' : 'current-password'"
+              :error="errors.password"
+              :hint="state.kind === 'new' ? 'Не короче 8 символов' : undefined"
+            />
           </fieldset>
 
           <div v-if="state.kind === 'current'" class="acts">
@@ -137,11 +119,12 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowRightIcon, CircleAlertIcon, ClockIcon, EyeIcon, EyeOffIcon } from '@lucide/vue'
+import { ArrowRightIcon, ClockIcon } from '@lucide/vue'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { type AcceptInviteInput, acceptInvite, getInvite, type InviteInfo } from '@/api/demo'
+import AppField from '@/components/AppField.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
 import { useAuth } from '@/composables/useAuth'
 
@@ -153,7 +136,6 @@ const { setToken, logout } = useAuth()
 const token = computed(() => String(route.params.token))
 const state = ref<State>({ kind: 'loading' })
 const sending = ref(false)
-const showPassword = ref(false)
 const form = reactive({ name: '', password: '' })
 const errors = reactive({ name: '', password: '' })
 

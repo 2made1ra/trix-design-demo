@@ -35,53 +35,37 @@
 
         <form aria-label="Предложение выступить" novalidate @submit.prevent="send">
           <div class="dlg-row">
-            <div v-if="event.tracks.length" class="field">
-              <label for="of-track">Трек</label>
+            <app-field v-if="event.tracks.length" id="of-track" label="Трек">
               <div class="combo">
                 <select id="of-track" v-model="form.track" class="inp">
                   <option v-for="track in event.tracks" :key="track" :value="track">{{ track }}</option>
                 </select>
                 <ChevronDownIcon aria-hidden="true" />
               </div>
-            </div>
-            <div class="field">
-              <label for="of-due">Ответить до</label>
-              <input
-                id="of-due"
-                v-model="form.answerBy"
-                class="inp"
-                type="date"
-                :min="today"
-                :aria-invalid="!!errors.answerBy"
-                aria-describedby="of-due-hint"
-              >
-              <p v-if="errors.answerBy" class="err" role="alert"><CircleAlertIcon />{{ errors.answerBy }}</p>
-              <span v-else id="of-due-hint" class="hint">Срок, к которому ждёте ответ</span>
-            </div>
-          </div>
-          <div class="field">
-            <label for="of-topic">Тема доклада <span class="muted font-medium">· необязательно</span></label>
-            <input
-              id="of-topic"
-              v-model="form.topic"
-              class="inp"
-              type="text"
-              placeholder="Например, миграция монолита без остановки"
-            >
-          </div>
-          <div class="field">
-            <label for="of-msg">Сообщение спикеру</label>
-            <textarea
-              id="of-msg"
-              v-model="form.message"
-              class="inp"
-              rows="5"
-              :aria-invalid="!!errors.message"
-              @input="edited = true"
+            </app-field>
+            <app-field
+              id="of-due"
+              v-model="form.answerBy"
+              label="Ответить до"
+              type="date"
+              :min="today"
+              :error="errors.answerBy"
+              hint="Срок, к которому ждёте ответ"
             />
-            <p v-if="errors.message" class="err" role="alert"><CircleAlertIcon />{{ errors.message }}</p>
-            <span v-else class="hint">Текст подготовлен за DevRel, его можно править.</span>
           </div>
+          <app-field id="of-topic" v-model="form.topic" placeholder="Например, миграция монолита без остановки">
+            <template #label>Тема доклада <span class="muted font-medium">· необязательно</span></template>
+          </app-field>
+          <app-field
+            id="of-msg"
+            v-model="form.message"
+            label="Сообщение спикеру"
+            multiline
+            rows="5"
+            :error="errors.message"
+            hint="Текст подготовлен за DevRel, его можно править."
+            @input="edited = true"
+          />
           <p class="small muted">Спикер увидит предложение у себя в подборке и ответит: принять или отказаться.</p>
           <p v-if="state.kind === 'error'" class="err" role="alert"><CircleAlertIcon />{{ state.message }}</p>
           <div class="dlg-act">
@@ -127,6 +111,7 @@
 import { CheckIcon, ChevronDownIcon, CircleAlertIcon, XIcon } from '@lucide/vue'
 import { computed, nextTick, reactive, ref, useTemplateRef, watch } from 'vue'
 import { createOffer, type Offer, type OrgEvent, type OrgSpeaker } from '@/api/demo'
+import AppField from '@/components/AppField.vue'
 import { formatDate } from '@/components/org/eventLabels'
 import { initials } from '@/components/org/format'
 import { toneOf } from '@/components/org/levels'

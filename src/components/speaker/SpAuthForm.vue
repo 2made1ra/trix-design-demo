@@ -35,73 +35,47 @@
 
       <form class="flex flex-col gap-7" novalidate data-rv @submit.prevent="submit">
         <fieldset class="fs" :disabled="sending">
-          <div v-if="!login" class="field">
-            <label for="auth-name">Имя</label>
-            <input
-              id="auth-name"
-              v-model="form.name"
-              class="inp"
-              type="text"
-              autocomplete="name"
-              placeholder="Как к вам обращаться"
-              :aria-invalid="!!errors.name"
-              :aria-describedby="errors.name ? 'auth-name-err' : undefined"
-              @input="errors.name = ''"
-            >
-            <p v-if="errors.name" id="auth-name-err" class="err"><CircleAlert />{{ errors.name }}</p>
-          </div>
+          <app-field
+            v-if="!login"
+            id="auth-name"
+            v-model="form.name"
+            label="Имя"
+            autocomplete="name"
+            placeholder="Как к вам обращаться"
+            :error="errors.name"
+            @input="errors.name = ''"
+          />
 
-          <div class="field">
-            <label for="auth-email">Почта</label>
-            <input
-              id="auth-email"
-              v-model="form.email"
-              class="inp"
-              type="email"
-              autocomplete="email"
-              placeholder="you@example.com"
-              :aria-invalid="!!errors.email"
-              :aria-describedby="errors.email ? 'auth-email-err' : undefined"
-              @input="errors.email = ''"
-            >
-            <p v-if="errors.email" id="auth-email-err" class="err">
-              <CircleAlert />
+          <app-field
+            id="auth-email"
+            v-model="form.email"
+            label="Почта"
+            type="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            :error="errors.email"
+            @input="errors.email = ''"
+          >
+            <template #error>
               <span>
                 {{ errors.email }}
                 <router-link v-if="emailTaken" replace to="/login" class="ln font-semibold">Войти</router-link>
               </span>
-            </p>
-          </div>
+            </template>
+          </app-field>
 
-          <div class="field">
-            <div v-if="login" class="flex items-baseline justify-between gap-4">
-              <label for="auth-pass">Пароль</label>
-              <a href="#reset" class="small ln">Забыли пароль?</a>
-            </div>
-            <label v-else for="auth-pass">Пароль</label>
-            <div class="pw">
-              <input
-                id="auth-pass"
-                v-model="form.password"
-                class="inp"
-                :type="reveal ? 'text' : 'password'"
-                :autocomplete="login ? 'current-password' : 'new-password'"
-                :aria-invalid="!!errors.password"
-                :aria-describedby="errors.password ? 'auth-pass-err' : 'auth-pass-hint'"
-                @input="errors.password = ''"
-              >
-              <button
-                type="button"
-                :aria-label="reveal ? 'Скрыть пароль' : 'Показать пароль'"
-                @click="reveal = !reveal"
-              >
-                <EyeOff v-if="reveal" />
-                <Eye v-else />
-              </button>
-            </div>
-            <p v-if="errors.password" id="auth-pass-err" class="err"><CircleAlert />{{ errors.password }}</p>
-            <p v-else-if="!login" id="auth-pass-hint" class="hint">Не короче 8 символов</p>
-          </div>
+          <app-field
+            id="auth-pass"
+            v-model="form.password"
+            label="Пароль"
+            type="password"
+            :autocomplete="login ? 'current-password' : 'new-password'"
+            :error="errors.password"
+            :hint="login ? undefined : 'Не короче 8 символов'"
+            @input="errors.password = ''"
+          >
+            <template v-if="login" #aside><a href="#reset" class="small ln">Забыли пароль?</a></template>
+          </app-field>
         </fieldset>
 
         <p v-if="errors.form" class="err" role="alert"><CircleAlert />{{ errors.form }}</p>
@@ -138,11 +112,12 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowRight, CircleAlert, Eye, EyeOff } from '@lucide/vue'
+import { ArrowRight, CircleAlert } from '@lucide/vue'
 import { computed, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { type Error as ApiError, type AuthResult, register, login as signIn } from '@/api/generated'
+import AppField from '@/components/AppField.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
 import AppPick from '@/components/AppPick.vue'
 import { useAuth } from '@/composables/useAuth'
@@ -156,7 +131,6 @@ const login = computed(() => props.mode === 'login')
 const form = reactive({ name: '', email: String(useRoute().query.email ?? ''), password: '' })
 const errors = reactive({ name: '', email: '', password: '', form: '' })
 const emailTaken = ref(false)
-const reveal = ref(false)
 const sending = ref(false)
 
 const MIN_PASSWORD = 8

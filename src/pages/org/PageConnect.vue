@@ -20,46 +20,32 @@
       </div>
       <form class="flex flex-col gap-7" novalidate data-rv @submit.prevent="submit">
         <fieldset class="fs">
-          <div class="field">
-            <label for="org-name">Название организации</label>
-            <input
-              id="org-name"
-              v-model="form.name"
-              class="inp"
-              type="text"
-              autocomplete="organization"
-              placeholder="Как называется компания"
-              :aria-invalid="!!errors.name"
-              :aria-describedby="errors.name ? 'org-name-err' : undefined"
-            >
-            <p v-if="errors.name" id="org-name-err" class="err" role="alert"><CircleAlertIcon />{{ errors.name }}</p>
-          </div>
-          <div class="field">
-            <label for="org-email">Рабочая почта</label>
-            <input
-              id="org-email"
-              v-model="form.email"
-              class="inp"
-              type="email"
-              autocomplete="email"
-              placeholder="you@company.ru"
-              :aria-invalid="!!errors.email"
-              aria-describedby="org-email-hint"
-            >
-            <p v-if="errors.email" class="err" role="alert"><CircleAlertIcon />{{ errors.email }}</p>
-            <p id="org-email-hint" class="hint">Сюда придёт приглашение</p>
-          </div>
-          <div class="field">
-            <label for="org-site">Сайт</label>
-            <input
-              id="org-site"
-              v-model="form.site"
-              class="inp"
-              type="url"
-              autocomplete="url"
-              placeholder="https://company.ru"
-            >
-          </div>
+          <app-field
+            id="org-name"
+            v-model="form.name"
+            label="Название организации"
+            autocomplete="organization"
+            placeholder="Как называется компания"
+            :error="errors.name"
+          />
+          <app-field
+            id="org-email"
+            v-model="form.email"
+            label="Рабочая почта"
+            type="email"
+            autocomplete="email"
+            placeholder="you@company.ru"
+            :error="errors.email"
+            hint="Сюда придёт приглашение"
+          />
+          <app-field
+            id="org-site"
+            v-model="form.site"
+            label="Сайт"
+            type="url"
+            autocomplete="url"
+            placeholder="https://company.ru"
+          />
           <div class="flex flex-col gap-2">
             <label class="agree">
               <input v-model="form.consent" type="checkbox">
@@ -80,7 +66,7 @@
       </p>
     </section>
 
-    <section v-else class="pnl" aria-labelledby="sent-title" aria-live="polite">
+    <section v-else-if="state.kind === 'sent'" class="pnl" aria-labelledby="sent-title" aria-live="polite">
       <div class="flex flex-col gap-6" data-rv>
         <span class="done" aria-hidden="true"><CheckIcon /></span>
         <h1 id="sent-title" class="d-1">Заявка принята, ответим на почту</h1>
@@ -114,6 +100,7 @@ import { reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { createOrgApplication } from '@/api/demo'
+import AppField from '@/components/AppField.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
 
 type State = { kind: 'form' } | { kind: 'sent'; token: string }

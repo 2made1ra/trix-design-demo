@@ -95,12 +95,15 @@
 
           <section aria-label="Фильтры" data-rv>
             <form class="filters" @submit.prevent>
-              <div class="field wide2">
-                <label for="q">Поиск</label>
-                <input id="q" v-model="filters.q" class="inp" type="search" placeholder="Имя или должность">
-              </div>
-              <div class="field">
-                <label for="f-dir">Направление</label>
+              <app-field
+                id="q"
+                v-model="filters.q"
+                class="wide2"
+                label="Поиск"
+                type="search"
+                placeholder="Имя или должность"
+              />
+              <app-field id="f-dir" label="Направление">
                 <div class="combo">
                   <select id="f-dir" v-model="filters.direction_id" class="inp">
                     <option value="">Все</option>
@@ -108,9 +111,8 @@
                   </select>
                   <ChevronDownIcon aria-hidden="true" />
                 </div>
-              </div>
-              <div class="field">
-                <label for="f-city">Город</label>
+              </app-field>
+              <app-field id="f-city" label="Город">
                 <div class="combo">
                   <select id="f-city" v-model="filters.city_id" class="inp">
                     <option value="">Все</option>
@@ -118,9 +120,8 @@
                   </select>
                   <ChevronDownIcon aria-hidden="true" />
                 </div>
-              </div>
-              <div class="field">
-                <label for="f-lvl">Уровень</label>
+              </app-field>
+              <app-field id="f-lvl" label="Уровень">
                 <div class="combo">
                   <select id="f-lvl" v-model="filters.level" class="inp">
                     <option value="">Любой</option>
@@ -128,24 +129,25 @@
                   </select>
                   <ChevronDownIcon aria-hidden="true" />
                 </div>
-              </div>
-              <div class="field">
-                <label for="f-nps">NPS зала, от</label>
-                <input
-                  id="f-nps"
-                  v-model="filters.nps_min"
-                  class="inp"
-                  type="number"
-                  min="0"
-                  max="10"
-                  step="0.1"
-                  placeholder="0"
-                >
-              </div>
-              <div class="field">
-                <label for="f-cnt">Выступлений, от</label>
-                <input id="f-cnt" v-model="filters.talks_min" class="inp" type="number" min="0" placeholder="0">
-              </div>
+              </app-field>
+              <app-field
+                id="f-nps"
+                v-model="filters.nps_min"
+                label="NPS зала, от"
+                type="number"
+                min="0"
+                max="10"
+                step="0.1"
+                placeholder="0"
+              />
+              <app-field
+                id="f-cnt"
+                v-model="filters.talks_min"
+                label="Выступлений, от"
+                type="number"
+                min="0"
+                placeholder="0"
+              />
             </form>
           </section>
 
@@ -286,6 +288,7 @@ import {
   type PositionCategory,
   type PositionLevel,
 } from '@/api/generated'
+import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppPick from '@/components/AppPick.vue'
 import { formatNps, initials, plural } from '@/components/org/format'

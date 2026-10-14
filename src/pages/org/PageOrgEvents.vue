@@ -33,20 +33,16 @@
           novalidate
           @submit.prevent="add"
         >
-          <div class="field min-w-70 flex-1">
-            <label for="event-url">Ссылка на мероприятие</label>
-            <input
-              id="event-url"
-              v-model="url"
-              class="inp"
-              type="url"
-              autocomplete="off"
-              placeholder="https://timepad.ru/event/go-meetup"
-              :aria-invalid="!!addError"
-              :aria-describedby="addError ? 'event-url-err' : undefined"
-            >
-            <p v-if="addError" id="event-url-err" class="err" role="alert"><CircleAlertIcon />{{ addError }}</p>
-          </div>
+          <app-field
+            id="event-url"
+            v-model="url"
+            class="min-w-70 flex-1"
+            label="Ссылка на мероприятие"
+            type="url"
+            autocomplete="off"
+            placeholder="https://timepad.ru/event/go-meetup"
+            :error="addError"
+          />
           <button type="submit" class="b b-mint" :disabled="saving">Добавить</button>
         </form>
 
@@ -133,10 +129,11 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowRightIcon, CircleAlertIcon, PlusIcon } from '@lucide/vue'
+import { ArrowRightIcon, PlusIcon } from '@lucide/vue'
 import { computed, onMounted, ref, useTemplateRef } from 'vue'
 import { toast } from 'vue-sonner'
 import { addOrgEvent, listOrgEvents, type OrgEvent } from '@/api/demo'
+import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import { formatDate, formatNames } from '@/components/org/eventLabels'
 import { plural } from '@/components/org/format'

@@ -8,19 +8,15 @@
   <form v-else class="flex flex-col gap-12" novalidate @submit.prevent="submit">
     <fieldset class="fld" data-rv>
       <legend class="idx k muted">01 / Название</legend>
-      <div class="field max-w-115">
-        <label for="org-name">Название организации</label>
-        <input
-          id="org-name"
-          v-model="form.name"
-          class="inp"
-          type="text"
-          autocomplete="organization"
-          :aria-invalid="!!errors.name"
-        >
-        <p v-if="errors.name" class="err" role="alert"><CircleAlertIcon />{{ errors.name }}</p>
-        <p v-else class="hint">Подставлено из заявки.</p>
-      </div>
+      <app-field
+        id="org-name"
+        v-model="form.name"
+        class="max-w-115"
+        label="Название организации"
+        autocomplete="organization"
+        :error="errors.name"
+        hint="Подставлено из заявки."
+      />
     </fieldset>
 
     <fieldset class="fld" data-rv>
@@ -115,6 +111,7 @@ import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { saveOrganizationProfile } from '@/api/demo'
 import { type City, listCities, listPositionCategories, type PositionCategory } from '@/api/generated'
+import AppField from '@/components/AppField.vue'
 import AppPick from '@/components/AppPick.vue'
 import AppPicks from '@/components/AppPicks.vue'
 import { useAuth } from '@/composables/useAuth'

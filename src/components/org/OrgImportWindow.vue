@@ -110,19 +110,16 @@
               <h3 ref="heading" tabindex="-1">{{ ctl.currentMail.value.title }}</h3>
               <template v-if="decision?.kind === 'open'">
                 <form class="row" novalidate @submit.prevent="addMail">
-                  <div class="field">
-                    <label for="mail">Рабочая почта {{ firstName }}</label>
-                    <input
-                      id="mail"
-                      v-model="mailDraft"
-                      class="inp"
-                      type="email"
-                      autocomplete="off"
-                      placeholder="p.lebedev@company.ru"
-                      :aria-invalid="!!mailError"
-                      aria-describedby="mail-hint"
-                    >
-                  </div>
+                  <app-field
+                    id="mail"
+                    v-model="mailDraft"
+                    :label="`Рабочая почта ${firstName}`"
+                    type="email"
+                    autocomplete="off"
+                    placeholder="p.lebedev@company.ru"
+                    :aria-invalid="!!mailError"
+                    aria-describedby="mail-hint"
+                  />
                   <button type="submit" class="b b-ink b-sm self-end">Добавить</button>
                   <button
                     type="button"
@@ -333,6 +330,7 @@
 import { ArrowRightIcon, CheckIcon, ChevronDownIcon, FileSpreadsheetIcon, MoveRightIcon, XIcon } from '@lucide/vue'
 import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import type { ImportDirectionQuestion, SpeakerImportRow } from '@/api/demo'
+import AppField from '@/components/AppField.vue'
 import AppPick from '@/components/AppPick.vue'
 import AppPicks from '@/components/AppPicks.vue'
 import { initials, plural } from '@/components/org/format'
