@@ -80,6 +80,8 @@ const props = withDefaults(
     side?: 'sp' | 'co'
     /** Якоря лендинга */
     anchors?: { label: string; hash: string }[]
+    /** Какой раздел кабинета подсветить, если страница сама решает (разбор в ожидании — «Мероприятия») */
+    current?: 'events' | 'talks'
   }>(),
   { variant: 'cabinet', side: 'sp' },
 )
@@ -114,15 +116,22 @@ const join = computed<RouteLocationRaw>(() =>
 )
 const joinLabel = computed(() => (landing.value && company.value ? 'Подключить организацию' : 'Начать'))
 
+const section = computed(() => {
+  if (props.current) return props.current
+  return ['events', 'conferences.show', 'talks.new'].includes(name.value)
+    ? 'events'
+    : name.value.startsWith('talks.')
+      ? 'talks'
+      : null
+})
+
 const links = computed<Link[]>(() => {
   if (props.variant === 'landing') return (props.anchors ?? []).map((a) => ({ label: a.label, to: { hash: a.hash } }))
   if (props.variant === 'cabinet') {
-    const items: Link[] = [
-      { label: 'Мероприятия', to: { name: 'events' }, active: ['events', 'conferences.show'].includes(name.value) },
-    ]
+    const items: Link[] = [{ label: 'Мероприятия', to: { name: 'events' }, active: section.value === 'events' }]
     if (user.value)
       items.push(
-        { label: 'Мои доклады', to: { name: 'talks.new' }, active: name.value.startsWith('talks.') },
+        { label: 'Мои доклады', to: { name: 'talks.new' }, active: section.value === 'talks' },
         { label: 'Развитие', to: { name: 'speakers.landing', hash: '#growth' } },
       )
     return items

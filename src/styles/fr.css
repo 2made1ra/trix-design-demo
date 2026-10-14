@@ -2806,6 +2806,76 @@
   }
 
   /* Страница мероприятия */
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 24px;
+  }
+
+  .inp.ta {
+    min-height: 340px;
+    font-size: 16px;
+  }
+
+  .crit li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding: 12px 0;
+    box-shadow: inset 0 1px 0 var(--line-2);
+
+    &::before {
+      content: "";
+      flex: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 0 1px var(--mint-line);
+      transform: translateY(-1px);
+    }
+  }
+
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: var(--ink-2);
+
+    & a:hover,
+    & [aria-current] {
+      color: var(--ink);
+    }
+  }
+
+  .err.dot {
+    align-items: baseline;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--ink);
+
+    &::before {
+      content: "";
+      flex: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--pink);
+      transform: translateY(-1px);
+    }
+  }
+
+  .formerr {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--pink) 28%, var(--bg));
+  }
+
   .ev-wrap {
     max-width: 1280px;
     margin: 0 auto;

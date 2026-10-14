@@ -5,26 +5,26 @@
 
       <main class="wrap pt-10 pb-30">
         <div v-if="event.status === 'loading'" class="mt-12 max-w-215" role="status" aria-busy="true">
-          <span class="sr-only">Загружаем мероприятие</span>
+          <span class="sr">Загружаем мероприятие</span>
           <div class="tile skel" aria-hidden="true"><i class="s" /><i class="t" /><i class="m" /><i class="s" /></div>
         </div>
 
         <section
           v-else-if="event.status !== 'ready'"
-          class="tile mt-12 flex max-w-160 flex-col gap-5"
+          class="tile sel-st mt-12 max-w-160"
           :role="event.status === 'error' ? 'alert' : undefined"
         >
-          <h1 class="text-[34px] leading-none font-bold">
+          <h1 class="h-34">
             {{ event.status === 'error' ? 'Не удалось загрузить мероприятие' : 'Выберите мероприятие' }}
           </h1>
-          <p class="text-[17px] leading-[1.55] text-ink-2">
+          <p class="deck">
             {{
               event.status === 'error'
                 ? 'Проверьте соединение и попробуйте ещё раз.'
                 : 'Разбор делается под аудиторию конкретного мероприятия: выберите его в подборке и нажмите «Подготовить доклад».'
             }}
           </p>
-          <div class="flex flex-wrap gap-3">
+          <div class="sel-acts">
             <button v-if="event.status === 'error'" type="button" class="b b-ink b-sm" @click="loadEvent">
               Повторить<RotateCw />
             </button>
@@ -33,20 +33,18 @@
         </section>
 
         <template v-else>
-          <nav aria-label="Путь по разделу" class="kicker flex flex-wrap gap-2.5 text-ink-2">
-            <router-link to="/events" class="hover:text-ink">Мероприятия</router-link>
+          <nav aria-label="Путь по разделу" class="crumbs k">
+            <router-link to="/events">Мероприятия</router-link>
             <span aria-hidden="true">/</span>
-            <router-link :to="`/c/${event.conference.slug}`" class="hover:text-ink">{{
-              event.conference.name
-            }}</router-link>
+            <router-link :to="`/c/${event.conference.slug}`">{{ event.conference.name }}</router-link>
             <span aria-hidden="true">/</span>
-            <span class="text-ink" aria-current="page">Подготовить доклад</span>
+            <span aria-current="page">Подготовить доклад</span>
           </nav>
 
           <div class="mt-12 flex max-w-215 flex-col gap-5" data-rv>
             <span class="ribbon self-start">Разбор до выступления</span>
-            <h1 class="shout text-d1">Подготовить доклад</h1>
-            <p class="text-[17px] leading-[1.55] text-ink-2">
+            <h1 class="d-1">Подготовить доклад</h1>
+            <p class="deck">
               Добавьте текст выступления или слайды. Разберём доклад под аудиторию этого мероприятия: что поправить и в
               каком порядке.
             </p>
@@ -56,7 +54,7 @@
             <form class="flex min-w-0 flex-[999_1_560px] flex-col gap-12" novalidate @submit.prevent="submit">
               <fieldset class="m-0 flex min-w-0 flex-col gap-12 border-0 p-0" :disabled="sending">
                 <div class="field" data-rv>
-                  <span class="idx kicker text-ink-2" aria-hidden="true">01 / Доклад</span>
+                  <span class="idx k muted" aria-hidden="true">01 / Доклад</span>
                   <label for="talk-title">Название доклада</label>
                   <input
                     id="talk-title"
@@ -68,21 +66,21 @@
                 </div>
 
                 <div class="field" data-rv>
-                  <span class="idx kicker text-ink-2" aria-hidden="true">02 / Материалы</span>
+                  <span class="idx k muted" aria-hidden="true">02 / Материалы</span>
                   <label for="talk-text">Текст выступления</label>
                   <textarea
                     id="talk-text"
                     v-model="text"
-                    class="inp min-h-85 text-base"
+                    class="inp ta"
                     rows="14"
                     aria-describedby="talk-text-count talk-need"
                     :aria-invalid="!!errors.material"
                     placeholder="Вставьте текст целиком или тезисами, как будете говорить со сцены"
                     @input="errors.material = ''"
                   />
-                  <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+                  <div class="meta">
                     <span class="hint">Текст можно вставить из заметок или документа, форматирование не важно.</span>
-                    <span id="talk-text-count" class="kicker text-ink-2" aria-live="polite">{{ count }}</span>
+                    <span id="talk-text-count" class="k muted" aria-live="polite">{{ count }}</span>
                   </div>
                 </div>
 
@@ -106,9 +104,7 @@
                       @change="onPick"
                     >
                     <Upload aria-hidden="true" />
-                    <span class="text-xl leading-[1.1] font-bold">
-                      Перетащите PDF или <span class="ln">выберите файл</span>
-                    </span>
+                    <span class="h-20"> Перетащите PDF или <span class="ln">выберите файл</span> </span>
                     <span id="pdf-limit" class="hint">
                       Только PDF, до {{ MAX_MB }} МБ. Из PowerPoint и Keynote сохраните через «Экспорт в PDF».
                     </span>
@@ -118,11 +114,11 @@
                     <div class="file" :class="{ 'file-bad': pdf.kind === 'bad' }">
                       <FileX v-if="pdf.kind === 'bad'" aria-hidden="true" />
                       <FileText v-else aria-hidden="true" />
-                      <div class="flex min-w-0 flex-1 flex-col gap-0.5">
-                        <b class="truncate font-semibold">{{ pdf.file.name }}</b>
-                        <span class="text-sm text-ink-2">{{ fileMeta(pdf.file) }}</span>
+                      <div class="cell">
+                        <b class="truncate">{{ pdf.file.name }}</b>
+                        <span class="small muted">{{ fileMeta(pdf.file) }}</span>
                       </div>
-                      <span v-if="pdf.kind === 'ok'" class="tag fill-mint">Загружен</span>
+                      <span v-if="pdf.kind === 'ok'" class="tag mint">Загружен</span>
                       <label v-else class="lnk relative">
                         Выбрать другой
                         <input
@@ -141,8 +137,8 @@
                         Убрать
                       </button>
                     </div>
-                    <p v-if="pdf.kind === 'bad'" class="err" role="alert">
-                      <CircleAlert />{{ pdf.reason === 'type' ? typeError(pdf.file) : sizeError }}
+                    <p v-if="pdf.kind === 'bad'" class="err dot" role="alert">
+                      {{ pdf.reason === 'type' ? typeError(pdf.file) : sizeError }}
                     </p>
                   </div>
                 </div>
@@ -150,23 +146,16 @@
                 <p id="talk-need" class="hint -mt-6" data-rv>Нужен текст или PDF, можно оба.</p>
               </fieldset>
 
-              <div
-                v-if="errors.material || errors.form"
-                class="flex flex-col gap-1.5 rounded-[18px] bg-[color-mix(in_srgb,var(--pink)_28%,var(--bg))] px-5 py-4.5"
-                role="alert"
-              >
+              <div v-if="errors.material || errors.form" class="formerr" role="alert">
                 <template v-if="errors.material">
                   <b>Добавьте текст или PDF</b>
-                  <span class="text-sm">{{ errors.material }}</span>
+                  <span class="small">{{ errors.material }}</span>
                 </template>
                 <span v-else>{{ errors.form }}</span>
               </div>
 
-              <div
-                class="flex flex-wrap items-center justify-between gap-4 pt-7 shadow-[inset_0_1px_0_var(--line)]"
-                data-rv
-              >
-                <router-link :to="`/c/${event.conference.slug}`" class="kicker ln">Отмена</router-link>
+              <div class="next flex-wrap" data-rv>
+                <router-link :to="`/c/${event.conference.slug}`" class="k ln">Отмена</router-link>
                 <button type="submit" class="b b-mint" :disabled="sending" :aria-busy="sending">
                   <template v-if="sending">
                     <LoaderCircle class="animate-spin" aria-hidden="true" />Отправляем
@@ -177,13 +166,13 @@
             </form>
 
             <aside class="flex min-w-0 flex-[1_1_340px] flex-col gap-4 lg:sticky lg:top-24">
-              <section class="tile surface-ink flex flex-col gap-5" aria-labelledby="ctx-title" data-rv>
-                <span class="kicker text-ink-2">Разбор под аудиторию</span>
+              <section class="tile ink flex flex-col gap-5" aria-labelledby="ctx-title" data-rv>
+                <span class="k muted">Разбор под аудиторию</span>
                 <div class="flex flex-col gap-2">
-                  <h2 id="ctx-title" class="text-2xl leading-[1.05] font-bold">{{ event.conference.name }}</h2>
-                  <span class="text-sm text-ink-2">{{ eventMeta }}</span>
+                  <h2 id="ctx-title" class="h-24">{{ event.conference.name }}</h2>
+                  <span class="small muted">{{ eventMeta }}</span>
                 </div>
-                <dl class="dl text-sm [grid-template-columns:120px_1fr]">
+                <dl class="dl small [grid-template-columns:120px_1fr]">
                   <dt>Уровень</dt>
                   <dd class="m-0">{{ levels }}</dd>
                   <dt>Кто приходит</dt>
@@ -199,11 +188,11 @@
                     </dd>
                   </template>
                 </dl>
-                <span class="kicker flex items-center gap-2"><Lock class="size-3.5" />Разбор видите только вы</span>
+                <span class="k lock"><Lock />Разбор видите только вы</span>
               </section>
-              <section class="tile tile-slate flex flex-col gap-3" aria-labelledby="what-title" data-rv>
-                <h2 id="what-title" class="text-xl leading-[1.1] font-bold">Что будет в разборе</h2>
-                <ul class="ticks text-sm">
+              <section class="tile slate flex flex-col gap-3" aria-labelledby="what-title" data-rv>
+                <h2 id="what-title" class="h-20">Что будет в разборе</h2>
+                <ul class="crit small">
                   <li>Оценка по четырём критериям: аудитория, структура, главная мысль, укладывается ли во время</li>
                   <li>Правки по приоритету с привязкой к месту в тексте или номеру слайда</li>
                   <li>Вопросы, которые вероятно зададут из зала</li>
@@ -218,7 +207,7 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowRight, CircleAlert, FileText, FileX, LoaderCircle, Lock, RotateCw, Upload } from '@lucide/vue'
+import { ArrowRight, FileText, FileX, LoaderCircle, Lock, RotateCw, Upload } from '@lucide/vue'
 import { computed, onMounted, reactive, ref, shallowRef, useTemplateRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
