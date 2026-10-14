@@ -34,46 +34,19 @@
                   <span class="k">{{ half.peekTitle }}</span>
                   <span class="k muted">{{ half.peekNote }}</span>
                 </div>
-                <template v-if="half.side === 'sp'">
-                  <div class="row">
-                    <span class="small">Ссылка</span>
-                    <b class="ty" :class="{ typing }">{{ scene.typed }}</b>
-                  </div>
-                  <div class="row" data-p :class="{ on: shown('sp', 2) }">
+                <transition-group tag="div" class="feed" :css="false" @enter="slideIn">
+                  <div v-for="item in feeds[half.side]" :key="item.key" class="row">
                     <div class="cell">
-                      <b>Feature store без боли</b>
-                      <span>Data Fest, Казань · 14 ноября</span>
+                      <b>{{ item.title }}</b>
+                      <span>{{ item.text }}</span>
                     </div>
-                    <app-tag tone="dash">Карточка готова</app-tag>
-                  </div>
-                  <div class="row" data-p :class="{ on: shown('sp', 3) }">
-                    <span><b>Команда DevRel</b> <span class="small muted">· увидела</span></span>
-                    <app-tag tone="ink">Засчитано</app-tag>
-                  </div>
-                </template>
-                <template v-else>
-                  <div class="chips">
-                    <span class="chip" :class="{ on: shown('co', 1) }">Data Science</span>
-                    <span class="chip" :class="{ on: shown('co', 1) }">NPS от 9.4</span>
-                    <span class="chip">Не Москва</span>
-                  </div>
-                  <div
-                    v-for="(row, i) in people"
-                    :key="row.name"
-                    class="row"
-                    data-p
-                    :class="{ on: shown('co', i + 2) }"
-                  >
-                    <div class="cell">
-                      <b>{{ row.name }}</b>
-                      <span>{{ row.text }}</span>
-                    </div>
-                    <span class="end">
-                      <span class="num">{{ row.nps }}</span>
-                      <app-tag :tone="row.tag">{{ row.status }}</app-tag>
+                    <span v-if="item.nps" class="end">
+                      <span class="num">{{ item.nps }}</span>
+                      <app-tag :tone="item.tone">{{ item.tag }}</app-tag>
                     </span>
+                    <app-tag v-else :tone="item.tone">{{ item.tag }}</app-tag>
                   </div>
-                </template>
+                </transition-group>
               </div>
               <span class="half-row">
                 <span class="k">{{ half.kicker }}</span>
@@ -97,13 +70,16 @@ import AppHeader from '@/components/AppHeader.vue'
 import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import SpPage from '@/components/speaker/SpPage.vue'
+import type { TagTone } from '@/components/tones'
 import { useFx } from '@/composables/useFx'
 
 type Side = 'sp' | 'co'
+type FeedItem = { title: string; text: string; tag: string; tone: TagTone; nps?: string }
 
 const CYCLE_MS = 4200
-const TYPING_MS = 45
-const LINK = 'datafest.ru/program'
+const FEED_MS = 1800
+const FEED_MAX = 14
+const ROW_GAP = 8
 
 const halves = [
   {
@@ -113,8 +89,8 @@ const halves = [
     kicker: '01 · Спикерам',
     title: 'Я выступаю',
     text: 'Портфолио выступлений, подборка площадок и честный разбор доклада.',
-    peekTitle: 'Новое выступление',
-    peekNote: 'Портфолио',
+    peekTitle: 'Для вас сейчас',
+    peekNote: '128 площадок ищут спикеров',
   },
   {
     side: 'co',
@@ -123,52 +99,89 @@ const halves = [
     kicker: '02 · Компаниям',
     title: 'Я из компании',
     text: 'Все спикеры компании, их выступления и оценки зала — в одном окне.',
-    peekTitle: 'Спикеры',
+    peekTitle: 'Выступления ваших спикеров',
     peekNote: '212 · 14 городов',
   },
 ] as const
-const people = [
-  {
-    name: 'Анна Ковалёва',
-    text: 'Data Science · Казань · 6 выступлений',
-    nps: '9.7',
-    status: 'Рекомендую',
-    tag: 'ink',
-  },
-  { name: 'Ольга Смирнова', text: 'Data Science · Екатеринбург', nps: '9.6', status: 'Приглашена', tag: 'dash' },
-] as const
+
+// Площадки и спикеры вымышленные: реальные названия на развилке читались бы как партнёрства
+const FEED: Record<Side, FeedItem[]> = {
+  sp: [
+    { title: 'МЛ-Конф', text: 'Трек «ML в проде» · Москва · 12 декабря', tag: 'Под вашу тему', tone: 'ink' },
+    { title: 'ДатаКон', text: 'Трек «Хранилища» · Казань · 14 ноября', tag: 'Заявки до 1 ноября', tone: 'dash' },
+    { title: 'Облакс зовёт на митап', text: 'Платформа данных · Москва · 21 ноября', tag: 'Лично вам', tone: 'yellow' },
+    { title: 'Инфра-Саммит', text: 'Трек «Платформы данных» · Санкт-Петербург', tag: 'Оплачивается', tone: 'dash' },
+    { title: 'Код-Сибирь', text: 'Трек «Data Science» · Новосибирск · 20 марта', tag: 'Под вашу тему', tone: 'ink' },
+    { title: 'Бэкенд-Фест', text: 'Трек «Хранение» · Екатеринбург · 3 апреля', tag: 'Оплачивается', tone: 'dash' },
+    { title: 'Лаборатория «Вектор»', text: 'Митап по NLP · онлайн · 9 декабря', tag: 'Лично вам', tone: 'yellow' },
+    {
+      title: 'Питон-Север',
+      text: 'Трек «Данные» · Петрозаводск · 15 февраля',
+      tag: 'Заявки до 15 января',
+      tone: 'dash',
+    },
+    { title: 'ПродуктКэмп', text: 'Трек «Аналитика» · Сочи · 18 мая', tag: 'Под вашу тему', tone: 'ink' },
+    { title: 'Сетка', text: 'Трек «Рекомендации» · Нижний Новгород', tag: 'Оплачивается', tone: 'dash' },
+  ],
+  co: [
+    { title: 'Анна Ковалёва', text: 'ДатаКон · Казань', nps: '9.7', tag: 'Подтвердить', tone: 'yellow' },
+    { title: 'Павел Морозов', text: 'Код-Сибирь · Новосибирск', nps: '9.5', tag: 'Засчитано', tone: 'dash' },
+    { title: 'Мария Орлова', text: 'Инфра-Саммит · Санкт-Петербург', nps: '9.6', tag: 'Засчитано', tone: 'dash' },
+    { title: 'Игорь Лебедев', text: 'Бэкенд-Фест · Екатеринбург', nps: '9.4', tag: 'Подтвердить', tone: 'yellow' },
+    { title: 'Ольга Смирнова', text: 'МЛ-Конф · Москва', nps: '9.8', tag: 'Засчитано', tone: 'dash' },
+    { title: 'Дмитрий Ким', text: 'Сетка · Нижний Новгород', nps: '9.5', tag: 'Засчитано', tone: 'dash' },
+    { title: 'Елена Соколова', text: 'ПродуктКэмп · Сочи', nps: '9.6', tag: 'Подтвердить', tone: 'yellow' },
+    { title: 'Артём Белов', text: 'Питон-Север · Петрозаводск', nps: '9.4', tag: 'Засчитано', tone: 'dash' },
+    { title: 'Ксения Павлова', text: 'Облакс, митап · Москва', nps: '9.7', tag: 'Засчитано', tone: 'dash' },
+    { title: 'Руслан Ахметов', text: 'Код-Сибирь · Новосибирск', nps: '9.5', tag: 'Подтвердить', tone: 'yellow' },
+  ],
+}
 
 const root = useTemplateRef<HTMLElement>('root')
 const flip = useTemplateRef<HTMLElement>('flip')
 const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
 const side = ref<Side>('sp')
 const letter = ref('х')
-const scene = reactive({ typed: '', step: 0 })
 let hold = false
 let cycleTimer = 0
-const sceneTimers: number[] = []
-const typing = computed(() => !calm && side.value === 'sp' && scene.typed.length < LINK.length)
+let feedTimer = 0
+const flipTimers: number[] = []
 
-// Мини-сцена активной половины: ссылка печатается, строки появляются по шагам
-const shown = (of: Side, n: number) => side.value === of && scene.step >= n
+// Лента заполнена заранее от новых к старым, поэтому следующая строка продолжает очередь без повторов рядом
+let key = 0
+const entry = (of: Side, n: number) => ({ ...FEED[of][n % FEED[of].length], key: key++ })
+const prefill = (of: Side) => FEED[of].map((_, i) => entry(of, FEED[of].length - 1 - i))
+const feeds = reactive({ sp: prefill('sp'), co: prefill('co') })
+const next = { sp: FEED.sp.length, co: FEED.co.length }
 
-const play = () => {
-  for (const id of sceneTimers.splice(0)) clearTimeout(id)
-  scene.typed = ''
-  scene.step = 0
-  if (calm) {
-    scene.typed = LINK
-    scene.step = 3
-    return
-  }
-  const at = (fn: () => void, ms: number) => sceneTimers.push(window.setTimeout(fn, ms))
-  let t = 250
-  if (side.value === 'sp') {
-    for (let i = 0; i < LINK.length; i++) at(() => (scene.typed = LINK.slice(0, i + 1)), t + i * TYPING_MS)
-    t += LINK.length * TYPING_MS + 200
-  } else at(() => (scene.step = 1), t)
-  at(() => (scene.step = 2), t + 650)
-  at(() => (scene.step = 3), t + 1450)
+const push = (of: Side) => {
+  feeds[of].unshift(entry(of, next[of]++))
+  feeds[of].splice(FEED_MAX)
+}
+
+// Новая строка выезжает из-под верхнего края ленты и сдвигает остальные вниз
+const slideIn = (el: Element, done: () => void) => {
+  const shift = (el as HTMLElement).offsetHeight + ROW_GAP
+  el.animate(
+    [
+      { marginTop: `-${shift}px`, opacity: 0 },
+      { marginTop: '0px', opacity: 1 },
+    ],
+    {
+      duration: 700,
+      easing: 'cubic-bezier(.2,.7,.2,1)',
+    },
+  ).finished.then(done, done)
+}
+
+// Лента течёт только у активной половины
+const stream = () => {
+  clearTimeout(feedTimer)
+  if (calm) return
+  feedTimer = window.setTimeout(() => {
+    push(side.value)
+    stream()
+  }, FEED_MS)
 }
 
 const cycle = () => {
@@ -179,10 +192,10 @@ const cycle = () => {
     cycle()
   }, CYCLE_MS)
 }
-const hover = (next: Side) => {
+const hover = (to: Side) => {
   hold = true
   clearTimeout(cycleTimer)
-  side.value = next
+  side.value = to
 }
 const release = () => {
   hold = false
@@ -191,7 +204,7 @@ const release = () => {
 
 const nextLetter = computed(() => (side.value === 'sp' ? 'х' : 'в'))
 watch(side, () => {
-  play()
+  stream()
   if (calm) {
     letter.value = nextLetter.value
     return
@@ -205,16 +218,17 @@ watch(side, () => {
     ],
     { duration: 520, easing: 'cubic-bezier(.5,0,.2,1)' },
   )
-  sceneTimers.push(window.setTimeout(() => (letter.value = nextLetter.value), 250))
+  flipTimers.push(window.setTimeout(() => (letter.value = nextLetter.value), 250))
 })
 
 onMounted(() => {
-  play()
+  stream()
   cycle()
 })
 onBeforeUnmount(() => {
   clearTimeout(cycleTimer)
-  for (const id of sceneTimers) clearTimeout(id)
+  clearTimeout(feedTimer)
+  for (const id of flipTimers) clearTimeout(id)
 })
 
 useFx(root, { words: 'home' })
