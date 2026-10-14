@@ -209,6 +209,7 @@ import { toast } from 'vue-sonner'
 import {
   type City,
   completeOnboarding,
+  getOnboarding,
   listCities,
   listPositionCategories,
   type PositionCategory,
@@ -332,7 +333,22 @@ const next = async () => {
   await router.replace('/events')
 }
 
-onMounted(() => {
+onMounted(async () => {
+  // Спикер, уже прошедший онбординг, приходит сюда из подборки менять профиль: показываем его ответы.
+  if (user.value?.onboarding_completed_at && !draft.sphereId) {
+    const res = await getOnboarding()
+    if (res.status === 200) {
+      const saved = res.data
+      Object.assign(draft, {
+        sphereId: saved.position_category_ids[0] ?? null,
+        experience: saved.speaking_experience,
+        goal: saved.goal,
+        cityId: saved.preferred_city_id,
+        formats: [...saved.preferred_formats],
+        paidOnly: saved.paid_only,
+      })
+    }
+  }
   // Шаги 2 и 3 без ответов предыдущих открыть нельзя: возвращаем на первый незаполненный.
   if (step.value > 1 && !(draft.sphereId && draft.experience)) void router.replace('/onboarding/1')
   else if (step.value > 2 && !draft.goal) void router.replace('/onboarding/2')
