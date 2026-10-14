@@ -1,139 +1,122 @@
 <template>
-  <div class="org-scrim fixed inset-0 z-100 flex items-start justify-center overflow-y-auto px-6 pt-22 pb-10">
-    <div
-      ref="dialog"
-      class="org-dlg relative flex w-full max-w-160 flex-col gap-6 rounded-[18px] bg-paper p-8 text-ink shadow-[0_1px_2px_rgb(0_0_0/8%),0_40px_80px_-24px_rgb(0_0_0/50%)]"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="offer-title"
-      tabindex="-1"
-    >
-      <template v-if="state.kind !== 'sent'">
-        <div class="flex items-start justify-between gap-4">
+  <div class="scrim">
+    <div ref="dialog" class="dlg" role="dialog" aria-modal="true" aria-labelledby="offer-title" tabindex="-1">
+      <div v-if="state.kind !== 'sent'" class="flex flex-col gap-6">
+        <div class="dlg-head">
           <div class="flex flex-col gap-2">
-            <span class="kicker text-ink-2">Предложение выступить</span>
-            <h2 id="offer-title" class="shout text-d3">Предложить выступить</h2>
+            <span class="k muted">Предложение выступить</span>
+            <h2 id="offer-title" class="h-34">Предложить выступить</h2>
           </div>
-          <button
-            type="button"
-            class="flex size-9 flex-none items-center justify-center rounded-full shadow-[inset_0_0_0_1px_var(--field)] hover:bg-paper-2"
-            aria-label="Закрыть"
-            @click="emit('close')"
-          >
-            <XIcon class="size-4" />
+          <button type="button" class="dlg-x" aria-label="Закрыть" @click="emit('close')">
+            <XIcon aria-hidden="true" />
           </button>
         </div>
 
-        <dl
-          class="m-0 flex flex-wrap gap-x-10 gap-y-3 py-4 shadow-[inset_0_1px_0_var(--line-2),inset_0_-1px_0_var(--line-2)]"
-        >
-          <div class="flex min-w-0 flex-col gap-1.5">
-            <dt class="kicker text-ink-2">Кому</dt>
-            <dd class="m-0 font-semibold">
-              <span class="flex items-center gap-3">
-                <org-avatar :name="speaker.name" :tone="toneOf(speaker.name)" small />
-                <span class="flex flex-col"
-                  ><b>{{ speaker.name }}</b
-                  ><span class="text-sm font-medium text-ink-2"
-                    >{{ speaker.direction.name }}
-                    · {{ speaker.city.name }}</span
-                  ></span
-                >
+        <dl class="dlg-to">
+          <div>
+            <dt class="k muted">Кому</dt>
+            <dd>
+              <span class="person">
+                <span class="ava sm" :class="toneOf(speaker.name)" aria-hidden="true">{{
+                  initials(speaker.name)
+                }}</span>
+                <span class="cell">
+                  <b>{{ speaker.name }}</b>
+                  <span class="small muted">{{ speaker.direction.name }} · {{ speaker.city.name }}</span>
+                </span>
               </span>
             </dd>
           </div>
-          <div class="flex min-w-0 flex-col gap-1.5">
-            <dt class="kicker text-ink-2">Мероприятие</dt>
-            <dd class="m-0 font-semibold">{{ event.name }}</dd>
+          <div>
+            <dt class="k muted">Мероприятие</dt>
+            <dd>{{ event.name }}</dd>
           </div>
         </dl>
 
-        <form class="flex flex-col gap-5" aria-label="Предложение выступить" novalidate @submit.prevent="send">
-          <div class="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))]">
-            <div v-if="event.tracks.length" class="flex flex-col gap-2.5">
-              <label for="of-track" class="org-label">Трек</label>
-              <select id="of-track" v-model="form.track" class="org-inp">
-                <option v-for="track in event.tracks" :key="track" :value="track">{{ track }}</option>
-              </select>
+        <form aria-label="Предложение выступить" novalidate @submit.prevent="send">
+          <div class="dlg-row">
+            <div v-if="event.tracks.length" class="field">
+              <label for="of-track">Трек</label>
+              <div class="combo">
+                <select id="of-track" v-model="form.track" class="inp">
+                  <option v-for="track in event.tracks" :key="track" :value="track">{{ track }}</option>
+                </select>
+                <ChevronDownIcon aria-hidden="true" />
+              </div>
             </div>
-            <div class="flex flex-col gap-2.5">
-              <label for="of-due" class="org-label">Ответить до</label>
+            <div class="field">
+              <label for="of-due">Ответить до</label>
               <input
                 id="of-due"
                 v-model="form.answerBy"
-                class="org-inp"
+                class="inp"
                 type="date"
                 :min="today"
                 :aria-invalid="!!errors.answerBy"
                 aria-describedby="of-due-hint"
               >
-              <p v-if="errors.answerBy" class="org-err" role="alert">{{ errors.answerBy }}</p>
-              <p v-else id="of-due-hint" class="text-[13px] text-ink-2">Срок, к которому ждёте ответ</p>
+              <p v-if="errors.answerBy" class="err" role="alert"><CircleAlertIcon />{{ errors.answerBy }}</p>
+              <span v-else id="of-due-hint" class="hint">Срок, к которому ждёте ответ</span>
             </div>
           </div>
-          <div class="flex flex-col gap-2.5">
-            <label for="of-topic" class="org-label"
-              >Тема доклада <span class="font-medium text-ink-2">· необязательно</span></label
-            >
+          <div class="field">
+            <label for="of-topic">Тема доклада <span class="muted font-medium">· необязательно</span></label>
             <input
               id="of-topic"
               v-model="form.topic"
-              class="org-inp"
+              class="inp"
               type="text"
               placeholder="Например, миграция монолита без остановки"
             >
           </div>
-          <div class="flex flex-col gap-2.5">
-            <label for="of-msg" class="org-label">Сообщение спикеру</label>
+          <div class="field">
+            <label for="of-msg">Сообщение спикеру</label>
             <textarea
               id="of-msg"
               v-model="form.message"
-              class="org-inp"
+              class="inp"
               rows="5"
               :aria-invalid="!!errors.message"
               @input="edited = true"
             />
-            <p v-if="errors.message" class="org-err" role="alert">{{ errors.message }}</p>
-            <p v-else class="text-[13px] text-ink-2">Текст подготовлен за DevRel, его можно править.</p>
+            <p v-if="errors.message" class="err" role="alert"><CircleAlertIcon />{{ errors.message }}</p>
+            <span v-else class="hint">Текст подготовлен за DevRel, его можно править.</span>
           </div>
-          <p class="text-sm text-ink-2">
-            Спикер увидит предложение у себя в подборке и ответит: принять или отказаться.
-          </p>
-          <p v-if="state.kind === 'error'" class="org-err" role="alert">{{ state.message }}</p>
-          <div class="flex flex-wrap items-center gap-3">
-            <org-button type="submit" :disabled="state.kind === 'sending'">Отправить предложение</org-button>
-            <org-button variant="line" @click="emit('close')">Отмена</org-button>
+          <p class="small muted">Спикер увидит предложение у себя в подборке и ответит: принять или отказаться.</p>
+          <p v-if="state.kind === 'error'" class="err" role="alert"><CircleAlertIcon />{{ state.message }}</p>
+          <div class="dlg-act">
+            <button type="submit" class="b b-mint" :disabled="state.kind === 'sending'">Отправить предложение</button>
+            <button type="button" class="b b-line" @click="emit('close')">Отмена</button>
           </div>
         </form>
-      </template>
+      </div>
 
-      <div v-else class="flex flex-col gap-5" role="status" aria-live="polite">
-        <span class="flex size-12 items-center justify-center rounded-full bg-(--side)" aria-hidden="true"
-          ><CheckIcon class="size-6" /></span
-        >
-        <h2 id="offer-title" ref="done" class="shout text-d3 outline-none" tabindex="-1">Предложение отправлено</h2>
-        <p class="text-ink-2">
-          {{ speaker.name }} увидит предложение у себя в подборке и ответит: принять или отказаться.
-        </p>
-        <dl
-          class="m-0 flex flex-wrap gap-x-10 gap-y-3 py-4 shadow-[inset_0_1px_0_var(--line-2),inset_0_-1px_0_var(--line-2)]"
-        >
-          <div class="flex flex-col gap-1.5">
-            <dt class="kicker text-ink-2">Мероприятие</dt>
-            <dd class="m-0 font-semibold">{{ event.name }}</dd>
+      <div v-else class="dlg-ok" role="status" aria-live="polite">
+        <span class="ok-ic" aria-hidden="true"><CheckIcon /></span>
+        <div class="flex flex-col gap-2.5">
+          <h2 id="offer-title" ref="done" class="h-34 outline-none" tabindex="-1">Предложение отправлено</h2>
+          <p class="deck">
+            {{ speaker.name }} увидит предложение у себя в подборке и ответит: принять или отказаться. Ответ придёт сюда
+            и на почту.
+          </p>
+        </div>
+        <dl class="dlg-to">
+          <div>
+            <dt class="k muted">Мероприятие</dt>
+            <dd>{{ event.name }}</dd>
           </div>
-          <div v-if="state.offer.track" class="flex flex-col gap-1.5">
-            <dt class="kicker text-ink-2">Трек</dt>
-            <dd class="m-0 font-semibold">{{ state.offer.track }}</dd>
+          <div v-if="state.offer.track">
+            <dt class="k muted">Трек</dt>
+            <dd>{{ state.offer.track }}</dd>
           </div>
-          <div class="flex flex-col gap-1.5">
-            <dt class="kicker text-ink-2">Ответить до</dt>
-            <dd class="m-0"><span class="tag fill-mint">{{ formatDate(state.offer.answer_by) }}</span></dd>
+          <div>
+            <dt class="k muted">Ответить до</dt>
+            <dd><span class="tag mint">{{ formatDate(state.offer.answer_by) }}</span></dd>
           </div>
         </dl>
-        <div class="flex flex-wrap items-center gap-3">
-          <org-button @click="emit('close')">Вернуться к кандидатам</org-button>
-          <org-button variant="line" :to="{ name: 'login' }" @click="asSpeaker">Как это видит спикер</org-button>
+        <div class="dlg-act">
+          <button type="button" class="b b-mint" @click="emit('close')">Вернуться к кандидатам</button>
+          <router-link :to="{ name: 'login' }" class="b b-line" @click="asSpeaker">Как это видит спикер</router-link>
         </div>
       </div>
     </div>
@@ -141,13 +124,12 @@
 </template>
 
 <script setup lang="ts">
-import { CheckIcon, XIcon } from '@lucide/vue'
+import { CheckIcon, ChevronDownIcon, CircleAlertIcon, XIcon } from '@lucide/vue'
 import { computed, nextTick, reactive, ref, useTemplateRef, watch } from 'vue'
 import { createOffer, type Offer, type OrgEvent, type OrgSpeaker } from '@/api/demo'
 import { formatDate } from '@/components/org/eventLabels'
+import { initials } from '@/components/org/format'
 import { toneOf } from '@/components/org/levels'
-import OrgAvatar from '@/components/org/OrgAvatar.vue'
-import OrgButton from '@/components/org/OrgButton.vue'
 import { useModal } from '@/components/org/useModal'
 import { useAuth } from '@/composables/useAuth'
 

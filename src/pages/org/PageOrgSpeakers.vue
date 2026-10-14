@@ -1,273 +1,274 @@
 <template>
-  <org-page>
-    <div class="flex flex-col gap-4" data-rv>
-      <span class="kicker text-ink-2">Кабинет организации</span>
-      <h1 class="shout text-d1">Спикеры</h1>
-      <p class="max-w-180 text-xl leading-[1.55] text-ink-2">
-        Все спикеры организации в одном окне: кто, где и как выступил. Оценки зала видны только вам и самому спикеру.
-      </p>
-    </div>
+  <sp-page side="co">
+    <div ref="root" class="flex flex-1 flex-col">
+      <app-header variant="org" />
 
-    <p v-if="state.kind === 'loading'" class="text-ink-2" role="status">Загружаем спикеров…</p>
-    <div v-else-if="state.kind === 'error'" class="flex flex-col items-start gap-4" role="alert">
-      <p>Не удалось загрузить спикеров.</p>
-      <org-button variant="line" @click="load">Попробовать снова</org-button>
-    </div>
-
-    <section
-      v-else-if="state.empty"
-      class="tile tile-slate flex flex-col items-start gap-5 p-10"
-      aria-labelledby="empty-title"
-      aria-live="polite"
-    >
-      <span class="tag tag-dash">Пока пусто</span>
-      <h2 id="empty-title" class="shout text-d3 max-w-200">
-        Спикеров пока нет: загрузите Excel или отправьте ссылку-приглашение
-      </h2>
-      <p class="text-ink-2">Спикер принимает приглашение сам, и только после этого вы видите его выступления.</p>
-      <div class="flex flex-wrap gap-3">
-        <org-button :to="{ path: '/org/onboarding/3' }">Загрузить Excel<ArrowRightIcon /></org-button>
-        <org-button variant="line" @click="copyLink">{{
-          copied ? 'Ссылка скопирована' : 'Скопировать ссылку-приглашение'
-        }}</org-button>
-      </div>
-    </section>
-
-    <template v-else>
-      <section v-if="talk" id="new" class="tile surface-lime flex flex-col gap-6" aria-labelledby="new-title" data-rv>
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <h2 id="new-title" class="kicker">
-            Новые выступления · {{ state.pending.length }}
-            {{ plural(state.pending.length, 'ждёт', 'ждут', 'ждут') }} подтверждения
-          </h2>
-          <button
-            v-if="state.pending.length > 1"
-            type="button"
-            class="text-sm font-semibold shadow-[inset_0_-1px_0_currentColor]"
-            @click="nextTalk"
-          >
-            Ещё {{ state.pending.length - 1 }}
-          </button>
-        </div>
-        <div class="grid gap-x-12 gap-y-6 md:grid-cols-2">
-          <div class="flex min-w-0 flex-col gap-3">
-            <div class="flex items-center gap-3">
-              <org-avatar :name="talk.speaker.name" tone="mint" />
-              <div class="flex min-w-0 flex-col">
-                <b>{{ talk.speaker.name }}</b>
-                <span class="text-sm opacity-70">{{ talk.speaker.position }}</span>
-              </div>
-            </div>
-            <p class="text-2xl leading-[1.1] font-bold">{{ talk.title }}</p>
-            <p class="text-sm opacity-70">{{ talk.kind }} · {{ formatDate(talk.date) }}</p>
-            <a
-              :href="talk.url"
-              class="self-start text-sm font-semibold shadow-[inset_0_-1px_0_currentColor]"
-              target="_blank"
-              rel="noreferrer"
-              >Ссылка на программу</a
-            >
-          </div>
-          <div class="flex flex-col gap-6">
-            <fieldset class="flex flex-wrap gap-2" aria-describedby="rate-hint">
-              <legend class="org-label mb-2.5">Оценка команды, 1–5</legend>
-              <label v-for="n in 5" :key="n" class="pick">
-                <input v-model="score" type="radio" name="rate" :value="n">{{ n }}
-              </label>
-            </fieldset>
-            <p id="rate-hint" class="-mt-3 text-[13px] opacity-70">1 — слабо, 5 — сильно. Спикер оценку не видит.</p>
-            <label class="flex cursor-pointer items-center gap-3.5">
-              <input v-model="recommend" type="checkbox" role="switch" :aria-checked="recommend" class="peer sr-only">
-              <span
-                class="relative h-7 w-12 flex-none rounded-full shadow-[inset_0_0_0_1px_currentColor] transition-colors after:absolute after:top-1 after:left-1 after:size-5 after:rounded-full after:bg-current after:transition-transform peer-checked:bg-[#131313] peer-checked:after:translate-x-5 peer-checked:after:bg-l-mint peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2"
-                aria-hidden="true"
-              />
-              <span class="flex flex-col"
-                ><b>Рекомендую</b><span class="text-sm opacity-70">Сигнал, кого звать на большие сцены</span></span
-              >
-            </label>
-          </div>
-        </div>
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <p
-            class="text-sm opacity-70"
-            :class="confirmError && 'font-semibold opacity-100'"
-            :role="confirmError ? 'alert' : undefined"
-          >
-            {{ confirmError || 'Подтверждённое выступление засчитывается спикеру.' }}
+      <main class="wrap wide pt-16">
+        <div class="flex flex-col gap-4" data-rv>
+          <span class="k muted">Кабинет организации</span>
+          <h1 class="d-1">Спикеры</h1>
+          <p class="deck max-w-180 text-[20px]">
+            Все спикеры организации в одном окне: кто, где и как выступил. Оценки зала видны только вам и самому
+            спикеру.
           </p>
-          <org-button :disabled="confirming" @click="confirm">Подтвердить<ArrowRightIcon /></org-button>
-        </div>
-      </section>
-
-      <section aria-label="Фильтры" data-rv>
-        <form class="grid items-end gap-4 [grid-template-columns:repeat(auto-fit,minmax(170px,1fr))]" @submit.prevent>
-          <div class="flex flex-col gap-2.5 sm:col-span-2">
-            <label for="q" class="org-label">Поиск</label>
-            <input id="q" v-model="filters.q" class="org-inp" type="search" placeholder="Имя или должность">
-          </div>
-          <div class="flex flex-col gap-2.5">
-            <label for="f-dir" class="org-label">Направление</label>
-            <select id="f-dir" v-model="filters.direction_id" class="org-inp">
-              <option value="">Все</option>
-              <option v-for="item in state.directions" :key="item.id" :value="item.id">{{ item.name }}</option>
-            </select>
-          </div>
-          <div class="flex flex-col gap-2.5">
-            <label for="f-city" class="org-label">Город</label>
-            <select id="f-city" v-model="filters.city_id" class="org-inp">
-              <option value="">Все</option>
-              <option v-for="item in state.cities" :key="item.id" :value="item.id">{{ item.name }}</option>
-            </select>
-          </div>
-          <div class="flex flex-col gap-2.5">
-            <label for="f-lvl" class="org-label">Уровень</label>
-            <select id="f-lvl" v-model="filters.level" class="org-inp">
-              <option value="">Любой</option>
-              <option v-for="item in levelOptions" :key="item.value" :value="item.value">{{ item.label }}</option>
-            </select>
-          </div>
-          <div class="flex flex-col gap-2.5">
-            <label for="f-nps" class="org-label">NPS зала, от</label>
-            <input
-              id="f-nps"
-              v-model="filters.nps_min"
-              class="org-inp"
-              type="number"
-              min="0"
-              max="10"
-              step="0.1"
-              placeholder="0"
-            >
-          </div>
-          <div class="flex flex-col gap-2.5">
-            <label for="f-cnt" class="org-label">Выступлений, от</label>
-            <input id="f-cnt" v-model="filters.talks_min" class="org-inp" type="number" min="0" placeholder="0">
-          </div>
-        </form>
-      </section>
-
-      <section class="flex flex-col gap-5" aria-label="Список спикеров">
-        <div class="flex flex-wrap items-center justify-between gap-4" data-rv>
-          <p class="text-sm text-ink-2" aria-live="polite">Показано {{ state.items.length }} из {{ state.all }}</p>
-          <fieldset class="org-seg m-0 border-0" aria-label="Вид списка">
-            <button type="button" :aria-pressed="view === 'table'" @click="view = 'table'">Таблица</button>
-            <button type="button" :aria-pressed="view === 'city'" @click="view = 'city'">По городам</button>
-          </fieldset>
         </div>
 
-        <p v-if="!state.items.length" class="tile tile-slate" role="status">
-          Никого не нашли: смягчите фильтры или очистите поиск.
-        </p>
-        <section
-          v-else-if="view === 'table'"
-          class="overflow-x-auto rounded-[18px] shadow-[inset_0_0_0_1px_var(--line)]"
-          :class="{ 'opacity-60': state.refreshing }"
-          :tabindex="0"
-          aria-label="Таблица спикеров"
-          data-rv
-        >
-          <table class="org-tbl w-full min-w-250 border-collapse text-left">
-            <caption class="sr-only">
-              Спикеры организации
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Спикер</th>
-                <th scope="col">Направление</th>
-                <th scope="col">Город</th>
-                <th scope="col">Уровень</th>
-                <th scope="col" class="text-right">Выступлений</th>
-                <th scope="col" class="text-right">NPS зала</th>
-                <th scope="col">Рекомендую</th>
-                <th scope="col">Статус</th>
-                <th scope="col"><span class="sr-only">Действие</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in state.items" :key="item.id" class="align-middle">
-                <td>
-                  <div class="flex items-center gap-3">
-                    <org-avatar :name="item.name" :tone="item.status === 'active' ? 'mint' : 'plain'" small />
-                    <div class="flex min-w-0 flex-col">
-                      <b class="font-semibold">{{ item.name }}</b>
-                      <span class="text-sm text-ink-2">{{ item.position }}</span>
-                    </div>
-                  </div>
-                </td>
-                <td>{{ item.direction.name }}</td>
-                <td>{{ item.city.name }}</td>
-                <td>{{ item.level ? levelNames[item.level] : '—' }}</td>
-                <td class="text-right font-mono">{{ item.status === 'active' ? item.talks_count : '—' }}</td>
-                <td class="text-right font-mono">{{ item.nps ?? '—' }}</td>
-                <td>
-                  <span v-if="item.recommended" class="tag fill-ink">Рекомендую</span>
-                  <span v-else class="text-ink-2"
-                    ><span aria-hidden="true">—</span><span class="sr-only">Не рекомендован</span></span
-                  >
-                </td>
-                <td>
-                  <span class="tag" :class="item.status === 'active' ? 'fill-mint' : 'tag-dash'">{{
-                    item.status === 'active' ? 'Активен' : 'Приглашён'
-                  }}</span>
-                </td>
-                <td><org-button variant="line" size="sm" :to="offerLink(item.id)">Предложить выступить</org-button></td>
-              </tr>
-            </tbody>
-          </table>
+        <p v-if="state.kind === 'loading'" class="muted" role="status">Загружаем спикеров…</p>
+        <div v-else-if="state.kind === 'error'" class="flex flex-col items-start gap-4" role="alert">
+          <p>Не удалось загрузить спикеров.</p>
+          <button type="button" class="b b-line" @click="load">Попробовать снова</button>
+        </div>
+
+        <section v-else-if="state.empty" class="tile slate" aria-labelledby="empty-title" aria-live="polite" data-rv>
+          <div class="emp">
+            <span class="tag dash">Пока пусто</span>
+            <h2 id="empty-title" class="h-34">Спикеров пока нет: загрузите Excel или отправьте ссылку-приглашение</h2>
+            <p class="muted">Спикер принимает приглашение сам, и только после этого вы видите его выступления.</p>
+            <div class="flex flex-wrap gap-3">
+              <router-link :to="{ path: '/org/onboarding/3' }" class="b b-mint">
+                Загрузить Excel<ArrowRightIcon />
+              </router-link>
+              <button type="button" class="b b-line" @click="copyLink">
+                {{ copied ? 'Ссылка скопирована' : 'Скопировать ссылку-приглашение' }}
+              </button>
+            </div>
+          </div>
         </section>
 
-        <ul
-          v-else
-          class="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))]"
-          aria-label="Спикеры по городам"
-          data-rv
-        >
-          <li v-for="group in byCity" :key="group.city" class="tile tile-slate flex flex-col gap-4">
-            <div class="flex items-baseline justify-between gap-3">
-              <h3 class="text-2xl leading-[1.1] font-bold">{{ group.city }}</h3>
-              <span class="kicker text-ink-2"
-                >{{ group.items.length }} {{ plural(group.items.length, 'спикер', 'спикера', 'спикеров') }}</span
-              >
+        <template v-else>
+          <section v-if="talk" id="new" class="tile lime strip" aria-labelledby="np-title" data-rv>
+            <div class="strip-top">
+              <h2 id="np-title" class="k">
+                Новые выступления · {{ state.pending.length }}
+                {{ plural(state.pending.length, 'ждёт', 'ждут', 'ждут') }} подтверждения
+              </h2>
+              <button v-if="state.pending.length > 1" type="button" class="ln small font-semibold" @click="nextTalk">
+                Ещё {{ state.pending.length - 1 }}
+              </button>
             </div>
-            <ul class="flex flex-col">
-              <li
-                v-for="item in group.items"
-                :key="item.id"
-                class="flex items-center justify-between gap-3 py-3 shadow-[inset_0_1px_0_var(--line-2)]"
-              >
-                <div class="flex min-w-0 items-center gap-3">
-                  <org-avatar :name="item.name" :tone="item.status === 'active' ? 'mint' : 'plain'" small />
-                  <div class="flex min-w-0 flex-col">
-                    <b class="truncate font-semibold">{{ item.name }}</b>
-                    <span class="text-sm text-ink-2"
-                      >{{ item.direction.name }}{{ item.level ? ` · ${levelNames[item.level]}` : '' }}</span
-                    >
+            <div class="np">
+              <div>
+                <div class="person">
+                  <span class="ava mint" aria-hidden="true">{{ initials(talk.speaker.name) }}</span>
+                  <div class="cell">
+                    <b>{{ talk.speaker.name }}</b>
+                    <span class="small muted">{{ talk.speaker.position }}</span>
                   </div>
                 </div>
-                <span class="flex flex-none items-center gap-2">
-                  <span v-if="item.recommended" class="tag fill-ink">Рекомендую</span>
-                  <span v-if="item.status === 'invited'" class="tag tag-dash">Приглашён</span>
-                  <span v-else class="font-mono">{{ item.nps }}</span>
-                </span>
+                <p class="h-24">{{ talk.title }}</p>
+                <p class="small muted">{{ talk.kind }} · {{ formatDate(talk.date) }}</p>
+                <a :href="talk.url" class="ln small self-start font-semibold" target="_blank" rel="noreferrer">
+                  Ссылка на программу
+                </a>
+              </div>
+              <div class="gap-6">
+                <fieldset class="rate" aria-describedby="rate-hint">
+                  <legend class="legend mb-2.5">Оценка команды, 1–5</legend>
+                  <label v-for="n in 5" :key="n" class="pick">
+                    <input v-model="score" type="radio" name="rate" :value="n">{{ n }}
+                  </label>
+                </fieldset>
+                <p id="rate-hint" class="hint -mt-2">1 — слабо, 5 — сильно. Спикер оценку не видит.</p>
+                <label class="swt">
+                  <input v-model="recommend" type="checkbox" role="switch" :aria-checked="recommend">
+                  <span class="tr" aria-hidden="true" />
+                  <span class="tx">
+                    <b>Рекомендую</b>
+                    <span class="small muted">Сигнал, кого звать на большие сцены</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="strip-bot">
+              <p
+                class="small muted"
+                :class="{ 'font-semibold': confirmError }"
+                :role="confirmError ? 'alert' : undefined"
+              >
+                {{ confirmError || 'Подтверждённое выступление засчитывается спикеру.' }}
+              </p>
+              <button type="button" class="b b-mint" :disabled="confirming" @click="confirm">
+                Подтвердить<CheckIcon />
+              </button>
+            </div>
+          </section>
+
+          <section aria-label="Фильтры" data-rv>
+            <form class="filters" @submit.prevent>
+              <div class="field wide2">
+                <label for="q">Поиск</label>
+                <input id="q" v-model="filters.q" class="inp" type="search" placeholder="Имя или должность">
+              </div>
+              <div class="field">
+                <label for="f-dir">Направление</label>
+                <div class="combo">
+                  <select id="f-dir" v-model="filters.direction_id" class="inp">
+                    <option value="">Все</option>
+                    <option v-for="item in state.directions" :key="item.id" :value="item.id">{{ item.name }}</option>
+                  </select>
+                  <ChevronDownIcon aria-hidden="true" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-city">Город</label>
+                <div class="combo">
+                  <select id="f-city" v-model="filters.city_id" class="inp">
+                    <option value="">Все</option>
+                    <option v-for="item in state.cities" :key="item.id" :value="item.id">{{ item.name }}</option>
+                  </select>
+                  <ChevronDownIcon aria-hidden="true" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-lvl">Уровень</label>
+                <div class="combo">
+                  <select id="f-lvl" v-model="filters.level" class="inp">
+                    <option value="">Любой</option>
+                    <option v-for="item in levelOptions" :key="item.value" :value="item.value">{{ item.label }}</option>
+                  </select>
+                  <ChevronDownIcon aria-hidden="true" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-nps">NPS зала, от</label>
+                <input
+                  id="f-nps"
+                  v-model="filters.nps_min"
+                  class="inp"
+                  type="number"
+                  min="0"
+                  max="10"
+                  step="0.1"
+                  placeholder="0"
+                >
+              </div>
+              <div class="field">
+                <label for="f-cnt">Выступлений, от</label>
+                <input id="f-cnt" v-model="filters.talks_min" class="inp" type="number" min="0" placeholder="0">
+              </div>
+            </form>
+          </section>
+
+          <section class="flex flex-col gap-5" aria-label="Список спикеров">
+            <div class="bar" data-rv>
+              <p class="small muted" aria-live="polite">Показано {{ state.items.length }} из {{ state.all }}</p>
+              <fieldset class="seg" aria-label="Вид списка">
+                <button type="button" :aria-pressed="view === 'table'" @click="view = 'table'">Таблица</button>
+                <button type="button" :aria-pressed="view === 'city'" @click="view = 'city'">По городам</button>
+              </fieldset>
+            </div>
+
+            <p v-if="!state.items.length" class="tile slate" role="status">
+              Никого не нашли: смягчите фильтры или очистите поиск.
+            </p>
+            <section
+              v-else-if="view === 'table'"
+              class="tbox"
+              :class="{ 'opacity-60': state.refreshing }"
+              :tabindex="0"
+              aria-label="Таблица спикеров"
+              data-rv
+            >
+              <table class="sp">
+                <caption class="sr">
+                  Спикеры организации
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Спикер</th>
+                    <th scope="col">Направление</th>
+                    <th scope="col">Город</th>
+                    <th scope="col">Уровень</th>
+                    <th scope="col" class="n">Выступлений</th>
+                    <th scope="col" class="n">NPS зала</th>
+                    <th scope="col">Рекомендую</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col"><span class="sr">Действие</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in state.items" :key="item.id">
+                    <td>
+                      <div class="person">
+                        <span class="ava sm" :class="{ mint: item.status === 'active' }" aria-hidden="true">{{
+                          initials(item.name)
+                        }}</span>
+                        <div class="cell">
+                          <b>{{ item.name }}</b>
+                          <span class="small muted">{{ item.position }}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{{ item.direction.name }}</td>
+                    <td>{{ item.city.name }}</td>
+                    <td>{{ item.level ? levelNames[item.level] : '—' }}</td>
+                    <td class="n num">{{ item.status === 'active' ? item.talks_count : '—' }}</td>
+                    <td class="n num">{{ formatNps(item.nps) }}</td>
+                    <td>
+                      <span v-if="item.recommended" class="tag ink">Рекомендую</span>
+                      <span v-else class="muted"
+                        ><span aria-hidden="true">—</span><span class="sr">Не рекомендован</span></span
+                      >
+                    </td>
+                    <td>
+                      <span class="tag" :class="item.status === 'active' ? 'mint' : 'dash'">{{
+                        item.status === 'active' ? 'Активен' : 'Приглашён'
+                      }}</span>
+                    </td>
+                    <td>
+                      <router-link :to="offerLink(item.id)" class="b b-line b-sm">Предложить выступить</router-link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <ul v-else class="cities" aria-label="Спикеры по городам" data-rv>
+              <li v-for="group in byCity" :key="group.city" class="tile slate city">
+                <div class="flex items-baseline justify-between gap-3">
+                  <h3 class="h-24">{{ group.city }}</h3>
+                  <span class="k muted"
+                    >{{ group.items.length }} {{ plural(group.items.length, 'спикер', 'спикера', 'спикеров') }}</span
+                  >
+                </div>
+                <ul>
+                  <li v-for="item in group.items" :key="item.id">
+                    <div class="person">
+                      <span class="ava sm" :class="{ mint: item.status === 'active' }" aria-hidden="true">{{
+                        initials(item.name)
+                      }}</span>
+                      <div class="cell">
+                        <b>{{ item.name }}</b>
+                        <span class="small muted"
+                          >{{ item.direction.name }}{{ item.level ? ` · ${levelNames[item.level]}` : '' }}</span
+                        >
+                      </div>
+                    </div>
+                    <span class="flex items-center gap-2">
+                      <span v-if="item.recommended" class="tag ink">Рекомендую</span>
+                      <span v-if="item.status === 'invited'" class="tag dash">Приглашён</span>
+                      <span v-else class="num">{{ formatNps(item.nps) }}</span>
+                    </span>
+                  </li>
+                </ul>
               </li>
             </ul>
-          </li>
-        </ul>
 
-        <p class="text-sm text-ink-2">
-          «Выступлений» — только подтверждённые. У приглашённых оценок пока нет: они появятся после первого
-          подтверждённого выступления.
-        </p>
-      </section>
-    </template>
-  </org-page>
+            <p class="small muted">
+              «Выступлений» — только подтверждённые. У приглашённых оценок пока нет: они появятся после первого
+              подтверждённого выступления.
+            </p>
+          </section>
+        </template>
+      </main>
+    </div>
+  </sp-page>
 </template>
 
 <script setup lang="ts">
-import { ArrowRightIcon } from '@lucide/vue'
+import { ArrowRightIcon, CheckIcon, ChevronDownIcon } from '@lucide/vue'
 import { watchDebounced } from '@vueuse/core'
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref, useTemplateRef } from 'vue'
 import { toast } from 'vue-sonner'
 import {
   confirmPendingTalk,
@@ -285,11 +286,11 @@ import {
   type PositionCategory,
   type PositionLevel,
 } from '@/api/generated'
-import { plural } from '@/components/org/format'
+import AppHeader from '@/components/AppHeader.vue'
+import { formatNps, initials, plural } from '@/components/org/format'
 import { levelNames, levelOptions } from '@/components/org/levels'
-import OrgAvatar from '@/components/org/OrgAvatar.vue'
-import OrgButton from '@/components/org/OrgButton.vue'
-import OrgPage from '@/components/org/OrgPage.vue'
+import SpPage from '@/components/speaker/SpPage.vue'
+import { useFx } from '@/composables/useFx'
 
 type State =
   | { kind: 'loading' }
@@ -306,6 +307,7 @@ type State =
       cities: City[]
     }
 
+const root = useTemplateRef<HTMLElement>('root')
 const state = ref<State>({ kind: 'loading' })
 const view = ref<'table' | 'city'>('table')
 const nextEventId = ref<string | null>(null)
@@ -434,4 +436,6 @@ const copyLink = async () => {
   copied.value = true
   toast.success('Ссылка-приглашение скопирована')
 }
+
+useFx(root, { words: 'landing', ink: true, fade: 0 })
 </script>
