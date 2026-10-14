@@ -1,21 +1,64 @@
 <template>
-  <org-onboarding-frame :step="step" :title="meta.title" :description="meta.description" :hint="meta.hint">
+  <app-onboarding-frame
+    side="co"
+    :home="{ name: 'companies.landing' }"
+    :big="`0${step}`"
+    sub="/03"
+    tall
+    :footer="false"
+  >
+    <template #float>
+      <span class="k muted">Шаг {{ step }} из 3</span>
+      <div
+        role="progressbar"
+        aria-label="Онбординг организации"
+        aria-valuemin="0"
+        aria-valuemax="3"
+        :aria-valuenow="step"
+        class="prog"
+      >
+        <span v-for="n in 3" :key="n" :class="{ on: n <= step }" />
+      </div>
+      <p class="small muted">{{ meta.hint }}</p>
+    </template>
+
+    <div class="head" data-rv>
+      <span class="tag lime self-start">Онбординг организации</span>
+      <h1 class="d-1">{{ meta.title }}</h1>
+      <p class="deck text-[20px]">{{ meta.description }}</p>
+    </div>
     <org-step-profile v-if="step === 1" />
     <org-step-team v-else-if="step === 2" />
     <org-step-speakers v-else ref="speakers" />
 
-    <template #links>
-      <span>© 2026 TRIX</span>
-      <button v-if="step === 3" type="button" :class="linkClass" @click="speakers?.skip()">Продолжить позже</button>
+    <template #footer>
+      <footer class="obl">
+        <ol aria-label="Шаги онбординга">
+          <li
+            v-for="(name, i) in ['Организация', 'Команда', 'Спикеры']"
+            :key="name"
+            :class="i + 1 < step ? 'done' : i + 1 === step ? 'on' : ''"
+            :aria-current="i + 1 === step ? 'step' : undefined"
+          >
+            <span class="k">0{{ i + 1 }}<CheckIcon v-if="i + 1 < step" /></span>
+            <b>{{ name }}</b>
+          </li>
+        </ol>
+        <div class="k muted obl-r">
+          <span>© 2026 TRIX</span>
+          <a href="#help" class="ln">Помощь</a>
+          <button v-if="step === 3" type="button" class="ln" @click="speakers?.skip()">Продолжить позже</button>
+        </div>
+      </footer>
     </template>
-  </org-onboarding-frame>
+  </app-onboarding-frame>
 </template>
 
 <script setup lang="ts">
+import { CheckIcon } from '@lucide/vue'
 import { computed, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
-import { linkClass } from '@/components/org/classes'
-import OrgOnboardingFrame from '@/components/org/OrgOnboardingFrame.vue'
+import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
 import OrgStepProfile from '@/components/org/OrgStepProfile.vue'
 import OrgStepSpeakers from '@/components/org/OrgStepSpeakers.vue'
 import OrgStepTeam from '@/components/org/OrgStepTeam.vue'

@@ -1,67 +1,56 @@
 <template>
-  <p v-if="state.kind === 'loading'" class="text-ink-2" role="status">Загружаем справочники…</p>
+  <p v-if="state.kind === 'loading'" class="muted" role="status">Загружаем справочники…</p>
   <div v-else-if="state.kind === 'error'" class="flex flex-col items-start gap-4" role="alert">
     <p>Не удалось загрузить справочники.</p>
-    <org-button variant="line" @click="load">Попробовать снова</org-button>
+    <button type="button" class="b b-line" @click="load">Попробовать снова</button>
   </div>
 
   <form v-else class="flex flex-col gap-12" novalidate @submit.prevent="submit">
-    <fieldset class="min-w-0" data-rv>
-      <legend :class="legendClass">01 / Название</legend>
-      <div class="flex max-w-115 flex-col gap-2.5">
-        <label for="org-name" class="org-label">Название организации</label>
+    <fieldset class="fld" data-rv>
+      <legend class="idx k muted">01 / Название</legend>
+      <div class="field max-w-115">
+        <label for="org-name">Название организации</label>
         <input
           id="org-name"
           v-model="form.name"
-          class="org-inp"
+          class="inp"
           type="text"
           autocomplete="organization"
           :aria-invalid="!!errors.name"
         >
-        <p v-if="errors.name" class="org-err" role="alert">{{ errors.name }}</p>
-        <p v-else class="text-[13px] leading-normal text-ink-2">Подставлено из заявки.</p>
+        <p v-if="errors.name" class="err" role="alert"><CircleAlertIcon />{{ errors.name }}</p>
+        <p v-else class="hint">Подставлено из заявки.</p>
       </div>
     </fieldset>
 
-    <fieldset class="min-w-0" data-rv>
-      <legend :class="legendClass">02 / Направления</legend>
-      <p class="mb-4 text-[13px] leading-normal text-ink-2">
-        Выберите всё, чем занимаются ваши спикеры. Можно несколько.
-      </p>
-      <div class="flex flex-wrap gap-2">
+    <fieldset class="fld" data-rv>
+      <legend class="idx k muted">02 / Направления</legend>
+      <p class="hint mb-4">Выберите всё, чем занимаются ваши спикеры. Можно несколько.</p>
+      <div class="picks">
         <label v-for="direction in state.directions" :key="direction.id" class="pick">
           <input v-model="form.directionIds" type="checkbox" :value="direction.id">
           {{ direction.name }}
         </label>
       </div>
-      <p v-if="errors.directions" class="org-err mt-3" role="alert">{{ errors.directions }}</p>
+      <p v-if="errors.directions" class="err mt-3" role="alert"><CircleAlertIcon />{{ errors.directions }}</p>
     </fieldset>
 
-    <fieldset class="min-w-0" data-rv>
-      <legend :class="legendClass">03 / Города присутствия</legend>
-      <ul v-if="form.cityIds.length" class="mb-4 flex flex-wrap gap-2" aria-label="Выбранные города">
-        <li
-          v-for="id in form.cityIds"
-          :key="id"
-          class="inline-flex h-9.5 items-center gap-1 rounded-3xl bg-paper-2 pr-1.5 pl-4 text-sm font-semibold shadow-[inset_0_0_0_1px_var(--field)]"
-        >
+    <fieldset class="fld" data-rv>
+      <legend class="idx k muted">03 / Города присутствия</legend>
+      <ul v-if="form.cityIds.length" class="chips" aria-label="Выбранные города">
+        <li v-for="id in form.cityIds" :key="id" class="chip">
           <span>{{ cityName(id) }}</span>
-          <button
-            type="button"
-            class="flex size-6.5 items-center justify-center rounded-full text-ink-2 hover:bg-paper-3 hover:text-ink"
-            :aria-label="`Убрать: ${cityName(id)}`"
-            @click="removeCity(id)"
-          >
-            <XIcon class="size-3" />
+          <button type="button" :aria-label="`Убрать: ${cityName(id)}`" @click="removeCity(id)">
+            <XIcon aria-hidden="true" />
           </button>
         </li>
       </ul>
-      <div class="flex max-w-115 flex-wrap gap-2">
-        <label class="sr-only" for="city-add">Город</label>
+      <div class="addrow">
+        <label class="sr" for="city-add">Город</label>
         <input
           id="city-add"
           v-model="cityQuery"
-          class="org-inp w-auto min-w-0 flex-[1_1_200px]"
+          class="inp"
           type="text"
           list="city-list"
           placeholder="Город"
@@ -71,66 +60,56 @@
         <datalist id="city-list">
           <option v-for="city in state.cities" :key="city.id" :value="city.name" />
         </datalist>
-        <org-button variant="line" @click="addCity">Добавить город</org-button>
+        <button type="button" class="b b-line" @click="addCity">Добавить город</button>
       </div>
-      <p v-if="errors.cities" class="org-err mt-3" role="alert">{{ errors.cities }}</p>
+      <p v-if="errors.cities" class="err mt-3" role="alert"><CircleAlertIcon />{{ errors.cities }}</p>
     </fieldset>
 
-    <fieldset class="min-w-0" data-rv>
-      <legend :class="legendClass">04 / Домены почты</legend>
-      <ul v-if="form.domains.length" class="mb-4 flex flex-wrap gap-2" aria-label="Домены организации">
-        <li
-          v-for="domain in form.domains"
-          :key="domain"
-          class="inline-flex h-9.5 items-center gap-1 rounded-3xl bg-paper-2 pr-1.5 pl-4 font-mono text-sm font-semibold shadow-[inset_0_0_0_1px_var(--field)]"
-        >
+    <fieldset class="fld" data-rv>
+      <legend class="idx k muted">04 / Домены почты</legend>
+      <ul v-if="form.domains.length" class="chips" aria-label="Домены организации">
+        <li v-for="domain in form.domains" :key="domain" class="chip mono">
           <span>{{ domain }}</span>
-          <button
-            type="button"
-            class="flex size-6.5 items-center justify-center rounded-full text-ink-2 hover:bg-paper-3 hover:text-ink"
-            :aria-label="`Убрать: ${domain}`"
-            @click="removeDomain(domain)"
-          >
-            <XIcon class="size-3" />
+          <button type="button" :aria-label="`Убрать: ${domain}`" @click="removeDomain(domain)">
+            <XIcon aria-hidden="true" />
           </button>
         </li>
       </ul>
-      <div class="flex max-w-115 flex-wrap gap-2">
-        <label class="sr-only" for="domain-add">Домен</label>
+      <div class="addrow">
+        <label class="sr" for="domain-add">Домен</label>
         <input
           id="domain-add"
           v-model="domainQuery"
-          class="org-inp w-auto min-w-0 flex-[1_1_200px]"
+          class="inp"
           type="text"
-          placeholder="company.ru"
+          placeholder="example.ru"
+          inputmode="url"
           autocapitalize="off"
           :aria-invalid="!!errors.domain"
           @keydown.enter.prevent="addDomain"
         >
-        <org-button variant="line" @click="addDomain">Добавить домен</org-button>
+        <button type="button" class="b b-line" @click="addDomain">Добавить домен</button>
       </div>
-      <p v-if="errors.domain" class="org-err mt-3" role="alert">{{ errors.domain }}</p>
-      <p v-else class="mt-3 text-[13px] leading-normal text-ink-2">
-        По домену коллеги и спикеры попадают в организацию только по приглашению
+      <p v-if="errors.domain" class="err mt-3" role="alert"><CircleAlertIcon />{{ errors.domain }}</p>
+      <p v-else class="hint mt-3 max-w-130">
+        По домену коллеги и спикеры попадают в организацию только по приглашению. Сами они не добавляются.
       </p>
     </fieldset>
 
-    <div class="flex flex-wrap items-center justify-between gap-4 pt-7 shadow-[inset_0_1px_0_var(--line)]" data-rv>
-      <span class="text-sm text-ink-2">Онбординг можно прервать — продолжите с этого шага</span>
-      <org-button type="submit" :disabled="saving">Далее<ArrowRightIcon /></org-button>
+    <div class="next" data-rv>
+      <span class="small muted">Онбординг можно прервать — продолжите с этого шага</span>
+      <button type="submit" class="b b-mint" :disabled="saving">Далее<ArrowRightIcon /></button>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
-import { ArrowRightIcon, XIcon } from '@lucide/vue'
+import { ArrowRightIcon, CircleAlertIcon, XIcon } from '@lucide/vue'
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { saveOrganizationProfile } from '@/api/demo'
 import { type City, listCities, listPositionCategories, type PositionCategory } from '@/api/generated'
-import { legendClass } from '@/components/org/classes'
-import OrgButton from '@/components/org/OrgButton.vue'
 import { useAuth } from '@/composables/useAuth'
 
 type State = { kind: 'loading' } | { kind: 'error' } | { kind: 'ready'; directions: PositionCategory[]; cities: City[] }

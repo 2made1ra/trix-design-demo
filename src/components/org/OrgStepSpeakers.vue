@@ -1,62 +1,45 @@
 <template>
   <div :inert="open">
     <section v-if="ctl.state.value.kind !== 'sent'" class="flex flex-col gap-10">
-      <div
-        v-if="ctl.state.value.kind === 'failed'"
-        class="flex items-center gap-4 rounded-[14px] fill-pink py-3.5 pr-3.5 pl-5"
-        role="alert"
-      >
-        <CircleAlertIcon class="size-5 shrink-0" />
-        <p class="min-w-0 flex-1 text-sm"><b>Не удалось разобрать файл.</b> {{ ctl.state.value.message }}</p>
-        <org-button variant="ink" size="sm" @click="ctl.reset()">Загрузить заново</org-button>
+      <div v-if="ctl.state.value.kind === 'failed'" class="alert" role="alert">
+        <CircleAlertIcon />
+        <p class="small"><b>Не удалось разобрать файл.</b> {{ ctl.state.value.message }}</p>
+        <button type="button" class="b b-ink b-sm" @click="ctl.reset()">Загрузить заново</button>
       </div>
 
-      <section aria-labelledby="drop-title" data-rv>
-        <div
-          class="flex flex-col items-center gap-4 rounded-[18px] bg-paper-2 px-6 py-18 text-center outline-1 -outline-offset-1 outline-quiet outline-dashed transition-colors hover:bg-paper-3"
-          :class="over && 'bg-paper-3'"
-          v-on="drag"
-        >
-          <span
-            class="flex size-14 items-center justify-center rounded-full shadow-[inset_0_0_0_1px_var(--field)]"
-            aria-hidden="true"
-          >
-            <UploadIcon class="size-6" />
-          </span>
-          <h2 id="drop-title" class="max-w-130 text-2xl leading-[1.1] font-bold">
-            Перетащите Excel или CSV — подойдёт таблица в любом виде
-          </h2>
-          <p class="text-sm text-ink-2">Колонки могут называться как угодно, порядок не важен</p>
-          <org-button variant="ink" @click="startDemo">Выбрать файл</org-button>
-          <label class="cursor-pointer text-sm text-ink-2 shadow-[inset_0_-1px_0_currentColor] hover:text-ink">
+      <section class="g-drop" aria-labelledby="drop-title" data-rv>
+        <div class="drop" :data-over="over || undefined" v-on="drag">
+          <span class="drop-ic" aria-hidden="true"><UploadIcon /></span>
+          <h2 id="drop-title" class="h-24">Перетащите Excel или CSV — подойдёт таблица в любом виде</h2>
+          <p class="small muted">Колонки могут называться как угодно, порядок не важен</p>
+          <button type="button" class="b b-ink" @click="startDemo">Выбрать файл</button>
+          <label class="ln small cursor-pointer">
             Выбрать свой файл с компьютера
-            <input ref="input" class="sr-only" type="file" accept=".xlsx,.xls,.csv" @change="onPick">
+            <input ref="input" class="sr" type="file" accept=".xlsx,.xls,.csv" @change="onPick">
           </label>
         </div>
       </section>
 
-      <div class="flex flex-wrap items-center justify-between gap-4 pt-7 shadow-[inset_0_1px_0_var(--line)]" data-rv>
-        <org-button variant="line" size="sm" :to="{ path: '/org/onboarding/2' }"><ArrowLeftIcon />Назад</org-button>
-        <button type="button" class="text-sm" :class="linkClass" :disabled="skipping" @click="skip">
-          Пропустить, загружу позже
-        </button>
+      <div class="next" data-rv>
+        <router-link :to="{ path: '/org/onboarding/2' }" class="b b-line b-sm">Назад</router-link>
+        <button type="button" class="ln small" :disabled="skipping" @click="skip">Пропустить, загружу позже</button>
       </div>
     </section>
 
-    <section v-else class="flex max-w-140 flex-col gap-0" aria-labelledby="done-title" aria-live="polite">
-      <div class="tile surface-mint flex flex-col items-start gap-5 p-10">
-        <h2 id="done-title" ref="done" class="shout text-d3 outline-none" tabindex="-1">
+    <section v-else aria-labelledby="done-title" aria-live="polite" data-rv>
+      <div class="tile mint done-t">
+        <h2 id="done-title" ref="done" class="h-34" tabindex="-1">
           {{ ctl.state.value.sent }}
           {{
             plural(ctl.state.value.sent, 'приглашение отправлено', 'приглашения отправлено', 'приглашений отправлено')
           }}
         </h2>
-        <p class="text-lg leading-normal text-ink-2">
+        <p class="deck text-[18px]">
           Пока спикер не примет приглашение, у него статус «Приглашён». Вы видите только данные из своей таблицы.
         </p>
-        <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
-          <org-button variant="ink" :to="{ name: 'org.speakers' }">Перейти к спикерам<ArrowRightIcon /></org-button>
-          <button type="button" class="text-sm" :class="linkClass" @click="ctl.reset()">Загрузить ещё файл</button>
+        <div class="wrow">
+          <router-link :to="{ name: 'org.speakers' }" class="b b-ink">Перейти к спикерам<ArrowRightIcon /></router-link>
+          <button type="button" class="ln small lnb" @click="ctl.reset()">Загрузить ещё файл</button>
         </div>
       </div>
     </section>
@@ -65,14 +48,12 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowLeftIcon, ArrowRightIcon, CircleAlertIcon, UploadIcon } from '@lucide/vue'
+import { ArrowRightIcon, CircleAlertIcon, UploadIcon } from '@lucide/vue'
 import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { completeOrganizationOnboarding } from '@/api/demo'
-import { linkClass } from '@/components/org/classes'
 import { demoFile, plural } from '@/components/org/format'
-import OrgButton from '@/components/org/OrgButton.vue'
 import OrgImportWindow from '@/components/org/OrgImportWindow.vue'
 import { useSpeakerImport } from '@/components/org/useSpeakerImport'
 import { useAuth } from '@/composables/useAuth'

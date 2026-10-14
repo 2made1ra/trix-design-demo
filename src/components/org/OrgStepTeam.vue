@@ -1,81 +1,70 @@
 <template>
   <form class="flex flex-col gap-12" novalidate @submit.prevent="submit(emails)">
-    <fieldset class="min-w-0" data-rv>
-      <legend :class="legendClass">01 / Вы</legend>
-      <div class="tile tile-slate flex items-center gap-4 px-6 py-5">
-        <org-avatar :name="me" />
-        <div class="flex min-w-0 flex-1 flex-col gap-0.5">
-          <b class="truncate">{{ me }}</b>
-          <span class="truncate font-mono text-sm text-ink-2">{{ user?.email }}</span>
+    <fieldset class="fld" data-rv>
+      <legend class="idx k muted">01 / Вы</legend>
+      <div class="tile slate me">
+        <span class="ava mint" aria-hidden="true">{{ initials(me) }}</span>
+        <div class="me-t">
+          <b>{{ me }}</b>
+          <span class="small muted mono">{{ user?.email }}</span>
         </div>
-        <span class="tag fill-lime">Администратор</span>
+        <span class="tag lime">Администратор</span>
       </div>
     </fieldset>
 
-    <fieldset class="min-w-0" data-rv>
-      <legend :class="legendClass">02 / Приглашения</legend>
-      <div class="flex flex-col gap-3">
-        <div v-for="(row, i) in rows" :key="row.id" class="grid grid-cols-[minmax(0,1fr)_44px] items-center gap-2">
-          <label class="sr-only" :for="`email-${row.id}`">Почта коллеги {{ i + 1 }}</label>
+    <fieldset class="fld" data-rv>
+      <legend class="idx k muted">02 / Приглашения</legend>
+      <div class="inv">
+        <div v-for="(row, i) in rows" :key="row.id" class="irow">
+          <label class="sr" :for="`email-${row.id}`">Почта коллеги {{ i + 1 }}</label>
           <input
             :id="`email-${row.id}`"
             v-model="row.email"
-            class="org-inp"
+            class="inp"
             type="email"
             placeholder="коллега@company.ru"
             autocomplete="off"
             autocapitalize="off"
             :aria-invalid="!!row.error"
           >
-          <button
-            type="button"
-            class="flex size-11 items-center justify-center rounded-full text-ink-2 shadow-[inset_0_0_0_1px_var(--field)] hover:bg-paper-3 hover:text-ink"
-            :aria-label="`Убрать строку ${i + 1}`"
-            @click="remove(row.id)"
-          >
-            <Trash2Icon class="size-4" />
+          <button type="button" class="rm" :aria-label="`Убрать строку ${i + 1}`" @click="remove(row.id)">
+            <Trash2Icon aria-hidden="true" />
           </button>
-          <p v-if="row.error" class="org-err col-span-2" role="alert">{{ row.error }}</p>
+          <p v-if="row.error" class="err" role="alert"><CircleAlertIcon />{{ row.error }}</p>
         </div>
-        <div><org-button variant="line" size="sm" @click="add">Добавить ещё</org-button></div>
+        <div><button type="button" class="b b-line b-sm" @click="add">Добавить ещё</button></div>
       </div>
     </fieldset>
 
-    <div
-      v-if="save.kind === 'error'"
-      class="flex items-center gap-4 rounded-[14px] fill-pink py-3.5 pr-3.5 pl-5"
-      role="alert"
-    >
-      <CircleAlertIcon class="size-5 shrink-0" />
-      <p class="min-w-0 flex-1 text-sm"><b>Не удалось отправить приглашения.</b> {{ save.message }}</p>
-      <org-button variant="ink" size="sm" @click="submit(emails)">Повторить</org-button>
+    <div v-if="save.kind === 'error'" class="alert" role="alert">
+      <CircleAlertIcon />
+      <p class="small"><b>Не удалось отправить приглашения.</b> {{ save.message }}</p>
+      <button type="button" class="b b-ink b-sm" @click="submit(emails)">Повторить</button>
     </div>
 
-    <div class="flex flex-wrap items-center justify-between gap-4 pt-7 shadow-[inset_0_1px_0_var(--line)]" data-rv>
-      <div class="flex min-w-0 flex-1 flex-wrap items-center gap-x-5 gap-y-3">
-        <org-button variant="line" :to="{ path: '/org/onboarding/1' }"><ArrowLeftIcon />Назад</org-button>
-        <span class="text-sm text-ink-2">Коллеги получат письмо и сразу попадут в интерфейс организации</span>
+    <div class="next" data-rv>
+      <div class="nx-l">
+        <router-link :to="{ path: '/org/onboarding/1' }" class="b b-line">Назад</router-link>
+        <span class="small muted">Коллеги получат письмо и сразу попадут в интерфейс организации</span>
       </div>
-      <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
-        <button type="button" class="text-sm" :class="linkClass" :disabled="save.kind === 'saving'" @click="submit([])">
+      <div class="nx-r">
+        <button type="button" class="ln small" :disabled="save.kind === 'saving'" @click="submit([])">
           Пропустить
         </button>
-        <org-button type="submit" :disabled="save.kind === 'saving'">
+        <button type="submit" class="b b-mint" :disabled="save.kind === 'saving'">
           {{ emails.length ? 'Пригласить и продолжить' : 'Продолжить' }}<ArrowRightIcon />
-        </org-button>
+        </button>
       </div>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
-import { ArrowLeftIcon, ArrowRightIcon, CircleAlertIcon, Trash2Icon } from '@lucide/vue'
+import { ArrowRightIcon, CircleAlertIcon, Trash2Icon } from '@lucide/vue'
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { inviteColleagues } from '@/api/demo'
-import { legendClass, linkClass } from '@/components/org/classes'
-import OrgAvatar from '@/components/org/OrgAvatar.vue'
-import OrgButton from '@/components/org/OrgButton.vue'
+import { initials } from '@/components/org/format'
 import { useAuth } from '@/composables/useAuth'
 
 type Save = { kind: 'idle' } | { kind: 'saving' } | { kind: 'error'; message: string }
