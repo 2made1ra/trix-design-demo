@@ -12,7 +12,7 @@
 
     <section v-if="state.kind === 'form'" class="pnl" aria-labelledby="form-title">
       <div class="flex flex-col gap-4" data-rv>
-        <span class="tag lime self-start">Компаниям</span>
+        <app-tag tone="lime" class="self-start">Компаниям</app-tag>
         <h1 id="form-title" class="d-1">Подключить организацию</h1>
         <p class="deck text-[20px]">
           Оставьте заявку: проверим организацию и пришлём приглашение администратору на рабочую почту.
@@ -102,6 +102,7 @@ import { toast } from 'vue-sonner'
 import { createOrgApplication } from '@/api/demo'
 import AppField from '@/components/AppField.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
+import AppTag from '@/components/AppTag.vue'
 
 type State = { kind: 'form' } | { kind: 'sent'; token: string }
 

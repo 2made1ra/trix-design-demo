@@ -44,11 +44,11 @@
                       <b>Feature store без боли</b>
                       <span>Data Fest, Казань · 14 ноября</span>
                     </div>
-                    <span class="tag dash">Карточка готова</span>
+                    <app-tag tone="dash">Карточка готова</app-tag>
                   </div>
                   <div class="row" data-p :class="{ on: shown('sp', 3) }">
                     <span><b>Команда DevRel</b> <span class="small muted">· увидела</span></span>
-                    <span class="tag ink">Засчитано</span>
+                    <app-tag tone="ink">Засчитано</app-tag>
                   </div>
                 </template>
                 <template v-else>
@@ -70,7 +70,7 @@
                     </div>
                     <span class="end">
                       <span class="num">{{ row.nps }}</span>
-                      <span class="tag" :class="row.tag">{{ row.status }}</span>
+                      <app-tag :tone="row.tag">{{ row.status }}</app-tag>
                     </span>
                   </div>
                 </template>
@@ -93,6 +93,7 @@
 import { ArrowRight } from '@lucide/vue'
 import { computed, onBeforeUnmount, onMounted, reactive, ref, useTemplateRef, watch } from 'vue'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import SpPage from '@/components/speaker/SpPage.vue'
 import { useFx } from '@/composables/useFx'
@@ -134,7 +135,7 @@ const people = [
     tag: 'ink',
   },
   { name: 'Ольга Смирнова', text: 'Data Science · Екатеринбург', nps: '9.6', status: 'Приглашена', tag: 'dash' },
-]
+] as const
 
 const root = useTemplateRef<HTMLElement>('root')
 const flip = useTemplateRef<HTMLElement>('flip')

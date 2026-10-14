@@ -8,7 +8,7 @@
           <b>{{ me }}</b>
           <span class="small muted mono">{{ user?.email }}</span>
         </div>
-        <span class="tag lime">Администратор</span>
+        <app-tag tone="lime">Администратор</app-tag>
       </app-tile>
     </fieldset>
 
@@ -64,6 +64,7 @@ import { ArrowRightIcon, CircleAlertIcon, Trash2Icon } from '@lucide/vue'
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { inviteColleagues } from '@/api/demo'
+import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import { initials } from '@/components/org/format'
 import { useAuth } from '@/composables/useAuth'

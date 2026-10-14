@@ -42,7 +42,7 @@
               </div>
               <div>
                 <dt class="k muted">Дедлайн заявок</dt>
-                <dd><span class="tag mint">{{ formatDate(state.event.deadline) }}</span></dd>
+                <dd><app-tag tone="mint">{{ formatDate(state.event.deadline) }}</app-tag></dd>
               </div>
             </dl>
           </app-tile>
@@ -82,7 +82,7 @@
                       <span class="small muted">{{ item.speaker.direction.name }} · {{ item.speaker.city.name }}</span>
                     </div>
                   </div>
-                  <span v-if="item.speaker.recommended" class="tag ink">Рекомендую</span>
+                  <app-tag v-if="item.speaker.recommended" tone="ink">Рекомендую</app-tag>
                 </div>
                 <dl class="stats">
                   <div>
@@ -99,7 +99,7 @@
                 </p>
                 <div class="cd-act">
                   <span v-if="item.offer" class="sent">
-                    <span class="tag mint">Предложение отправлено</span>
+                    <app-tag tone="mint">Предложение отправлено</app-tag>
                     <span class="small muted">{{ formatDate(item.offer.sent_at) }}</span>
                   </span>
                   <button
@@ -146,6 +146,7 @@ import {
   type OrgSpeaker,
 } from '@/api/demo'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import { formatDate } from '@/components/org/eventLabels'
 import { formatNps, initials, plural } from '@/components/org/format'

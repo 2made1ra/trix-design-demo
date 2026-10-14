@@ -34,9 +34,9 @@
                   <div class="mrow">
                     <span class="small">Рабочая почта</span><b class="small" data-typed="1">devrel@company.ru</b>
                   </div>
-                  <span class="tag mint self-start" data-s="2">Домен совпал</span>
+                  <app-tag tone="mint" class="self-start" data-s="2">Домен совпал</app-tag>
                   <div class="mrow" data-s="3">
-                    <span class="small">212 спикеров</span><span class="tag ink">Приглашены</span>
+                    <span class="small">212 спикеров</span><app-tag tone="ink">Приглашены</app-tag>
                   </div>
                 </app-how-step>
                 <app-how-step
@@ -48,7 +48,7 @@
                     <span class="small">Ссылка</span><b class="small" data-typed="4">datafest.ru/program</b>
                   </div>
                   <div class="mrow" data-s="5">
-                    <span class="small">Новое выступление</span><span class="tag lime">Анна К.</span>
+                    <span class="small">Новое выступление</span><app-tag tone="lime">Анна К.</app-tag>
                   </div>
                 </app-how-step>
                 <app-how-step
@@ -90,8 +90,9 @@
               <figcaption class="sr">База спикеров с фильтром по направлению, NPS и городу</figcaption>
               <app-win-top title="Спикеры" note="212 · 14 городов" />
               <app-picks>
-                <span class="tag mint" data-s="1">Data Science</span><span class="tag mint" data-s="1">NPS от 9.4</span
-                ><span class="tag mint" data-s="1">Не Москва</span><span class="tag">Конференции</span>
+                <app-tag tone="mint" data-s="1">Data Science</app-tag
+                ><app-tag tone="mint" data-s="1">NPS от 9.4</app-tag><app-tag tone="mint" data-s="1">Не Москва</app-tag
+                ><app-tag>Конференции</app-tag>
               </app-picks>
               <app-scene-bar :step="1" busy="Фильтруем 212 спикеров" done="Нашли 8 спикеров" />
               <div v-for="person in people" :key="person.name" class="mrow" :data-s="person.invited ? 3 : 2">
@@ -104,7 +105,7 @@
                 </div>
                 <div class="end">
                   <span class="num">{{ person.nps }}</span>
-                  <span v-if="person.tag" class="tag" :class="person.invited ? 'dash' : 'mint'">{{ person.tag }}</span>
+                  <app-tag v-if="person.tag" :tone="person.invited ? 'dash' : 'mint'">{{ person.tag }}</app-tag>
                 </div>
               </div>
             </app-tile>
@@ -135,7 +136,7 @@
                 </div>
                 <span class="stack">
                   <span class="b b-ink b-sm" aria-hidden="true" data-s="0-1" data-press="1">Подтвердить</span>
-                  <span class="tag ink" data-s="2">Засчитано</span>
+                  <app-tag tone="ink" data-s="2">Засчитано</app-tag>
                 </span>
               </div>
               <div class="mrow">
@@ -144,8 +145,8 @@
                   <span class="small muted">Подкаст · запись выступления</span>
                 </div>
                 <span class="stack">
-                  <span class="tag dash" data-s="0-2">Ждёт подтверждения</span>
-                  <span class="tag ink" data-s="3">Рекомендую</span>
+                  <app-tag tone="dash" data-s="0-2">Ждёт подтверждения</app-tag>
+                  <app-tag tone="ink" data-s="3">Рекомендую</app-tag>
                 </span>
               </div>
               <div class="mrow">
@@ -153,7 +154,7 @@
                   <b>Ольга Смирнова — «A/B-тесты без мифов»</b>
                   <span class="small muted">Внутренний митап · пост в канале</span>
                 </div>
-                <span class="tag dash">Ждёт подтверждения</span>
+                <app-tag tone="dash">Ждёт подтверждения</app-tag>
               </div>
             </app-tile>
           </app-feature>
@@ -184,8 +185,8 @@
                 </div>
                 <span class="stack">
                   <span class="b b-line b-sm" aria-hidden="true" data-s="2-2">Предложить</span>
-                  <span class="tag" data-s="3-3">Предложено</span>
-                  <span class="tag ink" data-s="4">Согласна</span>
+                  <app-tag data-s="3-3">Предложено</app-tag>
+                  <app-tag tone="ink" data-s="4">Согласна</app-tag>
                 </span>
               </div>
               <div class="mrow" data-s="2">
@@ -234,18 +235,18 @@
               <app-scene-bar :step="2" busy="Читаем страницу" done="Черновик готов, проверьте поля" />
               <div class="mrow" data-s="3"><span class="k muted">Название</span><b>Митап Go-разработчиков</b></div>
               <div class="mrow" data-s="3"><span class="k muted">Дата и город</span><b>20 ноября · Казань</b></div>
-              <div class="mrow" data-s="3"><span class="k muted">Видимость</span><span class="tag">Открытое</span></div>
+              <div class="mrow" data-s="3"><span class="k muted">Видимость</span><app-tag>Открытое</app-tag></div>
               <span class="b b-ink b-sm self-start" aria-hidden="true" data-press="4">Опубликовать</span>
               <div class="mrow" data-s="5">
                 <span><b>Лендинг готов</b> <span class="small muted">· ссылка скопирована</span></span>
-                <span class="tag ink">Открыть</span>
+                <app-tag tone="ink">Открыть</app-tag>
               </div>
               <div class="mrow note" data-s="6">
                 <div class="cell">
                   <b>Новая заявка</b>
                   <span class="small">«Профилирование Go в проде» · 5 выступлений в портфолио</span>
                 </div>
-                <span class="tag">Спикер</span>
+                <app-tag>Спикер</app-tag>
               </div>
             </app-tile>
           </app-feature>
@@ -280,7 +281,7 @@
                 </template>
               </div>
               <div class="mrow" data-s="3">
-                <span>Слепая зона</span><span class="tag pink">Mobile · Дальний Восток</span>
+                <span>Слепая зона</span><app-tag tone="pink">Mobile · Дальний Восток</app-tag>
               </div>
               <span class="b b-mint b-sm self-start" aria-hidden="true" data-s="3">Выгрузить отчёт</span>
             </app-tile>
@@ -315,8 +316,8 @@
                     <tr v-for="row in who" :key="row.name" :class="{ key: row.key }">
                       <th scope="row">{{ row.name }}</th>
                       <td v-for="cell in row.cells" :key="cell" :class="!['Да', 'Нет'].includes(cell) && 'small'">
-                        <span v-if="cell === 'Да'" class="tag mint">Да</span>
-                        <span v-else-if="cell === 'Нет'" class="tag dash">Нет</span>
+                        <app-tag v-if="cell === 'Да'" tone="mint">Да</app-tag>
+                        <app-tag v-else-if="cell === 'Нет'" tone="dash">Нет</app-tag>
                         <template v-else>{{ cell }}</template>
                       </td>
                     </tr>
@@ -347,6 +348,7 @@ import AppHowStep from '@/components/AppHowStep.vue'
 import AppPick from '@/components/AppPick.vue'
 import AppPicks from '@/components/AppPicks.vue'
 import AppSceneBar from '@/components/AppSceneBar.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTicker from '@/components/AppTicker.vue'
 import AppTile from '@/components/AppTile.vue'
 import AppWinTop from '@/components/AppWinTop.vue'

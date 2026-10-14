@@ -87,9 +87,9 @@
             <app-tile v-for="event in shown" :key="event.id" as="li" tone="slate" class="ev" data-rv>
               <div class="ev-main">
                 <div class="ev-top">
-                  <span class="tag" :class="event.source === 'own' ? 'lime' : 'dash'">{{
+                  <app-tag :tone="event.source === 'own' ? 'lime' : 'dash'">{{
                     event.source === 'own' ? 'Своё' : 'Открытое'
-                  }}</span>
+                  }}</app-tag>
                   <span class="k muted">{{ event.kind }} · {{ event.city }} · {{ formatNames[event.format] }}</span>
                 </div>
                 <h2 class="h-34">
@@ -104,13 +104,13 @@
                   <div>
                     <dt class="k muted">{{ tab === 'upcoming' ? 'Дедлайн заявок' : 'Приём заявок' }}</dt>
                     <dd>
-                      <span v-if="tab === 'upcoming'" class="tag mint">{{ formatDate(event.deadline) }}</span>
-                      <span v-else class="tag dash">Закрыт</span>
+                      <app-tag v-if="tab === 'upcoming'" tone="mint">{{ formatDate(event.deadline) }}</app-tag>
+                      <app-tag v-else tone="dash">Закрыт</app-tag>
                     </dd>
                   </div>
                 </dl>
                 <ul v-if="event.tracks.length" class="trk" aria-label="Треки">
-                  <li v-for="track in event.tracks" :key="track" class="tag">{{ track }}</li>
+                  <app-tag v-for="track in event.tracks" :key="track" as="li">{{ track }}</app-tag>
                 </ul>
               </div>
               <div class="ev-act">
@@ -137,6 +137,7 @@ import { toast } from 'vue-sonner'
 import { addOrgEvent, listOrgEvents, type OrgEvent } from '@/api/demo'
 import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import { formatDate, formatNames } from '@/components/org/eventLabels'
 import { plural } from '@/components/org/format'

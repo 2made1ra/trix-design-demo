@@ -95,7 +95,7 @@
           </div>
           <div>
             <dt class="k muted">Ответить до</dt>
-            <dd><span class="tag mint">{{ formatDate(state.offer.answer_by) }}</span></dd>
+            <dd><app-tag tone="mint">{{ formatDate(state.offer.answer_by) }}</app-tag></dd>
           </div>
         </dl>
         <div class="dlg-act">
@@ -112,6 +112,7 @@ import { CheckIcon, ChevronDownIcon, CircleAlertIcon, XIcon } from '@lucide/vue'
 import { computed, nextTick, reactive, ref, useTemplateRef, watch } from 'vue'
 import { createOffer, type Offer, type OrgEvent, type OrgSpeaker } from '@/api/demo'
 import AppField from '@/components/AppField.vue'
+import AppTag from '@/components/AppTag.vue'
 import { formatDate } from '@/components/org/eventLabels'
 import { initials } from '@/components/org/format'
 import { toneOf } from '@/components/org/levels'

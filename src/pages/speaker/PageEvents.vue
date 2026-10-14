@@ -39,7 +39,7 @@
         <div>
           <app-tile v-if="offer" as="section" tone="ink" class="offer" aria-labelledby="offer-title" data-rv>
             <div class="offer-top">
-              <span class="tag mint">Предложение</span>
+              <app-tag tone="mint">Предложение</app-tag>
               <span class="k muted">От команды организации</span>
             </div>
             <h2 id="offer-title" class="h-34">{{ offer.organization_name }} предлагает выступить</h2>
@@ -84,7 +84,7 @@
           </section>
 
           <app-tile v-else-if="screen === 'error'" as="section" class="sel-st" role="alert" aria-labelledby="err-title">
-            <span class="tag pink self-start">Ошибка</span>
+            <app-tag tone="pink" class="self-start">Ошибка</app-tag>
             <h2 id="err-title" class="h-34">Не удалось загрузить подборку</h2>
             <p class="deck">Проверьте соединение и попробуйте ещё раз. Профиль и фильтры сохранены.</p>
             <div class="sel-acts">
@@ -118,20 +118,20 @@
               >
                 <div class="flex flex-wrap items-center gap-3">
                   <span class="k" :class="{ muted: i !== featured }">{{ meta(item) }}</span>
-                  <span v-if="isTrixSource(item.conference)" class="tag ink">Заявка через TRIX</span>
+                  <app-tag v-if="isTrixSource(item.conference)" tone="ink">Заявка через TRIX</app-tag>
                 </div>
                 <h2 :class="i === featured ? 'd-3' : 'h-34'">
                   <router-link :to="`/c/${item.conference.slug}`">{{ item.conference.name }}</router-link>
                 </h2>
                 <div v-if="item.topics.length" class="flex flex-wrap gap-2">
-                  <span v-for="topic in item.topics" :key="topic" class="tag">{{ topic }}</span>
+                  <app-tag v-for="topic in item.topics" :key="topic">{{ topic }}</app-tag>
                 </div>
                 <p class="why"><b>Почему подходит</b>{{ item.reason }}</p>
                 <div class="ev-foot">
                   <span class="mr-auto">
-                    <span class="tag" :class="{ dash: item.conference.is_paid === null }">{{
+                    <app-tag :tone="item.conference.is_paid === null ? 'dash' : null">{{
                       paidLabel(item.conference.is_paid)
-                    }}</span>
+                    }}</app-tag>
                   </span>
                   <template v-if="isTrixSource(item.conference)">
                     <router-link
@@ -143,7 +143,7 @@
                     </router-link>
                   </template>
                   <template v-else>
-                    <span class="tag dash">Из открытых источников</span>
+                    <app-tag tone="dash">Из открытых источников</app-tag>
                     <a
                       v-if="item.conference.website_url"
                       :href="item.conference.website_url"
@@ -214,6 +214,7 @@ import {
 } from '@/api/generated'
 import AppHeader from '@/components/AppHeader.vue'
 import AppPick from '@/components/AppPick.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTicker from '@/components/AppTicker.vue'
 import AppTile from '@/components/AppTile.vue'
 import {

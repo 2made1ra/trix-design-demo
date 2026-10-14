@@ -14,7 +14,7 @@
     </template>
 
     <div class="head" data-rv>
-      <span class="tag lime self-start">Онбординг организации</span>
+      <app-tag tone="lime" class="self-start">Онбординг организации</app-tag>
       <h1 class="d-1">{{ meta.title }}</h1>
       <p class="deck text-[20px]">{{ meta.description }}</p>
     </div>
@@ -51,6 +51,7 @@ import { computed, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
 import AppProgress from '@/components/AppProgress.vue'
+import AppTag from '@/components/AppTag.vue'
 import OrgStepProfile from '@/components/org/OrgStepProfile.vue'
 import OrgStepSpeakers from '@/components/org/OrgStepSpeakers.vue'
 import OrgStepTeam from '@/components/org/OrgStepTeam.vue'

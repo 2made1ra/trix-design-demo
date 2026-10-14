@@ -134,7 +134,7 @@
                 </p>
               </template>
               <div v-else class="q2-res" role="status" aria-live="polite">
-                <span class="tag mint">Решено</span>
+                <app-tag tone="mint">Решено</app-tag>
                 <span class="small">
                   {{
                     decision?.kind === 'mail'
@@ -182,9 +182,9 @@
           <section v-else-if="stage === 'review' && imp" class="s" aria-label="Проверка превью">
             <div class="rv-top">
               <div class="sum" aria-live="polite">
-                <span class="tag mint">{{ imp.summary.ready }} готовы к приглашению</span>
-                <span v-if="imp.summary.no_email" class="tag pink">{{ imp.summary.no_email }} без почты</span>
-                <span v-if="imp.summary.skipped" class="tag dash">{{ imp.summary.skipped }} не приглашаем</span>
+                <app-tag tone="mint">{{ imp.summary.ready }} готовы к приглашению</app-tag>
+                <app-tag v-if="imp.summary.no_email" tone="pink">{{ imp.summary.no_email }} без почты</app-tag>
+                <app-tag v-if="imp.summary.skipped" tone="dash">{{ imp.summary.skipped }} не приглашаем</app-tag>
               </div>
             </div>
 
@@ -219,7 +219,7 @@
                           <span class="hv"
                             ><span class="muted" aria-hidden="true">→ </span><span>{{ mapping[i] }}</span></span
                           >
-                          <span v-if="i === imp.columns.length - 1" class="tag lime">Разобрано моделью</span>
+                          <app-tag v-if="i === imp.columns.length - 1" tone="lime">Разобрано моделью</app-tag>
                         </div>
                       </th>
                       <th scope="col" style="min-width: 160px">
@@ -254,7 +254,7 @@
                         <span v-if="row.past_talks.length" class="src small muted">«{{ row.source_text }}»</span>
                       </td>
                       <td>
-                        <span class="tag" :class="statuses[row.status].class">{{ statuses[row.status].label }}</span>
+                        <app-tag :tone="statuses[row.status].tone">{{ statuses[row.status].label }}</app-tag>
                       </td>
                     </tr>
                   </tbody>
@@ -333,10 +333,12 @@ import type { ImportDirectionQuestion, SpeakerImportRow } from '@/api/demo'
 import AppField from '@/components/AppField.vue'
 import AppPick from '@/components/AppPick.vue'
 import AppPicks from '@/components/AppPicks.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import { initials, plural } from '@/components/org/format'
 import { useModal } from '@/components/org/useModal'
 import type { SpeakerImportController } from '@/components/org/useSpeakerImport'
+import type { TagTone } from '@/components/tones'
 import { useAuth } from '@/composables/useAuth'
 
 const props = defineProps<{ ctl: SpeakerImportController; fileName: string }>()
@@ -363,10 +365,10 @@ const stages = [
 ]
 const targets = ['Имя', 'Рабочая почта', 'Город', 'Направление', 'Прошлые выступления', 'Не импортировать']
 const widths = [180, 200, 140, 140, 260]
-const statuses: Record<SpeakerImportRow['status'], { label: string; class: string }> = {
-  will_invite: { label: 'Будет приглашён', class: 'ink' },
-  no_email: { label: 'Нет почты', class: 'pink' },
-  skipped: { label: 'Не приглашаем', class: 'dash' },
+const statuses: Record<SpeakerImportRow['status'], { label: string; tone: TagTone }> = {
+  will_invite: { label: 'Будет приглашён', tone: 'ink' },
+  no_email: { label: 'Нет почты', tone: 'pink' },
+  skipped: { label: 'Не приглашаем', tone: 'dash' },
 }
 const tones = ['mint', 'yellow', 'uv', 'orange', 'pink'] as const
 const tone = (id: string) => tones[(Number.parseInt(id.replace(/\D/g, ''), 10) - 1) % tones.length] ?? 'mint'

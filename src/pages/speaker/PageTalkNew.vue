@@ -116,7 +116,7 @@
                         <b class="truncate">{{ pdf.file.name }}</b>
                         <span class="small muted">{{ fileMeta(pdf.file) }}</span>
                       </div>
-                      <span v-if="pdf.kind === 'ok'" class="tag mint">Загружен</span>
+                      <app-tag v-if="pdf.kind === 'ok'" tone="mint">Загружен</app-tag>
                       <label v-else class="lnk relative">
                         Выбрать другой
                         <input
@@ -182,7 +182,7 @@
                   <template v-if="event.tracks.length">
                     <dt>Треки</dt>
                     <dd class="m-0 flex flex-wrap gap-1.5">
-                      <span v-for="track in event.tracks" :key="track.name" class="tag">{{ track.name }}</span>
+                      <app-tag v-for="track in event.tracks" :key="track.name">{{ track.name }}</app-tag>
                     </dd>
                   </template>
                 </dl>
@@ -213,6 +213,7 @@ import { createTalkReview, type EventTrack, listEventTracks } from '@/api/demo'
 import { type City, type Conference, getConferenceBySlug, listCities } from '@/api/generated'
 import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import { conferencePlace, formatLabels, isTrixSource, kindLabels, levelLabels } from '@/components/speaker/events'
 import SpPage from '@/components/speaker/SpPage.vue'

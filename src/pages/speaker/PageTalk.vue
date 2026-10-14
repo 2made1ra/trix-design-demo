@@ -51,8 +51,8 @@
               <span class="ribbon self-start">Разбор до выступления</span>
               <h1 class="d-2">{{ state.review.title }}</h1>
               <div class="flex flex-wrap gap-2">
-                <span class="tag">{{ state.review.event.name }}</span>
-                <span v-for="material in state.review.materials" :key="material" class="tag">{{ material }}</span>
+                <app-tag>{{ state.review.event.name }}</app-tag>
+                <app-tag v-for="material in state.review.materials" :key="material">{{ material }}</app-tag>
               </div>
             </div>
 
@@ -67,9 +67,9 @@
                   <div class="step" :class="{ 'text-ink-2': stepState(i) === 'wait' }">
                     <div class="step-h">
                       <h3 class="h-24">{{ step.title }}</h3>
-                      <span class="tag" :class="badge(i).class">
+                      <app-tag :tone="badge(i).tone">
                         <i v-if="stepState(i) === 'run'" class="dot-live" />{{ badge(i).label }}
-                      </span>
+                      </app-tag>
                     </div>
                     <p class="small muted">{{ step.text }}</p>
                     <span v-if="stepState(i) === 'run'" class="run-bar" aria-hidden="true" />
@@ -149,7 +149,7 @@
 
               <app-tile as="section" tone="ink" class="flex flex-col gap-4" aria-labelledby="criteria-title" data-rv>
                 <div class="flex items-center justify-between">
-                  <span class="tag mint">AI · Оценка</span>
+                  <app-tag tone="mint">AI · Оценка</app-tag>
                   <span class="k muted">{{
                     state.review.materials.length > 1 ? 'Текст + слайды' : 'По материалам'
                   }}</span>
@@ -171,9 +171,9 @@
                 <div>
                   <div v-for="criterion in state.review.result.criteria" :key="criterion.id" class="crit">
                     <span>{{ criterion.name }}</span>
-                    <span class="tag" :class="criteriaMarks[criterion.state].tag">{{
+                    <app-tag :tone="criteriaMarks[criterion.state].tag">{{
                       criteriaMarks[criterion.state].label
-                    }}</span>
+                    }}</app-tag>
                   </div>
                 </div>
                 <p class="small muted">
@@ -192,9 +192,9 @@
                   <sp-stream-label label="Правка" :number="String(i + 1).padStart(2, '0')" />
                   <app-tile class="fix" data-rv>
                     <div class="flex flex-col gap-2.5">
-                      <span class="tag self-start" :class="{ ink: fix.priority === 'high' }">{{
+                      <app-tag class="self-start" :tone="fix.priority === 'high' ? 'ink' : null">{{
                         fix.priority === 'high' ? 'Высокий' : 'Средний'
-                      }}</span>
+                      }}</app-tag>
                       <h3 class="h-24">{{ fix.title }}</h3>
                       <p class="muted">{{ fix.text }}</p>
                     </div>
@@ -239,9 +239,11 @@ import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch
 import { useRoute } from 'vue-router'
 import { type CriterionState, getTalkReview, type TalkReview, type TalkReviewStage } from '@/api/demo'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import SpPage from '@/components/speaker/SpPage.vue'
 import SpStreamLabel from '@/components/speaker/SpStreamLabel.vue'
+import type { TagTone } from '@/components/tones'
 import { useFx } from '@/composables/useFx'
 
 type State =
@@ -269,7 +271,7 @@ const steps = [
 const stages: TalkReviewStage[] = ['reading', 'matching', 'scoring']
 const statusLines = ['Читаем материалы', 'Сверяем доклад с аудиторией мероприятия', 'Готовим правки и вопросы из зала']
 
-const criteriaMarks: Record<CriterionState, { label: string; tag: string; meter: string }> = {
+const criteriaMarks: Record<CriterionState, { label: string; tag: TagTone; meter: string }> = {
   ok: { label: 'В порядке', tag: 'mint', meter: '' },
   improve: { label: 'Доработать', tag: 'yellow', meter: 'warn' },
   weak: { label: 'Слабо', tag: 'pink', meter: 'bad' },
@@ -296,17 +298,17 @@ const stepState = (i: number): StepState => {
   if (review.value?.status === 'failed') return i === 0 ? 'fail' : 'wait'
   return i < current.value ? 'done' : i === current.value ? 'run' : 'wait'
 }
-const badge = (i: number) => {
+const badge = (i: number): { label: string; tone: TagTone | null } => {
   const failed = review.value?.status === 'failed'
   switch (stepState(i)) {
     case 'done':
-      return { label: 'Готово', class: 'mint' }
+      return { label: 'Готово', tone: 'mint' }
     case 'run':
-      return { label: 'В работе', class: '' }
+      return { label: 'В работе', tone: null }
     case 'fail':
-      return { label: 'Ошибка', class: 'pink' }
+      return { label: 'Ошибка', tone: 'pink' }
     default:
-      return { label: failed ? 'Не начат' : 'Ждёт', class: 'dash' }
+      return { label: failed ? 'Не начат' : 'Ждёт', tone: 'dash' }
   }
 }
 const lowerFirst = (text: string) =>

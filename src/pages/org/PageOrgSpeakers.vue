@@ -28,7 +28,7 @@
           data-rv
         >
           <div class="emp">
-            <span class="tag dash">Пока пусто</span>
+            <app-tag tone="dash">Пока пусто</app-tag>
             <h2 id="empty-title" class="h-34">Спикеров пока нет: загрузите Excel или отправьте ссылку-приглашение</h2>
             <p class="muted">Спикер принимает приглашение сам, и только после этого вы видите его выступления.</p>
             <div class="flex flex-wrap gap-3">
@@ -214,15 +214,15 @@
                     <td class="n num">{{ item.status === 'active' ? item.talks_count : '—' }}</td>
                     <td class="n num">{{ formatNps(item.nps) }}</td>
                     <td>
-                      <span v-if="item.recommended" class="tag ink">Рекомендую</span>
+                      <app-tag v-if="item.recommended" tone="ink">Рекомендую</app-tag>
                       <span v-else class="muted"
                         ><span aria-hidden="true">—</span><span class="sr">Не рекомендован</span></span
                       >
                     </td>
                     <td>
-                      <span class="tag" :class="item.status === 'active' ? 'mint' : 'dash'">{{
+                      <app-tag :tone="item.status === 'active' ? 'mint' : 'dash'">{{
                         item.status === 'active' ? 'Активен' : 'Приглашён'
-                      }}</span>
+                      }}</app-tag>
                     </td>
                     <td>
                       <router-link :to="offerLink(item.id)" class="b b-line b-sm">Предложить выступить</router-link>
@@ -254,8 +254,8 @@
                       </div>
                     </div>
                     <span class="flex items-center gap-2">
-                      <span v-if="item.recommended" class="tag ink">Рекомендую</span>
-                      <span v-if="item.status === 'invited'" class="tag dash">Приглашён</span>
+                      <app-tag v-if="item.recommended" tone="ink">Рекомендую</app-tag>
+                      <app-tag v-if="item.status === 'invited'" tone="dash">Приглашён</app-tag>
                       <span v-else class="num">{{ formatNps(item.nps) }}</span>
                     </span>
                   </li>
@@ -298,6 +298,7 @@ import {
 import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppPick from '@/components/AppPick.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import { formatNps, initials, plural } from '@/components/org/format'
 import { levelNames, levelOptions } from '@/components/org/levels'

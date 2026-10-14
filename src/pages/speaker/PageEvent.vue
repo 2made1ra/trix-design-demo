@@ -12,9 +12,9 @@
 
       <div v-else-if="state.status !== 'ready'" class="wrap flex-1 pt-16 pb-24">
         <app-tile as="section" class="sel-st max-w-160" :role="state.status === 'error' ? 'alert' : undefined">
-          <span class="tag self-start" :class="{ pink: state.status === 'error' }">
+          <app-tag class="self-start" :tone="state.status === 'error' ? 'pink' : null">
             {{ state.status === 'error' ? 'Ошибка' : '404' }}
-          </span>
+          </app-tag>
           <h1 class="h-34">
             {{ state.status === 'error' ? 'Не удалось загрузить мероприятие' : 'Такого мероприятия нет' }}
           </h1>
@@ -215,6 +215,7 @@ import {
   listRecommendations,
 } from '@/api/generated'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import {
   conferencePlace,

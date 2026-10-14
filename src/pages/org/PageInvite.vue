@@ -40,7 +40,7 @@
 
       <section class="pnl gap-8" aria-labelledby="title">
         <div class="flex flex-col gap-4" data-rv>
-          <span class="tag lime self-start">Компаниям</span>
+          <app-tag tone="lime" class="self-start">Компаниям</app-tag>
           <h1 id="title" class="d-1">{{ texts[state.kind].title }}</h1>
           <p class="deck text-[20px]">
             {{ texts[state.kind].lead }}
@@ -66,7 +66,7 @@
               <span class="k muted">Рабочая почта</span>
               <div class="mail-row">
                 <b>{{ state.info.email }}</b>
-                <span class="tag mint">Подтверждена</span>
+                <app-tag tone="mint">Подтверждена</app-tag>
               </div>
             </div>
             <app-field
@@ -126,6 +126,7 @@ import { toast } from 'vue-sonner'
 import { type AcceptInviteInput, acceptInvite, getInvite, type InviteInfo } from '@/api/demo'
 import AppField from '@/components/AppField.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTile from '@/components/AppTile.vue'
 import { useAuth } from '@/composables/useAuth'
 

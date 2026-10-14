@@ -35,7 +35,7 @@
                     <span class="small">Ссылка</span><b class="small" data-typed="1">datafest.ru/program</b>
                   </div>
                   <div class="mrow" data-s="2">
-                    <span class="small">Data Fest, Казань</span><span class="tag">14 ноября</span>
+                    <span class="small">Data Fest, Казань</span><app-tag>14 ноября</app-tag>
                   </div>
                 </app-how-step>
                 <app-how-step
@@ -44,13 +44,13 @@
                   text="Мероприятия вашей компании и открытые конференции — с объяснением, почему подходят."
                 >
                   <div class="mrow" data-s="3">
-                    <span class="sk w-26" /><span class="tag ink">Внутреннее</span>
+                    <span class="sk w-26" /><app-tag tone="ink">Внутреннее</app-tag>
                   </div>
                   <div class="mrow" data-s="4">
-                    <span class="sk w-30" /><span class="tag">до 20 ноября</span>
+                    <span class="sk w-30" /><app-tag>до 20 ноября</app-tag>
                   </div>
                   <div class="mrow" data-s="4">
-                    <span class="sk w-23" /><span class="tag mint">Оплачивается</span>
+                    <span class="sk w-23" /><app-tag tone="mint">Оплачивается</app-tag>
                   </div>
                 </app-how-step>
                 <app-how-step
@@ -58,10 +58,10 @@
                   title="Подготовьте доклад"
                   text="Загрузите текст или слайды — получите разбор под аудиторию мероприятия."
                 >
-                  <span class="tag dash self-start" data-s="5">slides.pdf</span>
+                  <app-tag tone="dash" class="self-start" data-s="5">slides.pdf</app-tag>
                   <div v-for="row in reviewRows" :key="row.label" class="mrow">
                     <span class="small">{{ row.label }}</span>
-                    <span class="tag" :class="row.tone" data-s="6">{{ row.status }}</span>
+                    <app-tag :tone="row.tone" data-s="6">{{ row.status }}</app-tag>
                   </div>
                 </app-how-step>
               </ol>
@@ -107,8 +107,8 @@
               <div class="mrow" data-s="4">
                 <span><b>Команда DevRel</b> <span class="small muted">· увидела выступление</span></span>
                 <span class="stack">
-                  <span class="tag dash" data-s="4-4">На подтверждении</span>
-                  <span class="tag mint" data-s="5">Засчитано</span>
+                  <app-tag tone="dash" data-s="4-4">На подтверждении</app-tag>
+                  <app-tag tone="mint" data-s="5">Засчитано</app-tag>
                 </span>
               </div>
             </app-tile>
@@ -124,8 +124,7 @@
               <figcaption class="sr">Подборка мероприятий и предложение выступить от команды</figcaption>
               <app-win-top title="Мероприятия для вас" note="Подборка · Сохранённые" />
               <app-picks>
-                <span class="tag ink">Backend</span><span class="tag">Опытный</span
-                ><span class="tag">Цель: выступать</span>
+                <app-tag tone="ink">Backend</app-tag><app-tag>Опытный</app-tag><app-tag>Цель: выступать</app-tag>
               </app-picks>
               <app-scene-bar
                 :step="1"
@@ -137,7 +136,7 @@
                   <b>DevRel предлагает выступить</b>
                   <span class="small">Конференция о данных, трек ML · ответить до 20 ноября</span>
                 </div>
-                <span class="tag ink">Предложение</span>
+                <app-tag tone="ink">Предложение</app-tag>
               </div>
               <div v-for="event in demoEvents" :key="event.title" class="mrow" data-s="3">
                 <div class="cell">
@@ -145,7 +144,7 @@
                   <span class="small muted">{{ event.text }}</span>
                   <span class="k muted">{{ event.source }}</span>
                 </div>
-                <span class="tag" :class="event.tone">{{ event.paid }}</span>
+                <app-tag :tone="event.tone">{{ event.paid }}</app-tag>
               </div>
             </app-tile>
 
@@ -162,8 +161,8 @@
                 <span class="k lock"><Lock />Видите только вы</span>
               </app-win-top>
               <app-picks>
-                <span class="tag" data-s="1">slides.pdf</span
-                ><span class="tag">Конференция о высоконагруженных системах</span><span class="tag">30 мин</span>
+                <app-tag data-s="1">slides.pdf</app-tag><app-tag>Конференция о высоконагруженных системах</app-tag
+                ><app-tag>30 мин</app-tag>
               </app-picks>
               <app-scene-bar :step="2" busy="Разбираем доклад под аудиторию" done="Готово: 4 критерия, 2 правки" />
               <div class="flex gap-6 k muted">
@@ -171,7 +170,7 @@
               </div>
               <div v-for="(row, j) in criteria" :key="row.label" class="mrow solid">
                 <span>{{ row.label }}</span>
-                <span class="tag" :class="row.tone" :data-s="j + 3">{{ row.status }}</span>
+                <app-tag :tone="row.tone" :data-s="j + 3">{{ row.status }}</app-tag>
               </div>
               <app-tile tone="ink" class="rounded-2xl px-5 py-4.5" data-s="7">
                 <span class="k text-mint">Правка 01</span>
@@ -194,15 +193,15 @@
                 <span v-for="n in 3" :key="n" class="k muted">Доклад {{ n }}</span>
                 <template v-for="row in progress" :key="row.label">
                   <span>{{ row.label }}</span>
-                  <span
+                  <app-tag
                     v-for="(mark, j) in row.marks"
                     :key="j"
-                    class="tag justify-self-start"
+                    class="justify-self-start"
                     :class="marks[mark].tone"
                     :data-s="j + 1"
                   >
                     {{ marks[mark].label }}
-                  </span>
+                  </app-tag>
                 </template>
                 <span>Оценки зала</span>
                 <b v-for="(score, j) in ['4,1', '4,4', '4,7']" :key="score" class="num" :data-s="j + 1">{{ score }}</b>
@@ -233,14 +232,14 @@
                   <b>{{ place.title }}</b>
                   <span class="small muted">{{ place.text }}</span>
                 </div>
-                <span class="tag" :class="place.start && 'mint'">{{ place.start ? 'Для старта' : 'Опытным' }}</span>
+                <app-tag :tone="place.start ? 'mint' : null">{{ place.start ? 'Для старта' : 'Опытным' }}</app-tag>
               </div>
               <app-tile tone="mint" class="flex items-center justify-between gap-4 rounded-2xl px-5 py-4.5" data-s="3">
                 <div>
                   <span class="k">Репетиция · аудио 9:48</span>
                   <p class="h-20 mt-2">Темп речи</p>
                 </div>
-                <span class="tag yellow" data-s="4">Доработать</span>
+                <app-tag tone="yellow" data-s="4">Доработать</app-tag>
               </app-tile>
             </app-tile>
 
@@ -260,9 +259,9 @@
                     <tr v-for="row in visibility" :key="row.label" :class="{ key: row.key }">
                       <th scope="row">{{ row.label }}</th>
                       <td v-for="(cell, j) in row.cells" :key="j" :class="!cell.tag && 'small'">
-                        <span v-if="cell.tag" class="tag" :class="cell.tag === 'yes' ? 'mint' : 'dash'">{{
+                        <app-tag v-if="cell.tag" :tone="cell.tag === 'yes' ? 'mint' : 'dash'">{{
                           cell.tag === 'yes' ? 'Да' : 'Нет'
-                        }}</span>
+                        }}</app-tag>
                         <template v-else>{{ cell.text }}</template>
                       </td>
                     </tr>
@@ -292,6 +291,7 @@ import AppHowStep from '@/components/AppHowStep.vue'
 import AppPick from '@/components/AppPick.vue'
 import AppPicks from '@/components/AppPicks.vue'
 import AppSceneBar from '@/components/AppSceneBar.vue'
+import AppTag from '@/components/AppTag.vue'
 import AppTicker from '@/components/AppTicker.vue'
 import AppTile from '@/components/AppTile.vue'
 import AppWinTop from '@/components/AppWinTop.vue'
@@ -320,7 +320,7 @@ const reviewRows = [
   { label: 'Аудитория', status: 'Доработать', tone: 'yellow' },
   { label: 'Структура', status: 'В порядке', tone: 'mint' },
   { label: 'Тайминг', status: 'Слабо', tone: 'pink' },
-]
+] as const
 
 const features = [
   {
@@ -415,7 +415,7 @@ const demoEvents = [
     text: 'Ваша тема совпадает с треком «Производительность». Заявки до 25 ноября',
     source: 'Внутреннее · Заявка через TRIX',
     paid: 'Не оплачивается',
-    tone: '',
+    tone: null,
   },
   {
     title: 'Конференция о высоконагруженных системах',
@@ -431,13 +431,13 @@ const demoEvents = [
     paid: 'Оплачивается',
     tone: 'ink',
   },
-]
+] as const
 const criteria = [
   { label: 'Соответствие аудитории', status: 'Доработать', tone: 'yellow' },
   { label: 'Структура', status: 'В порядке', tone: 'mint' },
   { label: 'Главная мысль', status: 'Доработать', tone: 'yellow' },
   { label: 'Укладывается во время', status: 'Слабо', tone: 'pink' },
-]
+] as const
 const marks = {
   ok: { label: 'В порядке', tone: 'mint' },
   fix: { label: 'Доработать', tone: 'yellow' },

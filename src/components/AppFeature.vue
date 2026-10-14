@@ -3,7 +3,7 @@
     <sp-stream-label :label="label" :number="number" />
     <div class="feat pb-12" :class="{ flip }">
       <div class="txt" data-rv>
-        <span class="tag self-start" :class="tone">{{ tag }}</span>
+        <app-tag class="self-start" :tone="tone">{{ tag }}</app-tag>
         <h2 :id="`${id}-title`" class="d-3">{{ title }}</h2>
         <p class="deck">{{ text }}</p>
         <ul class="ticks small">
@@ -17,6 +17,7 @@
 </template>
 
 <script setup lang="ts">
+import AppTag from '@/components/AppTag.vue'
 import SpStreamLabel from '@/components/speaker/SpStreamLabel.vue'
 
 defineProps<{
