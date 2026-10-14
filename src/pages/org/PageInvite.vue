@@ -1,161 +1,148 @@
 <template>
-  <org-split>
-    <template #card>
-      <span class="kicker text-ink-2">Приглашение в организацию</span>
-      <p class="text-2xl leading-[1.05] font-bold">Вас пригласили в {{ info?.organization_name ?? 'организацию' }}</p>
-      <dl class="text-sm">
-        <div
-          v-for="[ term, value ] in facts"
-          :key="term"
-          class="flex flex-col gap-1 py-3 shadow-[inset_0_1px_0_var(--line-2)]"
-        >
-          <dt class="kicker text-ink-2">{{ term }}</dt>
-          <dd class="text-[17px] font-semibold">{{ value }}</dd>
+  <app-onboarding-frame side="co" :home="{ name: 'companies.landing' }" big="TRIX" sub="." :footer="false">
+    <template #float>
+      <span class="k muted">Приглашение в организацию</span>
+      <p class="h-24">Вас пригласили в {{ info?.organization_name ?? 'организацию' }}</p>
+      <dl class="facts small">
+        <div v-for="[ term, value ] in facts" :key="term">
+          <dt class="k muted">{{ term }}</dt>
+          <dd>{{ value }}</dd>
         </div>
       </dl>
-      <p class="text-sm text-ink-2">
+      <p class="small muted">
         Заявку организации подтвердила команда TRIX. Вы первым настроите организацию: направления, города, команду и
         спикеров.
       </p>
     </template>
-    <template #big>TRIX<span class="font-light text-ink/30">.</span></template>
 
-    <p v-if="state.kind === 'loading'" class="text-ink-2" role="status">Загружаем приглашение…</p>
+    <p v-if="state.kind === 'loading'" class="muted" role="status">Загружаем приглашение…</p>
 
-    <section
-      v-else-if="state.kind === 'expired'"
-      class="flex max-w-140 flex-col gap-8"
-      aria-labelledby="title"
-      aria-live="polite"
-    >
+    <section v-else-if="state.kind === 'expired'" class="pnl gap-8" aria-labelledby="title" aria-live="polite">
       <div class="flex flex-col gap-6" data-rv>
-        <span
-          class="flex size-16 items-center justify-center rounded-full bg-paper-2 shadow-[inset_0_0_0_1px_var(--field)]"
-          aria-hidden="true"
-        >
-          <ClockIcon class="size-7" />
-        </span>
-        <h1 id="title" class="shout text-d1">Приглашение устарело</h1>
-        <p class="text-xl leading-[1.55] text-ink-2">
+        <span class="stop" aria-hidden="true"><ClockIcon /></span>
+        <h1 id="title" class="d-1">Приглашение устарело</h1>
+        <p class="deck text-[20px]">
           Ссылка из письма больше не действует: срок вышел или приглашение уже использовано. Запросите новое, и если для
           этой почты есть приглашение, мы пришлём его письмом.
         </p>
       </div>
-      <div class="flex flex-wrap gap-3" data-rv>
-        <org-button :to="{ name: 'connect' }">Запросить новое</org-button>
-        <org-button variant="line" :to="{ name: 'companies.landing' }">На главную</org-button>
+      <div class="acts" data-rv>
+        <router-link :to="{ name: 'connect' }" class="b b-mint">Запросить новое</router-link>
+        <router-link :to="{ name: 'companies.landing' }" class="b b-line">На главную</router-link>
       </div>
     </section>
 
-    <section v-else class="flex max-w-140 flex-col gap-8" aria-labelledby="title">
-      <p v-if="state.kind === 'new'" class="self-end text-sm text-ink-2" data-rv>
+    <div v-else class="flex flex-col gap-10">
+      <p v-if="state.kind === 'new'" class="small muted top" data-rv>
         Уже есть аккаунт?
-        <button
-          type="button"
-          class="ml-1.5 font-semibold text-ink shadow-[inset_0_-1px_0_currentColor]"
-          @click="goLogin"
-        >
-          Войти
-        </button>
+        <button type="button" class="ln ml-1.5 font-semibold text-ink" @click="goLogin">Войти</button>
       </p>
 
-      <div class="flex flex-col gap-4" data-rv>
-        <span class="tag fill-lime self-start">Компаниям</span>
-        <h1 id="title" class="shout text-d1">{{ texts[state.kind].title }}</h1>
-        <p class="text-xl leading-[1.55] text-ink-2">
-          {{ texts[state.kind].lead }}
-          <b v-if="state.kind === 'current'" class="font-mono text-[15px] break-all text-ink">{{
-            state.info.current_email
-          }}</b>
-          <template v-if="state.kind === 'current'">
-            Принять приглашение в этот аккаунт? Рабочая почта добавится к нему.</template
-          >
-        </p>
-      </div>
-
-      <div v-if="state.kind === 'current'" class="tile tile-slate flex flex-col gap-1.5 px-6 py-5" data-rv>
-        <span class="kicker text-ink-2">Что произойдёт</span>
-        <p class="text-sm">
-          Рабочая почта {{ state.info.email }} появится в вашем аккаунте, а организация
-          {{ state.info.organization_name }} откроется переключателем «Организация | Личное». Второго аккаунта не будет.
-        </p>
-      </div>
-
-      <form class="flex flex-col gap-7" novalidate data-rv @submit.prevent="submit">
-        <fieldset v-if="state.kind !== 'current'" class="flex min-w-0 flex-col gap-6">
-          <div class="flex flex-col gap-2">
-            <span class="kicker text-ink-2">Рабочая почта</span>
-            <div
-              class="flex flex-wrap items-center gap-x-3.5 gap-y-2.5 rounded-xs bg-paper-2 px-4 py-3.5 shadow-[inset_0_0_0_1px_var(--line-2)]"
-            >
-              <b class="text-[17px] font-semibold [overflow-wrap:anywhere]">{{ state.info.email }}</b>
-              <span class="tag fill-mint">Подтверждена</span>
-            </div>
-          </div>
-          <div v-if="state.kind === 'new'" class="flex flex-col gap-2.5">
-            <label for="name" class="org-label">Имя</label>
-            <input
-              id="name"
-              v-model="form.name"
-              class="org-inp"
-              type="text"
-              autocomplete="name"
-              placeholder="Имя и фамилия"
-              :aria-invalid="!!errors.name"
-            >
-            <p v-if="errors.name" class="org-err" role="alert">{{ errors.name }}</p>
-          </div>
-          <div class="flex flex-col gap-2.5">
-            <label for="password" class="org-label">Пароль</label>
-            <div class="relative">
-              <input
-                id="password"
-                v-model="form.password"
-                class="org-inp pr-13"
-                :type="showPassword ? 'text' : 'password'"
-                :autocomplete="state.kind === 'new' ? 'new-password' : 'current-password'"
-                :aria-invalid="!!errors.password"
-                aria-describedby="password-hint"
-              >
-              <button
-                type="button"
-                class="absolute top-0.75 right-0.75 flex size-11 items-center justify-center rounded-xs text-ink-2 hover:text-ink"
-                :aria-label="showPassword ? 'Скрыть пароль' : 'Показать пароль'"
-                @click="showPassword = !showPassword"
-              >
-                <component :is="showPassword ? EyeOffIcon : EyeIcon" class="size-4.5" />
-              </button>
-            </div>
-            <p v-if="errors.password" class="org-err" role="alert">{{ errors.password }}</p>
-            <p v-else-if="state.kind === 'new'" id="password-hint" class="text-[13px] leading-normal text-ink-2">
-              Не короче 8 символов
-            </p>
-          </div>
-        </fieldset>
-
-        <div class="flex flex-wrap gap-3">
-          <org-button type="submit" :block="state.kind !== 'current'" :disabled="sending">
-            {{ texts[state.kind].action }}<ArrowRightIcon />
-          </org-button>
-          <org-button v-if="state.kind === 'current'" variant="line" @click="goLogin">Войти под другим</org-button>
+      <section class="pnl gap-8" aria-labelledby="title">
+        <div class="flex flex-col gap-4" data-rv>
+          <span class="tag lime self-start">Компаниям</span>
+          <h1 id="title" class="d-1">{{ texts[state.kind].title }}</h1>
+          <p class="deck text-[20px]">
+            {{ texts[state.kind].lead }}
+            <template v-if="state.kind === 'current'">
+              <span class="who">{{ state.info.current_email }}</span>
+              Принять приглашение в этот аккаунт? Рабочая почта добавится к нему.
+            </template>
+          </p>
         </div>
-      </form>
 
-      <p v-if="state.kind === 'new'" class="text-sm text-ink-2" data-rv>
-        Принимая приглашение, вы соглашаетесь с политикой конфиденциальности.
-      </p>
-    </section>
-  </org-split>
+        <div v-if="state.kind === 'current'" class="tile slate note" data-rv>
+          <span class="k muted">Что произойдёт</span>
+          <p class="small">
+            Рабочая почта {{ state.info.email }} появится в вашем аккаунте, а организация
+            {{ state.info.organization_name }} откроется переключателем «Организация | Личное». Второго аккаунта не
+            будет.
+          </p>
+        </div>
+
+        <form class="flex flex-col gap-7" novalidate data-rv @submit.prevent="submit">
+          <fieldset v-if="state.kind !== 'current'" class="fs">
+            <div class="mail">
+              <span class="k muted">Рабочая почта</span>
+              <div class="mail-row">
+                <b>{{ state.info.email }}</b>
+                <span class="tag mint">Подтверждена</span>
+              </div>
+            </div>
+            <div v-if="state.kind === 'new'" class="field">
+              <label for="name">Имя</label>
+              <input
+                id="name"
+                v-model="form.name"
+                class="inp"
+                type="text"
+                autocomplete="name"
+                placeholder="Имя и фамилия"
+                :aria-invalid="!!errors.name"
+              >
+              <p v-if="errors.name" class="err" role="alert"><CircleAlertIcon />{{ errors.name }}</p>
+            </div>
+            <div class="field">
+              <label for="password">Пароль</label>
+              <div class="pw">
+                <input
+                  id="password"
+                  v-model="form.password"
+                  class="inp"
+                  :type="showPassword ? 'text' : 'password'"
+                  :autocomplete="state.kind === 'new' ? 'new-password' : 'current-password'"
+                  :aria-invalid="!!errors.password"
+                  aria-describedby="password-hint"
+                >
+                <button
+                  type="button"
+                  :aria-label="showPassword ? 'Скрыть пароль' : 'Показать пароль'"
+                  @click="showPassword = !showPassword"
+                >
+                  <component :is="showPassword ? EyeOffIcon : EyeIcon" />
+                </button>
+              </div>
+              <p v-if="errors.password" class="err" role="alert"><CircleAlertIcon />{{ errors.password }}</p>
+              <p v-else-if="state.kind === 'new'" id="password-hint" class="hint">Не короче 8 символов</p>
+            </div>
+          </fieldset>
+
+          <div v-if="state.kind === 'current'" class="acts">
+            <button type="submit" class="b b-mint" :disabled="sending">
+              {{ texts[state.kind].action }}<ArrowRightIcon />
+            </button>
+            <button type="button" class="b b-line" @click="goLogin">Войти под другим</button>
+          </div>
+          <button v-else type="submit" class="b b-mint go" :disabled="sending">
+            {{ texts[state.kind].action }}<ArrowRightIcon />
+          </button>
+        </form>
+
+        <p v-if="state.kind === 'new'" class="small muted" data-rv>
+          Принимая приглашение, вы соглашаетесь с <a href="#privacy-policy" class="ln">политикой конфиденциальности</a>.
+        </p>
+        <p v-else-if="state.kind === 'exists'" class="small" data-rv><a href="#reset" class="ln">Забыли пароль?</a></p>
+      </section>
+    </div>
+
+    <template #footer>
+      <footer class="rf k muted">
+        <span>© 2026 TRIX</span>
+        <div>
+          <a href="#help" class="ln">Помощь</a><a href="#privacy-policy" class="ln">Политика конфиденциальности</a>
+        </div>
+      </footer>
+    </template>
+  </app-onboarding-frame>
 </template>
 
 <script setup lang="ts">
-import { ArrowRightIcon, ClockIcon, EyeIcon, EyeOffIcon } from '@lucide/vue'
+import { ArrowRightIcon, CircleAlertIcon, ClockIcon, EyeIcon, EyeOffIcon } from '@lucide/vue'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { type AcceptInviteInput, acceptInvite, getInvite, type InviteInfo } from '@/api/demo'
-import OrgButton from '@/components/org/OrgButton.vue'
-import OrgSplit from '@/components/org/OrgSplit.vue'
+import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
 import { useAuth } from '@/composables/useAuth'
 
 type State = { kind: 'loading' } | { kind: 'expired' } | { kind: 'new' | 'exists' | 'current'; info: InviteInfo }

@@ -1,114 +1,120 @@
 <template>
-  <org-split>
-    <template #card>
-      <span class="kicker text-ink-2">Закрытая бета · для компаний</span>
-      <p class="text-2xl leading-[1.05] font-bold">Все ваши спикеры в одном окне</p>
-      <ul class="ticks text-sm">
+  <app-onboarding-frame side="co" :home="{ name: 'companies.landing' }" big="TRIX" sub="." :footer="false">
+    <template #float>
+      <span class="k muted">Закрытая бета · для компаний</span>
+      <p class="h-24">Все ваши спикеры в одном окне</p>
+      <ul class="ticks small">
         <li>Эксперты сами вносят выступления, вы подтверждаете</li>
         <li>Видно, кто, где и как выступил</li>
         <li>Подскажем, кого позвать на мероприятие</li>
       </ul>
     </template>
-    <template #big>TRIX<span class="font-light text-ink/30">.</span></template>
 
-    <section v-if="state.kind === 'form'" class="flex max-w-140 flex-col gap-10" aria-labelledby="form-title">
+    <section v-if="state.kind === 'form'" class="pnl" aria-labelledby="form-title">
       <div class="flex flex-col gap-4" data-rv>
-        <span class="tag fill-lime self-start">Компаниям</span>
-        <h1 id="form-title" class="shout text-d1">Подключить организацию</h1>
-        <p class="text-xl leading-[1.55] text-ink-2">
+        <span class="tag lime self-start">Компаниям</span>
+        <h1 id="form-title" class="d-1">Подключить организацию</h1>
+        <p class="deck text-[20px]">
           Оставьте заявку: проверим организацию и пришлём приглашение администратору на рабочую почту.
         </p>
       </div>
       <form class="flex flex-col gap-7" novalidate data-rv @submit.prevent="submit">
-        <fieldset class="flex min-w-0 flex-col gap-6">
-          <div class="flex flex-col gap-2.5">
-            <label for="org-name" class="org-label">Название организации</label>
+        <fieldset class="fs">
+          <div class="field">
+            <label for="org-name">Название организации</label>
             <input
               id="org-name"
               v-model="form.name"
-              class="org-inp"
+              class="inp"
               type="text"
               autocomplete="organization"
               placeholder="Как называется компания"
               :aria-invalid="!!errors.name"
               :aria-describedby="errors.name ? 'org-name-err' : undefined"
             >
-            <p v-if="errors.name" id="org-name-err" class="org-err" role="alert">{{ errors.name }}</p>
+            <p v-if="errors.name" id="org-name-err" class="err" role="alert"><CircleAlertIcon />{{ errors.name }}</p>
           </div>
-          <div class="flex flex-col gap-2.5">
-            <label for="org-email" class="org-label">Рабочая почта</label>
+          <div class="field">
+            <label for="org-email">Рабочая почта</label>
             <input
               id="org-email"
               v-model="form.email"
-              class="org-inp"
+              class="inp"
               type="email"
               autocomplete="email"
               placeholder="you@company.ru"
               :aria-invalid="!!errors.email"
               aria-describedby="org-email-hint"
             >
-            <p v-if="errors.email" class="org-err" role="alert">{{ errors.email }}</p>
-            <p id="org-email-hint" class="text-[13px] leading-normal text-ink-2">Сюда придёт приглашение</p>
+            <p v-if="errors.email" class="err" role="alert"><CircleAlertIcon />{{ errors.email }}</p>
+            <p id="org-email-hint" class="hint">Сюда придёт приглашение</p>
           </div>
-          <div class="flex flex-col gap-2.5">
-            <label for="org-site" class="org-label">Сайт</label>
+          <div class="field">
+            <label for="org-site">Сайт</label>
             <input
               id="org-site"
               v-model="form.site"
-              class="org-inp"
+              class="inp"
               type="url"
               autocomplete="url"
               placeholder="https://company.ru"
             >
           </div>
           <div class="flex flex-col gap-2">
-            <label class="org-agree">
+            <label class="agree">
               <input v-model="form.consent" type="checkbox">
               <span class="bx" aria-hidden="true"><CheckIcon /></span>
-              <span>Согласен на обработку персональных данных по политике конфиденциальности</span>
+              <span>
+                Согласен на обработку персональных данных по
+                <a href="#privacy-policy" class="ln">политике конфиденциальности</a>
+              </span>
             </label>
-            <p v-if="errors.consent" class="org-err" role="alert">{{ errors.consent }}</p>
+            <p v-if="errors.consent" class="err" role="alert"><CircleAlertIcon />{{ errors.consent }}</p>
           </div>
         </fieldset>
-        <org-button type="submit" block :disabled="sending"> Отправить заявку<ArrowRightIcon /> </org-button>
+        <button type="submit" class="b b-mint go" :disabled="sending">Отправить заявку<ArrowRightIcon /></button>
       </form>
-      <p class="text-sm text-ink-2" data-rv>
+      <p class="small muted" data-rv>
         Уже в команде?
-        <router-link :to="{ name: 'login' }" class="font-semibold text-ink shadow-[inset_0_-1px_0_currentColor]"
-          >Войти</router-link
-        >
+        <router-link :to="{ name: 'login' }" class="ln font-semibold text-ink">Войти</router-link>
       </p>
     </section>
 
-    <section v-else class="flex max-w-140 flex-col gap-10" aria-labelledby="sent-title" aria-live="polite">
+    <section v-else class="pnl" aria-labelledby="sent-title" aria-live="polite">
       <div class="flex flex-col gap-6" data-rv>
-        <span class="flex size-16 items-center justify-center rounded-full fill-lime" aria-hidden="true">
-          <CheckIcon class="size-7" />
-        </span>
-        <h1 id="sent-title" class="shout text-d1">Заявка принята, ответим на почту</h1>
-        <p class="text-xl leading-[1.55] text-ink-2">
+        <span class="done" aria-hidden="true"><CheckIcon /></span>
+        <h1 id="sent-title" class="d-1">Заявка принята, ответим на почту</h1>
+        <p class="deck text-[20px]">
           Мы проверим организацию и пришлём приглашение администратору на указанную почту. Обычно это занимает один–два
           рабочих дня.
         </p>
       </div>
-      <div class="flex flex-wrap gap-3" data-rv>
-        <org-button :to="{ name: 'companies.landing' }">На главную<ArrowRightIcon /></org-button>
-        <org-button variant="line" :to="{ name: 'invite', params: { token: state.token } }">
+      <div class="acts" data-rv>
+        <router-link :to="{ name: 'companies.landing' }" class="b b-mint">На главную<ArrowRightIcon /></router-link>
+        <router-link :to="{ name: 'invite', params: { token: state.token } }" class="b b-line">
           Открыть приглашение из письма
-        </org-button>
+        </router-link>
       </div>
     </section>
-  </org-split>
+
+    <template #footer>
+      <footer class="rf k muted">
+        <span>© 2026 TRIX</span>
+        <div>
+          <a href="#help" class="ln">Помощь</a><a href="#privacy-policy" class="ln">Политика конфиденциальности</a>
+        </div>
+      </footer>
+    </template>
+  </app-onboarding-frame>
 </template>
 
 <script setup lang="ts">
-import { ArrowRightIcon, CheckIcon } from '@lucide/vue'
+import { ArrowRightIcon, CheckIcon, CircleAlertIcon } from '@lucide/vue'
 import { reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { createOrgApplication } from '@/api/demo'
-import OrgButton from '@/components/org/OrgButton.vue'
-import OrgSplit from '@/components/org/OrgSplit.vue'
+import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
 
 type State = { kind: 'form' } | { kind: 'sent'; token: string }
 

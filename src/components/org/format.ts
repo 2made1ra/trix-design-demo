@@ -14,3 +14,13 @@ export const demoFile = () =>
   new File([new Uint8Array(DEMO_FILE_BYTES)], DEMO_FILE_NAME, {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   })
+
+export const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0]?.toUpperCase())
+    .join('')
+
+export const formatNps = (nps: number | null | undefined) => (nps == null ? '—' : nps.toFixed(1))
