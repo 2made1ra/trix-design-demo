@@ -4,26 +4,26 @@
       <app-header />
 
       <div v-if="state.status === 'loading'" class="wrap flex-1 pt-10" role="status" aria-busy="true">
-        <span class="sr-only">Загружаем мероприятие</span>
+        <span class="sr">Загружаем мероприятие</span>
         <div class="tile skel" aria-hidden="true"><i class="s" /><i class="t" /><i class="m" /><i class="s" /></div>
       </div>
 
       <div v-else-if="state.status !== 'ready'" class="wrap flex-1 pt-16 pb-24">
-        <section class="tile flex max-w-160 flex-col gap-5" :role="state.status === 'error' ? 'alert' : undefined">
-          <span class="tag self-start" :class="state.status === 'error' && 'fill-pink'">
+        <section class="tile sel-st max-w-160" :role="state.status === 'error' ? 'alert' : undefined">
+          <span class="tag self-start" :class="{ pink: state.status === 'error' }">
             {{ state.status === 'error' ? 'Ошибка' : '404' }}
           </span>
-          <h1 class="text-[34px] leading-none font-bold">
+          <h1 class="h-34">
             {{ state.status === 'error' ? 'Не удалось загрузить мероприятие' : 'Такого мероприятия нет' }}
           </h1>
-          <p class="text-[17px] leading-[1.55] text-ink-2">
+          <p class="deck">
             {{
               state.status === 'error'
                 ? 'Проверьте соединение и попробуйте ещё раз.'
                 : 'Возможно, ссылка устарела или мероприятие снято с публикации.'
             }}
           </p>
-          <div class="flex flex-wrap gap-3">
+          <div class="sel-acts">
             <button v-if="state.status === 'error'" type="button" class="b b-ink b-sm" @click="load">
               Повторить<RotateCw />
             </button>
@@ -32,157 +32,131 @@
         </section>
       </div>
 
-      <div v-else class="wrap pb-24">
-        <nav class="flex flex-wrap gap-2 py-5 text-[13px] text-ink-2" aria-label="Навигация">
-          <router-link :to="listPath" class="hover:text-ink">Мероприятия</router-link>
+      <div v-else class="ev-wrap w-full flex-1">
+        <nav class="ev-crumbs" aria-label="Навигация">
+          <router-link :to="listPath">Мероприятия</router-link>
           <span aria-hidden="true">/</span>
-          <span class="text-ink" aria-current="page">{{ state.conference.name }}</span>
+          <router-link :to="listPath">{{ kindPlural[state.conference.kind] }}</router-link>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{{ state.conference.name }}</span>
         </nav>
 
         <div class="ev-cover" role="img" aria-label="Обложка мероприятия">
-          <div class="absolute top-8 left-9 flex flex-col gap-1 text-sm opacity-90">
+          <div class="org">
             <span>Организатор</span>
-            <b class="text-xl font-medium">{{ organizer }}</b>
+            <b>{{ organizer }}</b>
           </div>
-          <div
-            class="absolute -bottom-11 left-9 grid size-26 place-items-center rounded-3xl bg-paper font-sans text-5xl font-black tracking-[-0.02em] text-(--ev-ink) shadow-[0_0_0_5px_var(--bg),0_0_0_6px_var(--line)]"
-            aria-hidden="true"
-          >
-            {{ logo }}
-          </div>
+          <div class="ev-logo" aria-hidden="true">{{ logo }}</div>
         </div>
 
-        <section class="pt-18" data-rv>
-          <div class="flex flex-wrap gap-2">
+        <section class="ev-title" data-rv>
+          <div class="ev-chips">
             <span class="ev-chip acc">{{ kindLabels[state.conference.kind] }}</span>
             <span class="ev-chip">{{ trix ? 'Заявка через TRIX' : 'Из открытых источников' }}</span>
           </div>
-          <h1 class="shout mt-4 max-w-240 text-[clamp(48px,6.6vw,96px)] leading-[0.88]">{{ state.conference.name }}</h1>
-          <div class="mt-4 flex flex-wrap gap-x-7 gap-y-2 text-ink-2">
-            <span class="inline-flex items-center gap-2"
-              ><CalendarDays class="size-4.5" aria-hidden="true" />{{ dates }}</span
-            >
-            <span class="inline-flex items-center gap-2"
-              ><MapPin class="size-4.5" aria-hidden="true" />{{ place }}</span
-            >
+          <h1 class="ev-h1 d-1">{{ state.conference.name }}</h1>
+          <div class="ev-meta">
+            <span><CalendarDays aria-hidden="true" />{{ dates }}</span>
+            <span><MapPin aria-hidden="true" />{{ place }}</span>
             <span>Организатор: {{ organizer }}</span>
           </div>
-          <p v-if="state.reason" class="why mt-5 max-w-190"><b>Почему подходит</b>{{ state.reason }}</p>
-          <nav class="mt-10 flex gap-7 border-b border-line" aria-label="Разделы мероприятия">
-            <router-link
+          <p v-if="state.reason" class="why"><b>Почему подходит</b>{{ state.reason }}</p>
+          <nav class="ev-tabs" aria-label="Разделы мероприятия">
+            <a
               v-for="tab in tabs"
               :key="tab.hash"
-              :to="{ hash: tab.hash }"
-              class="kicker py-3.5 text-ink-2 hover:text-ink"
+              :href="tab.hash"
+              :aria-current="(route.hash || '#about') === tab.hash ? 'true' : undefined"
             >
               {{ tab.label }}
-            </router-link>
+            </a>
           </nav>
         </section>
 
-        <div class="grid items-start gap-16 pt-10 lg:grid-cols-[minmax(0,1fr)_380px]">
-          <main class="min-w-0">
-            <section id="about" class="scroll-mt-24 pb-9" data-rv>
-              <h2 class="shout mb-5 text-[44px]">О мероприятии</h2>
-              <p class="max-w-190 text-lg leading-[1.55]">
-                {{ state.conference.description ?? 'Описание пока не добавлено.' }}
-              </p>
+        <div class="ev-grid">
+          <main>
+            <section id="about" class="ev-sec" data-rv>
+              <h2 class="ev-h2">О мероприятии</h2>
+              <p class="ev-lead">{{ state.conference.description ?? 'Описание пока не добавлено.' }}</p>
             </section>
 
-            <section id="aud" class="scroll-mt-24 border-t border-line py-9" data-rv>
-              <h2 class="shout mb-5 text-[44px]">Аудитория</h2>
-              <dl class="grid gap-3 sm:grid-cols-3">
-                <div
-                  v-for="fact in facts"
-                  :key="fact.label"
-                  class="flex flex-col gap-1.5 rounded-[20px] bg-paper-2 px-5 py-4.5"
-                >
-                  <dt class="kicker text-ink-2">{{ fact.label }}</dt>
-                  <dd class="m-0">{{ fact.value }}</dd>
+            <section id="aud" class="ev-sec" data-rv>
+              <h2 class="ev-h2">Аудитория</h2>
+              <dl class="ev-facts">
+                <div v-for="fact in facts" :key="fact.label">
+                  <dt class="ev-label">{{ fact.label }}</dt>
+                  <dd>{{ fact.value }}</dd>
                 </div>
               </dl>
             </section>
 
-            <section v-if="state.tracks.length" id="tracks" class="scroll-mt-24 border-t border-line py-9" data-rv>
-              <h2 class="shout mb-5 text-[44px]">Треки</h2>
-              <ul class="m-0 list-none p-0">
-                <li
-                  v-for="(track, i) in state.tracks"
-                  :key="track.name"
-                  class="grid grid-cols-[44px_1fr] gap-4.5 border-t border-line py-4.5 first:border-0 first:pt-0"
-                >
+            <section v-if="state.tracks.length" id="tracks" class="ev-sec" data-rv>
+              <h2 class="ev-h2">Треки</h2>
+              <ul class="ev-tracks">
+                <li v-for="(track, i) in state.tracks" :key="track.name">
                   <span class="ev-n">{{ String(i + 1).padStart(2, '0') }}</span>
                   <div>
-                    <h3 class="text-xl leading-[1.3] font-bold">{{ track.name }}</h3>
-                    <p class="mt-1 text-[15px] text-ink-2">{{ track.description }}</p>
+                    <h3 class="ev-h3">{{ track.name }}</h3>
+                    <p>{{ track.description }}</p>
                   </div>
                 </li>
               </ul>
             </section>
 
-            <section id="terms" class="scroll-mt-24 border-t border-line py-9" data-rv>
-              <h2 class="shout mb-5 text-[44px]">Условия для спикеров</h2>
-              <dl class="m-0">
-                <div
-                  v-for="term in terms"
-                  :key="term.label"
-                  class="grid gap-x-6 gap-y-1 border-t border-line py-3.5 first:border-0 first:pt-0 sm:grid-cols-[220px_1fr]"
-                >
-                  <dt class="text-ink-2">{{ term.label }}</dt>
-                  <dd class="m-0">
-                    <span v-if="term.chip" class="ev-chip" :class="state.conference.is_paid === null && 'text-quiet'">{{
-                      term.value
-                    }}</span>
+            <section id="terms" class="ev-sec" data-rv>
+              <h2 class="ev-h2">Условия для спикеров</h2>
+              <dl class="ev-dl">
+                <div v-for="term in terms" :key="term.label">
+                  <dt>{{ term.label }}</dt>
+                  <dd>
+                    <span
+                      v-if="term.chip"
+                      class="ev-chip"
+                      :class="{ 'text-quiet': state.conference.is_paid === null }"
+                      >{{
+                        term.value
+                      }}</span
+                    >
                     <template v-else>{{ term.value }}</template>
                   </dd>
                 </div>
               </dl>
             </section>
 
-            <section id="apply" class="scroll-mt-24 border-t border-line py-9" data-rv>
-              <h2 class="shout mb-5 text-[44px]">Как подать заявку</h2>
-              <p v-if="!trix" class="max-w-190 text-lg leading-[1.55]">Заявка подаётся на сайте организатора.</p>
-              <ol v-else class="m-0 grid list-none gap-3 p-0 sm:grid-cols-3">
-                <li
-                  v-for="(step, i) in steps"
-                  :key="step.title"
-                  class="flex flex-col gap-1.5 rounded-[20px] border border-line p-5"
-                >
-                  <span class="kicker text-ink-2">Шаг {{ i + 1 }}</span>
-                  <h3 class="text-xl leading-[1.3] font-bold">{{ step.title }}</h3>
-                  <p class="text-[15px] text-ink-2">{{ step.text }}</p>
+            <section id="apply" class="ev-sec" data-rv>
+              <h2 class="ev-h2">Как подать заявку</h2>
+              <p v-if="!trix" class="ev-lead">Заявка подаётся на сайте организатора.</p>
+              <ol v-else class="ev-steps">
+                <li v-for="(step, i) in steps" :key="step.title">
+                  <span class="ev-label">Шаг {{ i + 1 }}</span>
+                  <h3 class="ev-h3">{{ step.title }}</h3>
+                  <p>{{ step.text }}</p>
                 </li>
               </ol>
             </section>
           </main>
 
-          <aside class="flex flex-col gap-4 lg:sticky lg:top-24">
-            <section
-              class="flex flex-col gap-5 rounded-[20px] border border-t-4 border-line border-t-(--ev) bg-paper p-7"
-              aria-labelledby="deadline-title"
-              data-rv
-            >
+          <aside class="ev-side">
+            <section class="ev-card deadline" aria-labelledby="deadline-title" data-rv>
               <template v-if="state.cfp">
                 <div class="flex items-center justify-between gap-3">
-                  <span class="kicker text-ink-2">Заявки до</span>
-                  <span class="ev-chip" :class="state.cfp.is_open && 'ok'">{{
+                  <span class="ev-label">Заявки до</span>
+                  <span class="ev-chip" :class="{ ok: state.cfp.is_open }">{{
                     state.cfp.is_open ? 'Приём открыт' : 'Приём закрыт'
                   }}</span>
                 </div>
-                <h2 id="deadline-title" class="shout text-[clamp(44px,5vw,72px)] leading-none">
-                  {{ formatDate(state.cfp.closes_at) }}
-                </h2>
+                <h2 id="deadline-title" class="ev-when">{{ formatDate(state.cfp.closes_at) }}</h2>
               </template>
-              <h2 v-else id="deadline-title" class="shout text-[44px] leading-none">Даты приёма не указаны</h2>
-              <dl class="m-0 grid grid-cols-[auto_1fr] gap-x-5 gap-y-2.5 text-sm">
-                <dt class="text-ink-2">Даты</dt>
-                <dd class="m-0">{{ dates }}</dd>
-                <dt class="text-ink-2">Место</dt>
-                <dd class="m-0">{{ place }}</dd>
-                <dt class="text-ink-2">Организатор</dt>
-                <dd class="m-0">{{ organizer }}</dd>
+              <h2 v-else id="deadline-title" class="ev-when text-[44px]">Даты приёма не указаны</h2>
+              <dl class="ev-kv">
+                <dt>Даты</dt>
+                <dd>{{ dates }}</dd>
+                <dt>Место</dt>
+                <dd>{{ place }}</dd>
+                <dt>Организатор</dt>
+                <dd>{{ organizer }}</dd>
               </dl>
-              <div class="flex flex-col gap-2.5 *:justify-center">
+              <div class="ev-cta">
                 <router-link
                   v-if="user"
                   :to="{ name: 'talks.new', query: { event: state.conference.slug } }"
@@ -199,13 +173,11 @@
                   rel="noopener noreferrer"
                   class="b b-line"
                 >
-                  Подать на сайте<span class="sr-only"> (сайт организатора)</span><ExternalLink />
+                  Подать на сайте<span class="sr"> (сайт организатора)</span><ExternalLink />
                 </a>
               </div>
-              <p v-if="!trix && domain" class="text-xs leading-[1.45] text-ink-2">
-                Из открытых источников · {{ domain }}
-              </p>
-              <p v-else-if="trix" class="text-xs leading-[1.45] text-ink-2">
+              <p v-if="!trix && domain" class="ev-micro">Из открытых источников · {{ domain }}</p>
+              <p v-else-if="trix" class="ev-micro">
                 {{
                   user
                     ? 'Данные профиля подставятся в заявку сами.'
@@ -214,12 +186,10 @@
               </p>
             </section>
 
-            <section v-if="!user" class="flex flex-col gap-3 rounded-[20px] bg-paper-2 p-7" data-rv>
-              <h3 class="text-xl leading-[1.3] font-bold">Впервые в TRIX?</h3>
-              <p class="text-[15px] text-ink-2">
-                TRIX подбирает мероприятия под ваши темы и помогает подготовить доклад до подачи.
-              </p>
-              <router-link to="/speakers" class="ln self-start text-sm font-semibold">Как работает TRIX →</router-link>
+            <section v-if="!user" class="ev-card soft" data-rv>
+              <h3 class="ev-h3">Впервые в TRIX?</h3>
+              <p class="ev-muted">TRIX подбирает мероприятия под ваши темы и помогает подготовить доклад до подачи.</p>
+              <router-link to="/speakers" class="ev-more self-start">Как работает TRIX →</router-link>
             </section>
           </aside>
         </div>
@@ -275,6 +245,8 @@ const route = useRoute()
 const { user } = useAuth()
 const root = useTemplateRef<HTMLElement>('root')
 const state = shallowRef<State>({ status: 'loading' })
+
+const kindPlural = { conference: 'Конференции', meetup: 'Митапы', workshop: 'Воркшопы', other: 'Другие форматы' }
 
 const slug = computed(() => String(route.params.slug))
 const listPath = computed(() => (user.value ? '/events' : '/speakers'))
