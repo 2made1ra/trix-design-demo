@@ -6,12 +6,15 @@
       <main class="wrap pt-10 pb-40">
         <section v-if="state.status === 'loading'" class="mx-auto mt-14 max-w-220" role="status" aria-busy="true">
           <span class="sr">Загружаем разбор</span>
-          <div class="tile skel" aria-hidden="true"><i class="s" /><i class="t" /><i class="m" /><i class="s" /></div>
+          <app-tile class="skel" aria-hidden="true"
+            ><i class="s" /><i class="t" /><i class="m" /><i class="s" /></app-tile
+          >
         </section>
 
-        <section
+        <app-tile
           v-else-if="state.status === 'missing' || state.status === 'error'"
-          class="tile sel-st mt-14 max-w-160"
+          as="section"
+          class="sel-st mt-14 max-w-160"
           :role="state.status === 'error' ? 'alert' : undefined"
         >
           <h1 class="h-34">
@@ -30,7 +33,7 @@
             </button>
             <router-link to="/events" class="b b-line b-sm">К мероприятиям</router-link>
           </div>
-        </section>
+        </app-tile>
 
         <template v-else>
           <nav aria-label="Путь по разделу" class="crumbs k">
@@ -53,7 +56,7 @@
               </div>
             </div>
 
-            <section class="tile slate stepbox" aria-labelledby="steps-title" data-rv>
+            <app-tile as="section" tone="slate" class="stepbox" aria-labelledby="steps-title" data-rv>
               <h2 id="steps-title" class="sr">Ход разбора</h2>
               <div class="sr" role="progressbar" aria-label="Разбор доклада" :aria-valuetext="progress" />
               <ol class="stream steps">
@@ -79,7 +82,7 @@
                   {{ state.review.status === 'failed' ? 'Разбор остановлен на первом шаге' : statusLine }}
                 </p>
               </div>
-            </section>
+            </app-tile>
 
             <div v-if="state.review.status === 'failed'" class="fail" role="alert">
               <template v-if="state.review.error?.key === 'text_not_extracted'">
@@ -139,12 +142,12 @@
             </div>
 
             <div class="band">
-              <section class="tile yellow main-note" aria-labelledby="main-title" data-rv>
+              <app-tile as="section" tone="yellow" class="main-note" aria-labelledby="main-title" data-rv>
                 <span id="main-title" class="k">01 / Главное</span>
                 <p class="serif">{{ summary.lead }} <span class="muted">{{ summary.rest }}</span></p>
-              </section>
+              </app-tile>
 
-              <section class="tile ink flex flex-col gap-4" aria-labelledby="criteria-title" data-rv>
+              <app-tile as="section" tone="ink" class="flex flex-col gap-4" aria-labelledby="criteria-title" data-rv>
                 <div class="flex items-center justify-between">
                   <span class="tag mint">AI · Оценка</span>
                   <span class="k muted">{{
@@ -176,7 +179,7 @@
                 <p class="small muted">
                   Оценка по материалам с учётом аудитории мероприятия: уровень, кто приходит, треки, длительность слота.
                 </p>
-              </section>
+              </app-tile>
             </div>
 
             <section class="mt-28" aria-labelledby="fix-title">
@@ -187,7 +190,7 @@
               <ol class="stream m-0 list-none p-0 [--tc:120px]">
                 <li v-for="(fix, i) in state.review.result.fixes" :key="fix.id" class="st stream-item">
                   <sp-stream-label label="Правка" :number="String(i + 1).padStart(2, '0')" />
-                  <div class="tile fix" data-rv>
+                  <app-tile class="fix" data-rv>
                     <div class="flex flex-col gap-2.5">
                       <span class="tag self-start" :class="{ ink: fix.priority === 'high' }">{{
                         fix.priority === 'high' ? 'Высокий' : 'Средний'
@@ -199,7 +202,7 @@
                       <Presentation v-if="fix.where.startsWith('Слайд')" aria-hidden="true" />
                       <FileText v-else aria-hidden="true" />{{ fix.where }}
                     </span>
-                  </div>
+                  </app-tile>
                 </li>
               </ol>
             </section>
@@ -210,11 +213,17 @@
                 <p class="deck">Вероятные вопросы этой аудитории и как на них ответить.</p>
               </div>
               <div class="grid grid-cols-[repeat(auto-fit,minmax(min(420px,100%),1fr))] gap-4">
-                <article v-for="(item, i) in state.review.result.questions" :key="item.id" class="tile qa" data-rv>
+                <app-tile
+                  v-for="(item, i) in state.review.result.questions"
+                  :key="item.id"
+                  as="article"
+                  class="qa"
+                  data-rv
+                >
                   <span class="k muted">Вопрос {{ String(i + 1).padStart(2, '0') }}</span>
                   <h3 class="h-24">{{ item.question }}</h3>
                   <p class="why"><b>Как ответить</b>{{ lowerFirst(item.answer) }}</p>
-                </article>
+                </app-tile>
               </div>
             </section>
           </template>
@@ -230,6 +239,7 @@ import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch
 import { useRoute } from 'vue-router'
 import { type CriterionState, getTalkReview, type TalkReview, type TalkReviewStage } from '@/api/demo'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTile from '@/components/AppTile.vue'
 import SpPage from '@/components/speaker/SpPage.vue'
 import SpStreamLabel from '@/components/speaker/SpStreamLabel.vue'
 import { useFx } from '@/composables/useFx'

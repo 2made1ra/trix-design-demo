@@ -87,9 +87,11 @@
               </router-link>
             </template>
 
-            <figure
+            <app-tile
               v-if="feature.id === 'portfolio'"
-              class="tile ink win"
+              as="figure"
+              tone="ink"
+              class="win"
               data-rv
               data-scene="700,1600,1100,1000,1000,4200"
             >
@@ -109,11 +111,13 @@
                   <span class="tag mint" data-s="5">Засчитано</span>
                 </span>
               </div>
-            </figure>
+            </app-tile>
 
-            <figure
+            <app-tile
               v-else-if="feature.id === 'selection'"
-              class="tile mint win"
+              as="figure"
+              tone="mint"
+              class="win"
               data-rv
               data-scene="700,1500,1800,1800,4200"
             >
@@ -143,11 +147,13 @@
                 </div>
                 <span class="tag" :class="event.tone">{{ event.paid }}</span>
               </div>
-            </figure>
+            </app-tile>
 
-            <figure
+            <app-tile
               v-else-if="feature.id === 'review'"
-              class="tile lime win"
+              as="figure"
+              tone="lime"
+              class="win"
               data-rv
               data-scene="800,900,1900,500,500,500,700,4500"
             >
@@ -167,15 +173,17 @@
                 <span>{{ row.label }}</span>
                 <span class="tag" :class="row.tone" :data-s="j + 3">{{ row.status }}</span>
               </div>
-              <div class="tile ink rounded-2xl px-5 py-4.5" data-s="7">
+              <app-tile tone="ink" class="rounded-2xl px-5 py-4.5" data-s="7">
                 <span class="k text-mint">Правка 01</span>
                 <p class="h-20 mt-2" data-typed="7">Вынести главную мысль на второй слайд</p>
-              </div>
-            </figure>
+              </app-tile>
+            </app-tile>
 
-            <figure
+            <app-tile
               v-else-if="feature.id === 'growth'"
-              class="tile mint win"
+              as="figure"
+              tone="mint"
+              class="win"
               data-rv
               data-scene="700,1200,1200,1300,4200"
             >
@@ -205,11 +213,13 @@
                   <span data-typed="4">лекция о тайминге доклада</span>
                 </span>
               </div>
-            </figure>
+            </app-tile>
 
-            <figure
+            <app-tile
               v-else-if="feature.id === 'first'"
-              class="tile ink win"
+              as="figure"
+              tone="ink"
+              class="win"
               data-rv
               data-scene="900,1100,1300,1500,4200"
             >
@@ -225,16 +235,16 @@
                 </div>
                 <span class="tag" :class="place.start && 'mint'">{{ place.start ? 'Для старта' : 'Опытным' }}</span>
               </div>
-              <div class="tile mint flex items-center justify-between gap-4 rounded-2xl px-5 py-4.5" data-s="3">
+              <app-tile tone="mint" class="flex items-center justify-between gap-4 rounded-2xl px-5 py-4.5" data-s="3">
                 <div>
                   <span class="k">Репетиция · аудио 9:48</span>
                   <p class="h-20 mt-2">Темп речи</p>
                 </div>
                 <span class="tag yellow" data-s="4">Доработать</span>
-              </div>
-            </figure>
+              </app-tile>
+            </app-tile>
 
-            <figure v-else class="tile slate win" data-rv>
+            <app-tile v-else as="figure" tone="slate" class="win" data-rv>
               <figcaption class="sr">Кто что видит в TRIX</figcaption>
               <div class="overflow-x-auto">
                 <table class="who">
@@ -259,7 +269,7 @@
                   </tbody>
                 </table>
               </div>
-            </figure>
+            </app-tile>
           </app-feature>
 
           <app-faq :items="faq">
@@ -283,6 +293,7 @@ import AppPick from '@/components/AppPick.vue'
 import AppPicks from '@/components/AppPicks.vue'
 import AppSceneBar from '@/components/AppSceneBar.vue'
 import AppTicker from '@/components/AppTicker.vue'
+import AppTile from '@/components/AppTile.vue'
 import AppWinTop from '@/components/AppWinTop.vue'
 import SpPage from '@/components/speaker/SpPage.vue'
 import SpStreamLabel from '@/components/speaker/SpStreamLabel.vue'

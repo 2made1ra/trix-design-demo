@@ -69,7 +69,7 @@
               <span class="k muted" aria-live="polite">Вопрос {{ q + 1 }} из {{ imp.questions.length }}</span>
             </div>
 
-            <div v-if="ctl.currentDirections.value" :key="ctl.currentDirections.value.id" class="tile dq">
+            <app-tile v-if="ctl.currentDirections.value" :key="ctl.currentDirections.value.id" class="dq">
               <h3 ref="heading" tabindex="-1">{{ ctl.currentDirections.value.title }}</h3>
               <ul class="vals" aria-label="Значения для проверки">
                 <li v-for="value in ctl.currentDirections.value.values" :key="value.id">
@@ -104,9 +104,9 @@
                   <p class="hint why2">Так решила модель, поменяйте, если не так</p>
                 </li>
               </ul>
-            </div>
+            </app-tile>
 
-            <div v-else-if="ctl.currentMail.value" :key="ctl.currentMail.value.id" class="tile dq">
+            <app-tile v-else-if="ctl.currentMail.value" :key="ctl.currentMail.value.id" class="dq">
               <h3 ref="heading" tabindex="-1">{{ ctl.currentMail.value.title }}</h3>
               <template v-if="decision?.kind === 'open'">
                 <form class="row" novalidate @submit.prevent="addMail">
@@ -146,7 +146,7 @@
                   Изменить
                 </button>
               </div>
-            </div>
+            </app-tile>
 
             <div class="qact">
               <button type="button" class="b b-line b-sm" :disabled="q === 0" @click="ctl.go(q - 1)">Назад</button>
@@ -275,7 +275,7 @@
                 <summary class="small">
                   Отправим {{ invitesText }} с адреса no-reply@trix · <span class="ln">превью письма</span>
                 </summary>
-                <div class="tile slate mail">
+                <app-tile tone="slate" class="mail">
                   <dl>
                     <dt>От кого</dt>
                     <dd class="mono">no-reply@trix</dd>
@@ -289,7 +289,7 @@
                     их и подберите мероприятия под ваш доклад.
                   </p>
                   <span class="b b-mint b-sm pointer-events-none self-start">Принять приглашение</span>
-                </div>
+                </app-tile>
               </details>
             </div>
             <div class="act-r">
@@ -305,9 +305,9 @@
       </div>
 
       <div v-if="abort" class="abort">
-        <div
+        <app-tile
+          class="abort-c"
           ref="confirm"
-          class="tile abort-c"
           role="alertdialog"
           aria-modal="true"
           aria-labelledby="abort-title"
@@ -320,7 +320,7 @@
             <button type="button" class="b b-mint b-sm" @click="abort = false">Продолжить</button>
             <button type="button" class="b b-line b-sm" @click="ctl.cancel()">Прервать</button>
           </div>
-        </div>
+        </app-tile>
       </div>
     </div>
   </div>
@@ -333,6 +333,7 @@ import type { ImportDirectionQuestion, SpeakerImportRow } from '@/api/demo'
 import AppField from '@/components/AppField.vue'
 import AppPick from '@/components/AppPick.vue'
 import AppPicks from '@/components/AppPicks.vue'
+import AppTile from '@/components/AppTile.vue'
 import { initials, plural } from '@/components/org/format'
 import { useModal } from '@/components/org/useModal'
 import type { SpeakerImportController } from '@/components/org/useSpeakerImport'

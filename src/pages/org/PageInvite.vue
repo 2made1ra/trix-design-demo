@@ -51,14 +51,14 @@
           </p>
         </div>
 
-        <div v-if="state.kind === 'current'" class="tile slate note" data-rv>
+        <app-tile v-if="state.kind === 'current'" tone="slate" class="note" data-rv>
           <span class="k muted">Что произойдёт</span>
           <p class="small">
             Рабочая почта {{ state.info.email }} появится в вашем аккаунте, а организация
             {{ state.info.organization_name }} откроется переключателем «Организация | Личное». Второго аккаунта не
             будет.
           </p>
-        </div>
+        </app-tile>
 
         <form class="flex flex-col gap-7" novalidate data-rv @submit.prevent="submit">
           <fieldset v-if="state.kind !== 'current'" class="fs">
@@ -126,6 +126,7 @@ import { toast } from 'vue-sonner'
 import { type AcceptInviteInput, acceptInvite, getInvite, type InviteInfo } from '@/api/demo'
 import AppField from '@/components/AppField.vue'
 import AppOnboardingFrame from '@/components/AppOnboardingFrame.vue'
+import AppTile from '@/components/AppTile.vue'
 import { useAuth } from '@/composables/useAuth'
 
 type State = { kind: 'loading' } | { kind: 'expired' } | { kind: 'new' | 'exists' | 'current'; info: InviteInfo }

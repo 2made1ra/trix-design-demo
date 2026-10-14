@@ -26,10 +26,12 @@
           </div>
         </div>
 
-        <form
+        <app-tile
           v-if="adding"
+          as="form"
+          tone="slate"
+          class="flex flex-wrap items-end gap-3"
           id="add-event"
-          class="tile slate flex flex-wrap items-end gap-3"
           novalidate
           @submit.prevent="add"
         >
@@ -44,7 +46,7 @@
             :error="addError"
           />
           <button type="submit" class="b b-mint" :disabled="saving">Добавить</button>
-        </form>
+        </app-tile>
 
         <p v-if="state.kind === 'loading'" class="muted" role="status">Загружаем мероприятия…</p>
         <div v-else-if="state.kind === 'error'" class="flex flex-col items-start gap-4" role="alert">
@@ -80,9 +82,9 @@
             >
           </div>
 
-          <p v-if="!shown.length" class="tile slate" role="status">Здесь пока ничего нет.</p>
+          <app-tile v-if="!shown.length" as="p" tone="slate" role="status">Здесь пока ничего нет.</app-tile>
           <ul v-else class="evs" aria-label="Список мероприятий">
-            <li v-for="event in shown" :key="event.id" class="tile slate ev" data-rv>
+            <app-tile v-for="event in shown" :key="event.id" as="li" tone="slate" class="ev" data-rv>
               <div class="ev-main">
                 <div class="ev-top">
                   <span class="tag" :class="event.source === 'own' ? 'lime' : 'dash'">{{
@@ -120,7 +122,7 @@
                   Кого позвать<ArrowRightIcon />
                 </router-link>
               </div>
-            </li>
+            </app-tile>
           </ul>
         </template>
       </main>
@@ -135,6 +137,7 @@ import { toast } from 'vue-sonner'
 import { addOrgEvent, listOrgEvents, type OrgEvent } from '@/api/demo'
 import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTile from '@/components/AppTile.vue'
 import { formatDate, formatNames } from '@/components/org/eventLabels'
 import { plural } from '@/components/org/format'
 import SpPage from '@/components/speaker/SpPage.vue'

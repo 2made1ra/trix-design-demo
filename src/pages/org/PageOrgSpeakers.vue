@@ -19,7 +19,14 @@
           <button type="button" class="b b-line" @click="load">Попробовать снова</button>
         </div>
 
-        <section v-else-if="state.empty" class="tile slate" aria-labelledby="empty-title" aria-live="polite" data-rv>
+        <app-tile
+          v-else-if="state.empty"
+          as="section"
+          tone="slate"
+          aria-labelledby="empty-title"
+          aria-live="polite"
+          data-rv
+        >
           <div class="emp">
             <span class="tag dash">Пока пусто</span>
             <h2 id="empty-title" class="h-34">Спикеров пока нет: загрузите Excel или отправьте ссылку-приглашение</h2>
@@ -33,10 +40,10 @@
               </button>
             </div>
           </div>
-        </section>
+        </app-tile>
 
         <template v-else>
-          <section v-if="talk" id="new" class="tile lime strip" aria-labelledby="np-title" data-rv>
+          <app-tile v-if="talk" id="new" as="section" tone="lime" class="strip" aria-labelledby="np-title" data-rv>
             <div class="strip-top">
               <h2 id="np-title" class="k">
                 Новые выступления · {{ state.pending.length }}
@@ -91,7 +98,7 @@
                 Подтвердить<CheckIcon />
               </button>
             </div>
-          </section>
+          </app-tile>
 
           <section aria-label="Фильтры" data-rv>
             <form class="filters" @submit.prevent>
@@ -160,9 +167,9 @@
               </fieldset>
             </div>
 
-            <p v-if="!state.items.length" class="tile slate" role="status">
+            <app-tile v-if="!state.items.length" as="p" tone="slate" role="status">
               Никого не нашли: смягчите фильтры или очистите поиск.
-            </p>
+            </app-tile>
             <section
               v-else-if="view === 'table'"
               class="tbox"
@@ -226,7 +233,7 @@
             </section>
 
             <ul v-else class="cities" aria-label="Спикеры по городам" data-rv>
-              <li v-for="group in byCity" :key="group.city" class="tile slate city">
+              <app-tile v-for="group in byCity" :key="group.city" as="li" tone="slate" class="city">
                 <div class="flex items-baseline justify-between gap-3">
                   <h3 class="h-24">{{ group.city }}</h3>
                   <span class="k muted"
@@ -253,7 +260,7 @@
                     </span>
                   </li>
                 </ul>
-              </li>
+              </app-tile>
             </ul>
 
             <p class="small muted">
@@ -291,6 +298,7 @@ import {
 import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
 import AppPick from '@/components/AppPick.vue'
+import AppTile from '@/components/AppTile.vue'
 import { formatNps, initials, plural } from '@/components/org/format'
 import { levelNames, levelOptions } from '@/components/org/levels'
 import SpPage from '@/components/speaker/SpPage.vue'

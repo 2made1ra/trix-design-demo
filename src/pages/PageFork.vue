@@ -17,11 +17,11 @@
           </h1>
 
           <nav class="fork-split" aria-label="Для кого TRIX">
-            <router-link
+            <app-tile
               v-for="half in halves"
               :key="half.side"
+              class="half"
               :to="half.to"
-              class="half tile"
               :class="[half.side, half.tone]"
               data-rv
               @mouseenter="hover(half.side)"
@@ -81,7 +81,7 @@
               </span>
               <span class="half-t shout">{{ half.title }}</span>
               <span class="half-d">{{ half.text }}</span>
-            </router-link>
+            </app-tile>
           </nav>
         </div>
       </section>
@@ -93,6 +93,7 @@
 import { ArrowRight } from '@lucide/vue'
 import { computed, onBeforeUnmount, onMounted, reactive, ref, useTemplateRef, watch } from 'vue'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTile from '@/components/AppTile.vue'
 import SpPage from '@/components/speaker/SpPage.vue'
 import { useFx } from '@/composables/useFx'
 

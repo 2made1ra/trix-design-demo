@@ -27,7 +27,7 @@
     </section>
 
     <section v-else aria-labelledby="done-title" aria-live="polite" data-rv>
-      <div class="tile mint done-t">
+      <app-tile tone="mint" class="done-t">
         <h2 id="done-title" ref="done" class="h-34" tabindex="-1">
           {{ ctl.state.value.sent }}
           {{
@@ -41,7 +41,7 @@
           <router-link :to="{ name: 'org.speakers' }" class="b b-ink">Перейти к спикерам<ArrowRightIcon /></router-link>
           <button type="button" class="ln small lnb" @click="ctl.reset()">Загрузить ещё файл</button>
         </div>
-      </div>
+      </app-tile>
     </section>
   </div>
   <org-import-window v-if="open" :ctl="ctl" :file-name="fileName" />
@@ -53,6 +53,7 @@ import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 import { completeOrganizationOnboarding } from '@/api/demo'
+import AppTile from '@/components/AppTile.vue'
 import { demoFile, plural } from '@/components/org/format'
 import OrgImportWindow from '@/components/org/OrgImportWindow.vue'
 import { useSpeakerImport } from '@/components/org/useSpeakerImport'

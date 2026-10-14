@@ -5,11 +5,13 @@
 
       <div v-if="state.status === 'loading'" class="wrap flex-1 pt-10" role="status" aria-busy="true">
         <span class="sr">Загружаем мероприятие</span>
-        <div class="tile skel" aria-hidden="true"><i class="s" /><i class="t" /><i class="m" /><i class="s" /></div>
+        <app-tile class="skel" aria-hidden="true"
+          ><i class="s" /><i class="t" /><i class="m" /><i class="s" /></app-tile
+        >
       </div>
 
       <div v-else-if="state.status !== 'ready'" class="wrap flex-1 pt-16 pb-24">
-        <section class="tile sel-st max-w-160" :role="state.status === 'error' ? 'alert' : undefined">
+        <app-tile as="section" class="sel-st max-w-160" :role="state.status === 'error' ? 'alert' : undefined">
           <span class="tag self-start" :class="{ pink: state.status === 'error' }">
             {{ state.status === 'error' ? 'Ошибка' : '404' }}
           </span>
@@ -29,7 +31,7 @@
             </button>
             <router-link :to="listPath" class="b b-line b-sm">К мероприятиям</router-link>
           </div>
-        </section>
+        </app-tile>
       </div>
 
       <div v-else class="ev-wrap w-full flex-1">
@@ -213,6 +215,7 @@ import {
   listRecommendations,
 } from '@/api/generated'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTile from '@/components/AppTile.vue'
 import {
   conferencePlace,
   formatDate,

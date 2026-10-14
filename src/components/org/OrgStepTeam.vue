@@ -2,14 +2,14 @@
   <form class="flex flex-col gap-12" novalidate @submit.prevent="submit(emails)">
     <fieldset class="fld" data-rv>
       <legend class="idx k muted">01 / Вы</legend>
-      <div class="tile slate me">
+      <app-tile tone="slate" class="me">
         <span class="ava mint" aria-hidden="true">{{ initials(me) }}</span>
         <div class="me-t">
           <b>{{ me }}</b>
           <span class="small muted mono">{{ user?.email }}</span>
         </div>
         <span class="tag lime">Администратор</span>
-      </div>
+      </app-tile>
     </fieldset>
 
     <fieldset class="fld" data-rv>
@@ -64,6 +64,7 @@ import { ArrowRightIcon, CircleAlertIcon, Trash2Icon } from '@lucide/vue'
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { inviteColleagues } from '@/api/demo'
+import AppTile from '@/components/AppTile.vue'
 import { initials } from '@/components/org/format'
 import { useAuth } from '@/composables/useAuth'
 

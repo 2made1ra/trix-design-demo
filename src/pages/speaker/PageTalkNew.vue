@@ -6,12 +6,15 @@
       <main class="wrap pt-10 pb-30">
         <div v-if="event.status === 'loading'" class="mt-12 max-w-215" role="status" aria-busy="true">
           <span class="sr">Загружаем мероприятие</span>
-          <div class="tile skel" aria-hidden="true"><i class="s" /><i class="t" /><i class="m" /><i class="s" /></div>
+          <app-tile class="skel" aria-hidden="true"
+            ><i class="s" /><i class="t" /><i class="m" /><i class="s" /></app-tile
+          >
         </div>
 
-        <section
+        <app-tile
           v-else-if="event.status !== 'ready'"
-          class="tile sel-st mt-12 max-w-160"
+          as="section"
+          class="sel-st mt-12 max-w-160"
           :role="event.status === 'error' ? 'alert' : undefined"
         >
           <h1 class="h-34">
@@ -30,7 +33,7 @@
             </button>
             <router-link to="/events" class="b b-line b-sm">К мероприятиям</router-link>
           </div>
-        </section>
+        </app-tile>
 
         <template v-else>
           <nav aria-label="Путь по разделу" class="crumbs k">
@@ -161,7 +164,7 @@
             </form>
 
             <aside class="flex min-w-0 flex-[1_1_340px] flex-col gap-4 lg:sticky lg:top-24">
-              <section class="tile ink flex flex-col gap-5" aria-labelledby="ctx-title" data-rv>
+              <app-tile as="section" tone="ink" class="flex flex-col gap-5" aria-labelledby="ctx-title" data-rv>
                 <span class="k muted">Разбор под аудиторию</span>
                 <div class="flex flex-col gap-2">
                   <h2 id="ctx-title" class="h-24">{{ event.conference.name }}</h2>
@@ -184,15 +187,15 @@
                   </template>
                 </dl>
                 <span class="k lock"><Lock />Разбор видите только вы</span>
-              </section>
-              <section class="tile slate flex flex-col gap-3" aria-labelledby="what-title" data-rv>
+              </app-tile>
+              <app-tile as="section" tone="slate" class="flex flex-col gap-3" aria-labelledby="what-title" data-rv>
                 <h2 id="what-title" class="h-20">Что будет в разборе</h2>
                 <ul class="crit small">
                   <li>Оценка по четырём критериям: аудитория, структура, главная мысль, укладывается ли во время</li>
                   <li>Правки по приоритету с привязкой к месту в тексте или номеру слайда</li>
                   <li>Вопросы, которые вероятно зададут из зала</li>
                 </ul>
-              </section>
+              </app-tile>
             </aside>
           </div>
         </template>
@@ -210,6 +213,7 @@ import { createTalkReview, type EventTrack, listEventTracks } from '@/api/demo'
 import { type City, type Conference, getConferenceBySlug, listCities } from '@/api/generated'
 import AppField from '@/components/AppField.vue'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTile from '@/components/AppTile.vue'
 import { conferencePlace, formatLabels, isTrixSource, kindLabels, levelLabels } from '@/components/speaker/events'
 import SpPage from '@/components/speaker/SpPage.vue'
 import { useFx } from '@/composables/useFx'

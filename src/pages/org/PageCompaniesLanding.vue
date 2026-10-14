@@ -86,7 +86,7 @@
                 Подключить организацию<ArrowRight />
               </router-link>
             </template>
-            <figure class="tile ink win" data-rv data-scene="700,1000,1200,4200">
+            <app-tile as="figure" tone="ink" class="win" data-rv data-scene="700,1000,1200,4200">
               <figcaption class="sr">База спикеров с фильтром по направлению, NPS и городу</figcaption>
               <app-win-top title="Спикеры" note="212 · 14 городов" />
               <app-picks>
@@ -107,7 +107,7 @@
                   <span v-if="person.tag" class="tag" :class="person.invited ? 'dash' : 'mint'">{{ person.tag }}</span>
                 </div>
               </div>
-            </figure>
+            </app-tile>
           </app-feature>
 
           <app-feature
@@ -125,7 +125,7 @@
             ]"
             flip
           >
-            <figure class="tile lime win" data-rv data-scene="700,1000,900,1100,4200">
+            <app-tile as="figure" tone="lime" class="win" data-rv data-scene="700,1000,900,1100,4200">
               <figcaption class="sr">Команда подтверждает новые выступления и отмечает «Рекомендую»</figcaption>
               <app-win-top title="Новые выступления" note="Неделя · 5 новых" />
               <div class="mrow">
@@ -155,7 +155,7 @@
                 </div>
                 <span class="tag dash">Ждёт подтверждения</span>
               </div>
-            </figure>
+            </app-tile>
           </app-feature>
 
           <app-feature
@@ -172,7 +172,7 @@
               'Видно, кто согласился, а кто отказался',
             ]"
           >
-            <figure class="tile mint win" data-rv data-scene="700,1500,900,1000,4200">
+            <app-tile as="figure" tone="mint" class="win" data-rv data-scene="700,1500,900,1000,4200">
               <figcaption class="sr">Подбор своих спикеров под конференцию и предложение выступить</figcaption>
               <app-win-top title="Конференция о данных" note="Трек ML · заявки до 20 ноября" />
               <span class="b b-ink b-sm self-start" aria-hidden="true" data-press="1">Кого позвать</span>
@@ -202,7 +202,7 @@
                 </div>
                 <span class="b b-line b-sm" aria-hidden="true">Предложить</span>
               </div>
-            </figure>
+            </app-tile>
           </app-feature>
 
           <app-feature
@@ -225,7 +225,7 @@
                 Опубликовать мероприятие<ArrowRight />
               </router-link>
             </template>
-            <figure class="tile lime win" data-rv data-scene="700,1700,1000,1000,900,900,4500">
+            <app-tile as="figure" tone="lime" class="win" data-rv data-scene="700,1700,1000,1000,900,900,4500">
               <figcaption class="sr">Черновик мероприятия по ссылке, публикация и первая заявка</figcaption>
               <app-win-top title="Новое мероприятие" note="Ссылка · Черновик · Заявки" />
               <div class="mrow">
@@ -247,7 +247,7 @@
                 </div>
                 <span class="tag">Спикер</span>
               </div>
-            </figure>
+            </app-tile>
           </app-feature>
 
           <app-feature
@@ -264,7 +264,7 @@
               'Выгрузка отчёта за квартал',
             ]"
           >
-            <figure class="tile ink win" data-rv data-scene="700,1300,1200,4200">
+            <app-tile as="figure" tone="ink" class="win" data-rv data-scene="700,1300,1200,4200">
               <figcaption class="sr">Дашборд команды за квартал и слепая зона</figcaption>
               <app-win-top title="Дашборд" note="Q3 · 212 спикеров" />
               <div class="dash-stats" data-s="1">
@@ -283,7 +283,7 @@
                 <span>Слепая зона</span><span class="tag pink">Mobile · Дальний Восток</span>
               </div>
               <span class="b b-mint b-sm self-start" aria-hidden="true" data-s="3">Выгрузить отчёт</span>
-            </figure>
+            </app-tile>
           </app-feature>
 
           <app-feature
@@ -301,7 +301,7 @@
             ]"
             flip
           >
-            <figure class="tile slate win" data-rv>
+            <app-tile as="figure" tone="slate" class="win" data-rv>
               <figcaption class="sr">Кто что видит в TRIX</figcaption>
               <div class="overflow-x-auto">
                 <table class="who">
@@ -323,7 +323,7 @@
                   </tbody>
                 </table>
               </div>
-            </figure>
+            </app-tile>
           </app-feature>
 
           <app-faq :items="faq">
@@ -348,6 +348,7 @@ import AppPick from '@/components/AppPick.vue'
 import AppPicks from '@/components/AppPicks.vue'
 import AppSceneBar from '@/components/AppSceneBar.vue'
 import AppTicker from '@/components/AppTicker.vue'
+import AppTile from '@/components/AppTile.vue'
 import AppWinTop from '@/components/AppWinTop.vue'
 import SpPage from '@/components/speaker/SpPage.vue'
 import SpStreamLabel from '@/components/speaker/SpStreamLabel.vue'

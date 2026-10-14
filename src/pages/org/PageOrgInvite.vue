@@ -26,7 +26,7 @@
             </p>
           </div>
 
-          <section class="tile ink dead" aria-label="Мероприятие" data-rv>
+          <app-tile as="section" tone="ink" class="dead" aria-label="Мероприятие" data-rv>
             <div class="flex min-w-0 flex-col gap-2.5">
               <span class="k muted">Мероприятие · {{ state.event.city }}</span>
               <h2 class="h-34">{{ state.event.name }}</h2>
@@ -45,7 +45,7 @@
                 <dd><span class="tag mint">{{ formatDate(state.event.deadline) }}</span></dd>
               </div>
             </dl>
-          </section>
+          </app-tile>
 
           <section class="flex flex-col gap-5" aria-labelledby="cand-title">
             <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2" data-rv>
@@ -59,14 +59,16 @@
               <span class="small muted">По теме трека, уровню и NPS</span>
             </div>
 
-            <p v-if="!state.items.length" class="tile slate" role="status">
+            <app-tile v-if="!state.items.length" as="p" tone="slate" role="status">
               Под это мероприятие никто не подошёл. Загрузите больше спикеров или выберите другое мероприятие.
-            </p>
+            </app-tile>
             <ul v-else class="cand" aria-label="Кандидаты">
-              <li
+              <app-tile
                 v-for="item in state.items"
                 :key="item.speaker.id"
-                class="tile slate cd"
+                as="li"
+                tone="slate"
+                class="cd"
                 :class="{ sel: dialog?.id === item.speaker.id }"
                 data-rv
               >
@@ -110,7 +112,7 @@
                     Предложить выступить
                   </button>
                 </div>
-              </li>
+              </app-tile>
             </ul>
 
             <p class="small muted max-w-180" data-rv>
@@ -144,6 +146,7 @@ import {
   type OrgSpeaker,
 } from '@/api/demo'
 import AppHeader from '@/components/AppHeader.vue'
+import AppTile from '@/components/AppTile.vue'
 import { formatDate } from '@/components/org/eventLabels'
 import { formatNps, initials, plural } from '@/components/org/format'
 import { levelNames, toneOf } from '@/components/org/levels'

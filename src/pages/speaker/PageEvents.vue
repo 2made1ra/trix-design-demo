@@ -37,7 +37,7 @@
 
       <div class="wrap row2 pt-18 pb-30">
         <div>
-          <section v-if="offer" class="tile ink offer" aria-labelledby="offer-title" data-rv>
+          <app-tile v-if="offer" as="section" tone="ink" class="offer" aria-labelledby="offer-title" data-rv>
             <div class="offer-top">
               <span class="tag mint">Предложение</span>
               <span class="k muted">От команды организации</span>
@@ -67,7 +67,7 @@
               </button>
               <span class="small muted">После «Принять» — подготовить доклад</span>
             </div>
-          </section>
+          </app-tile>
 
           <section v-if="screen === 'loading'" class="sel-st" aria-label="Подбор мероприятий" aria-busy="true">
             <div role="status" aria-live="polite" class="flex flex-col gap-3">
@@ -78,21 +78,21 @@
                 секунд.
               </p>
             </div>
-            <div v-for="n in 3" :key="n" class="tile skel" aria-hidden="true">
+            <app-tile v-for="n in 3" :key="n" class="skel" aria-hidden="true">
               <i class="s" /><i class="t" /><i class="m" /><i class="s" />
-            </div>
+            </app-tile>
           </section>
 
-          <section v-else-if="screen === 'error'" class="sel-st tile" role="alert" aria-labelledby="err-title">
+          <app-tile v-else-if="screen === 'error'" as="section" class="sel-st" role="alert" aria-labelledby="err-title">
             <span class="tag pink self-start">Ошибка</span>
             <h2 id="err-title" class="h-34">Не удалось загрузить подборку</h2>
             <p class="deck">Проверьте соединение и попробуйте ещё раз. Профиль и фильтры сохранены.</p>
             <div class="sel-acts">
               <button type="button" class="b b-ink b-sm" @click="load">Повторить<RotateCw /></button>
             </div>
-          </section>
+          </app-tile>
 
-          <section v-else-if="screen === 'empty'" class="sel-st tile" aria-labelledby="empty-title">
+          <app-tile v-else-if="screen === 'empty'" as="section" class="sel-st" aria-labelledby="empty-title">
             <span class="k muted">Подборка</span>
             <h2 id="empty-title" class="h-34">Ничего не нашли</h2>
             <p class="deck">Расширьте фильтры или измените профиль.</p>
@@ -100,7 +100,7 @@
               <button type="button" class="b b-ink b-sm" @click="resetFilters">Сбросить фильтры</button>
               <router-link to="/onboarding/1" class="b b-line b-sm">Изменить профиль</router-link>
             </div>
-          </section>
+          </app-tile>
 
           <section
             v-else-if="state.status === 'ready'"
@@ -109,8 +109,8 @@
           >
             <article v-for="(item, i) in visible" :key="item.conference.id" class="st stream-item">
               <sp-stream-label label="Заявки до" :number="deadline(item)" />
-              <div
-                class="tile ev"
+              <app-tile
+                class="ev"
                 :class="
                   i === featured ? 'mint feature p-6 sm:p-10' : ['workshop', 'other'].includes(item.conference.kind) ? 'slate' : ''
                 "
@@ -158,13 +158,13 @@
                     Подготовить доклад
                   </router-link>
                 </div>
-              </div>
+              </app-tile>
             </article>
           </section>
         </div>
 
         <aside class="flex min-w-0 flex-[1_1_340px] flex-col gap-4 lg:sticky lg:top-24">
-          <div class="tile ink flex flex-col gap-5" data-rv>
+          <app-tile tone="ink" class="flex flex-col gap-5" data-rv>
             <div class="flex items-center gap-3.5">
               <span class="ava mint">{{ initials }}</span>
               <h2 class="h-24">Ваш профиль</h2>
@@ -176,15 +176,15 @@
               </template>
             </dl>
             <router-link to="/onboarding/1" class="k ln self-start">Изменить профиль</router-link>
-          </div>
-          <div class="tile uv flex flex-col gap-3.5" data-rv>
+          </app-tile>
+          <app-tile tone="uv" class="flex flex-col gap-3.5" data-rv>
             <span class="k">Развитие</span>
             <h2 class="h-24">Пока не готовы выступать?</h2>
             <p class="small muted">Подберём площадки для старта и материалы для прокачки.</p>
             <router-link to="/onboarding/1" class="b b-mint b-sm mt-1.5 self-start"
               >Уточнить цель<ArrowRight /></router-link
             >
-          </div>
+          </app-tile>
           <p class="small muted px-2">
             Мероприятия публикуют организаторы в TRIX или находит TRIX в открытых источниках. Оплату отмечаем, только
             если организатор её указал.
@@ -215,6 +215,7 @@ import {
 import AppHeader from '@/components/AppHeader.vue'
 import AppPick from '@/components/AppPick.vue'
 import AppTicker from '@/components/AppTicker.vue'
+import AppTile from '@/components/AppTile.vue'
 import {
   conferencePlace,
   experienceLabels,
