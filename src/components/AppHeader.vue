@@ -20,7 +20,10 @@
         </nav>
       </template>
 
-      <div class="flex items-center gap-7 max-sm:gap-4" :class="{ 'ml-auto': variant === 'fork' }">
+      <div
+        class="flex items-center max-sm:gap-4"
+        :class="[variant === 'org' ? 'gap-4' : 'gap-7', { 'ml-auto': variant === 'fork' }]"
+      >
         <nav v-if="variant === 'org' && isSpeaker" class="sw" aria-label="Режим кабинета">
           <span aria-current="page">Организация</span>
           <router-link :to="{ name: 'events' }">Личное</router-link>
